@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Posts on  </title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>http://ksmigiel.com/post/index.xml/</link>
+    
+    
+    
+    <updated>Sun, 18 Jan 2015 18:44:12 CET</updated>
+    
+    <item>
+      <title>Pierwszy post...</title>
+      <link>http://ksmigiel.com/2015/01/pierwszy-post</link>
+      <pubDate>Sun, 18 Jan 2015 18:44:12 CET</pubDate>
+      
+      <guid>http://ksmigiel.com/2015/01/pierwszy-post</guid>
+      <description>&lt;p&gt;Cześć! Pomysł na stworzenie bloga chodził mi już jakiś czas po głowie, ale jak to z pomysłami bywa, trochę czasu upłynęło zanim przeszedłem z fazy planingu do fazy implementacji. Nowy rok wydaje się być idealnym momentem na rozpoczęcie czegoś nowego w swoim życiu, więc korzystając z okazji zarejestrowałem domenę i zacząłem szukać hostingu / platformy blogowej, która by mi odpowiadała. Miałem kiedyś styczność z WordPressem, ale potrzebowałem alternatywy lekkiej, prostej i najlepiej minimalistycznej. W ten sposób natrafiłem na bardzo ciekawe narzędzie: &lt;a href=&#34;http://gohugo.io&#34;&gt;Hugo&lt;/a&gt; - czyli &lt;em&gt;static website engine&lt;/em&gt;. Istnieje parę podobnych rozwiązań typu &lt;em&gt;Jekyll&lt;/em&gt; i bazujący na nim &lt;em&gt;Octopress&lt;/em&gt;, ale ten Hugo bardzo mi się spodobał i spędziłem nad nim trochę czasu rozgryzając go, doprowadzając bloga do stanu obecnego.&lt;/p&gt;
+
+&lt;p&gt;Prawdopodobnie jak większość podobnych blogów, tak i ten powstał po to, aby dokumentować swoją pracę i przy okazji pomóc innym szukającym odpowiedzi na pytanie, których nie ma na stackoverflow. Zawsze narzekałem na brak swojej prywatnej dokumentacji, szczególnie wtedy, gdy nie mogłem sobie przypomnieć rozwiązania problemu, który już kiedyś rozwiązałem. Liczę więc na to, że blog zwiększy moją i Waszą produktywność :)&lt;/p&gt;
+
+&lt;p&gt;Posty będą o różnej tematyce: &lt;strong&gt;webdev&lt;/strong&gt; (.NET, js, MVC, REST API), &lt;strong&gt;data science&lt;/strong&gt; i &lt;strong&gt;big data&lt;/strong&gt; (no-sql, Hadoop, machine learning, AI, statystyka, ekonometria), &lt;strong&gt;programowanie funkcyjne&lt;/strong&gt; (F#), &lt;strong&gt;dobre praktyki&lt;/strong&gt; i &lt;strong&gt;protipy&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Jak zrealizuję chociaż 50% z tematów, które zamierzam poruszyć na ten rok to będzie sukces! A jak znajdą się czytelnicy, to i artykuły się znajdą.&lt;/p&gt;
+
+&lt;p&gt;Miłego czytania!&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
