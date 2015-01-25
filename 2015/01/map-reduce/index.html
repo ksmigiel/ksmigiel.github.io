@@ -73,7 +73,7 @@
 <li><strong>Shuffle</strong> - dane są tutaj sortowane i w takich grupach przydzielane do odpowiednich węzłów</li>
 <li><strong>Reduce</strong> - następuje agregacja danych na podstawie klucza - oczywiście w sposób równoległy</li>
 </ul>
-<p>Tak na prawdę każdy z nas (developerów) nie raz w życiu coś zmapredusił. Bo jeśli sprowadzimy ten proces z chmury i skomplikowanej topologii do pojedynczej bazy danych, to okaże się, że ten cały MapReduce to w rzeczywistości można napisać w SQLu:
+<p>Tak naprawdę każdy z nas (developerów) nie raz w życiu coś zmapredusił. Bo jeśli sprowadzimy ten proces z chmury i skomplikowanej topologii do pojedynczej bazy danych, to okaże się, że ten cały MapReduce to w rzeczywistości można napisać w SQLu:
 <div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span style="color: #66d9ef">select</span> <span style="color: #f8f8f2">id,</span> <span style="color: #66d9ef">sum</span><span style="color: #f8f8f2">(price)</span>
 <span style="color: #66d9ef">from</span> <span style="color: #f8f8f2">products</span>
 <span style="color: #66d9ef">group</span> <span style="color: #66d9ef">by</span> <span style="color: #f8f8f2">id</span>
