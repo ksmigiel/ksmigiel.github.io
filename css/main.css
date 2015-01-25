@@ -2815,7 +2815,14 @@ article {
   display: inline-block; }  
 
 #tags {
+  text-transform: none; 
   list-style: none;
   display: inline; }
   #tags li {
     display: inline; }
+
+.avatar {
+  width: 30%;
+  float: left;
+  margin: 5px 1em 0 0; }
+

@@ -7,7 +7,74 @@
     
     
     
-    <updated>Sun, 18 Jan 2015 18:44:12 CET</updated>
+    <updated>Fri, 23 Jan 2015 18:16:13 CET</updated>
+    
+    <item>
+      <title>MapReduce - wstęp</title>
+      <link>http://ksmigiel.com/2015/01/map-reduce</link>
+      <pubDate>Fri, 23 Jan 2015 18:16:13 CET</pubDate>
+      
+      <guid>http://ksmigiel.com/2015/01/map-reduce</guid>
+      <description>
+
+&lt;p&gt;Zapewne słyszeliście o &lt;strong&gt;MapReduce&lt;/strong&gt;, a jeśli nie, to teraz macie okazję poczytać. &lt;strong&gt;MapReduce&lt;/strong&gt; jest frameworkiem służącym do przetwarzania dużych zbiorów danych w sposób zrównoleglony. Ostatnimi czasy stał się bardzo popularny dzięki platformom takim jak Hadoop (o nim w kolejnym poście) czy Spark. Wykorzystywany jest wszędzie tam, gdzie dane liczy się w terabajtach. Duże firmy produkują dużo danych, więc znajduje on zastosowanie np. w Google czy Spotify.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_0&#34;&gt;Funkcyjnie&lt;/h2&gt;
+
+&lt;p&gt;Na początku chciałem wspomnieć o dwóch ważnych rzeczach: &lt;code&gt;map()&lt;/code&gt; i &lt;code&gt;reduce()&lt;/code&gt;. Te dwie funkcje, które są elementami języków funkcyjnych (choć np. C# ma swoje odpowiedniki w LINQ: &lt;code&gt;Select()&lt;/code&gt; i &lt;code&gt;Aggregate()&lt;/code&gt;) działają w analogiczny sposób do MapReduce, tyle że na kolekcjach. Tak więc nazwa nie wzięła się znikąd.&lt;/p&gt;
+
+&lt;h4 id=&#34;toc_1&#34;&gt;F&amp;#35;&lt;/h4&gt;
+
+&lt;p&gt;&lt;code&gt;map()&lt;/code&gt; aplikuje funkcję dla każdego elementu z kolekcji:
+&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;sample&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;4&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color: #75715e&#34;&gt;// Dodamy do każdego elementu listy &amp;quot;2&amp;quot;&lt;/span&gt;
+&lt;span style=&#34;color: #f8f8f2&#34;&gt;List.map&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;sample&lt;/span&gt;
+&lt;span style=&#34;color: #75715e&#34;&gt;(* val it : int list = [3; 4; 5; 6; 7] *)&lt;/span&gt;
+&lt;span style=&#34;color: #75715e&#34;&gt;// lub bardziej funkcyjnie przy pomocy operatora &amp;quot;|&amp;gt;&amp;quot;&lt;/span&gt;
+&lt;span style=&#34;color: #f8f8f2&#34;&gt;sample&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;|&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;List.map&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;reduce()&lt;/code&gt; natomiast jak się można domyślić: redukuje naszą kolekcję przy użyciu akumulatora przekazując wynik do następnego wywołania:
+&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #75715e&#34;&gt;// Zredukujemy naszą listę obliczając sumę ze wszystkich jej elementów&lt;/span&gt;
+&lt;span style=&#34;color: #75715e&#34;&gt;// a i b są sąsiadami&lt;/span&gt;
+&lt;span style=&#34;color: #f8f8f2&#34;&gt;sample&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;|&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;List.reduce&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;b&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color: #75715e&#34;&gt;(* val it : int = 15 *)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/p&gt;
+
+&lt;h4 id=&#34;toc_2&#34;&gt;C&amp;#35;&lt;/h4&gt;
+
+&lt;p&gt;I analogicznie przy użyciu LINQ
+&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;sample&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;List&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;&amp;gt;()&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;4&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;};&lt;/span&gt;
+&lt;span style=&#34;color: #f8f8f2&#34;&gt;sample.Select(x&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color: #f8f8f2&#34;&gt;sample.Aggregate((a,&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;b)&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;b);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;Operacje te prezentują prosty workflow jaki przeprowadza się na danych i w wersji rozszerzonej jest on wykorzystywany w MapReduce.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_3&#34;&gt;map() + reduce() -&amp;gt; MapReduce&lt;/h2&gt;
+
+&lt;p&gt;Wprowadźmy kilka pojęć: węzeł &lt;strong&gt;(node)&lt;/strong&gt; to jeden z wielu komputerów biorących udział w tym całym zamieszaniu. Grupa takich komputerów o podobnej do siebie konfiguracji, będących w tej samej sieci nazywa się klastrem &lt;strong&gt;(cluster)&lt;/strong&gt;. To powinno wystarczyć do zrozumienia zasady działania MapReduce, choć ludzie zaznajomieni z tematem prawdopodobnie zamkną przeglądarkę z powodu takiej trywializacji :]&lt;/p&gt;
+
+&lt;p&gt;Proces zazwyczaj odbywa się w 3 etapach: 2 tytułowe i jeden pomocniczy pomiędzy nimi:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Map&lt;/strong&gt; - na tym etapie każdy węzeł preparuje dane (np. usuwanie zbędnych rekordów, klasyfikacja poprzez dodanie kluczy itp.)&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Shuffle&lt;/strong&gt; - dane są tutaj sortowane i w takich grupach przydzielane do odpowiednich węzłów&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reduce&lt;/strong&gt; - następuje agregacja danych na podstawie klucza - oczywiście w sposób równoległy&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Tak na prawdę każdy z nas (developerów) nie raz w życiu coś zmapredusił. Bo jeśli sprowadzimy ten proces z chmury i skomplikowanej topologii do pojedynczej bazy danych, to okaże się, że ten cały MapReduce to w rzeczywistości można napisać w SQLu:
+&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;select&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;id,&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;sum&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(price)&lt;/span&gt;
+&lt;span style=&#34;color: #66d9ef&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;products&lt;/span&gt;
+&lt;span style=&#34;color: #66d9ef&#34;&gt;group&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;by&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;id&lt;/span&gt;
+&lt;span style=&#34;color: #66d9ef&#34;&gt;order&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;by&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;id&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;Wynik takiego zapytania może być również skutkiem całego procesu MapReduce. I dopóki ilość danych i czas w jakim zapytanie się wykonuje mieszczą się w granicach wymagań biznesu, to wszystko ok! Problem zaczyna się wtedy, gdy wydajność maleje, bo instancje serwerów SQL nie radzą sobie z przetwarzaniem coraz szybciej i ciągle napływających danych. Dlatego głównie ze względu na kwestię wydajności wprowadza się paralelność, co klasyczną analizę danych wybija na wyższy poziom zaawansowania.&lt;/p&gt;
+
+&lt;p&gt;Dane mogą teraz zostać przetworzone szybciej. Coś, co kiedyś trwało, lub ze względu na ograniczenia mocy obliczeniowej było prawie niemożliwe, dziś za pomocą chmury i tego typu technologii pozwala niejako na nowo odkrywać algorytmy uczenia maszynowego, data-miningu. A w jaki sposób to zostanie zaprezentowane.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Pierwszy post...</title>
