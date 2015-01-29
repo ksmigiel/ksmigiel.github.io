@@ -17,7 +17,7 @@
       <guid>http://ksmigiel.com/2015/01/map-reduce</guid>
       <description>
 
-&lt;p&gt;Zapewne słyszeliście o &lt;strong&gt;MapReduce&lt;/strong&gt;, a jeśli nie, to teraz macie okazję poczytać. &lt;strong&gt;MapReduce&lt;/strong&gt; jest frameworkiem służącym do przetwarzania dużych zbiorów danych w sposób zrównoleglony. Ostatnimi czasy stał się bardzo popularny dzięki platformom takim jak Hadoop (o nim w kolejnym poście) czy Spark. Wykorzystywany jest wszędzie tam, gdzie dane liczy się w terabajtach. Duże firmy produkują dużo danych, więc znajduje on zastosowanie np. w Google czy Spotify.&lt;/p&gt;
+&lt;p&gt;Zapewne słyszeliście o &lt;strong&gt;MapReduce&lt;/strong&gt;, a jeśli nie, to teraz macie okazję poczytać. &lt;strong&gt;MapReduce&lt;/strong&gt; jest frameworkiem służącym do przetwarzania dużych zbiorów danych w sposób zrównoleglony. Ostatnimi czasy stał się bardzo popularny dzięki platformom takim jak &lt;a href=&#34;http://hadoop.apache.org&#34;&gt;Hadoop&lt;/a&gt; (o nim w kolejnym poście) czy &lt;a href=&#34;https://spark.apache.org&#34;&gt;Spark&lt;/a&gt;. Wykorzystywany jest wszędzie tam, gdzie dane liczy się w terabajtach. Duże firmy produkują dużo danych, więc znajduje on zastosowanie np. w Google czy Spotify.&lt;/p&gt;
 
 &lt;h2 id=&#34;toc_0&#34;&gt;Funkcyjnie&lt;/h2&gt;
 
@@ -63,7 +63,7 @@
 &lt;li&gt;&lt;strong&gt;Reduce&lt;/strong&gt; - następuje agregacja danych na podstawie klucza - oczywiście w sposób równoległy&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Tak na prawdę każdy z nas (developerów) nie raz w życiu coś zmapredusił. Bo jeśli sprowadzimy ten proces z chmury i skomplikowanej topologii do pojedynczej bazy danych, to okaże się, że ten cały MapReduce to w rzeczywistości można napisać w SQLu:
+&lt;p&gt;Tak naprawdę każdy z nas (developerów) nie raz w życiu coś zmapredusił. Bo jeśli sprowadzimy ten proces z chmury i skomplikowanej topologii do pojedynczej bazy danych, to okaże się, że ten cały MapReduce to w rzeczywistości można napisać w SQLu:
 &lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;select&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;id,&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;sum&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(price)&lt;/span&gt;
 &lt;span style=&#34;color: #66d9ef&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;products&lt;/span&gt;
 &lt;span style=&#34;color: #66d9ef&#34;&gt;group&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;by&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;id&lt;/span&gt;
