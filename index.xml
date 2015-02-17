@@ -131,11 +131,11 @@
 
 &lt;p&gt;Uruchomienie joba odbywa się za pomocą komendy:&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;hadoop&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;jar&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;/usr/hdp/current/hadoop-mapreduce-client/hadoop-streaming.jar&lt;/span&gt; &lt;span style=&#34;color: #960050; background-color: #1e0010&#34;&gt;\&lt;/span&gt;
-    &lt;span style=&#34;color: #f8f8f2&#34;&gt;-files&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;mapper.sh,&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;reducer.sh,&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;Mapper.exe,&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;Reducer.exe&lt;/span&gt; &lt;span style=&#34;color: #960050; background-color: #1e0010&#34;&gt;\&lt;/span&gt;
-    &lt;span style=&#34;color: #f8f8f2&#34;&gt;-input&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;/user/ksmigiel/krzyzacy.txt&lt;/span&gt; &lt;span style=&#34;color: #960050; background-color: #1e0010&#34;&gt;\&lt;/span&gt;
-    &lt;span style=&#34;color: #f8f8f2&#34;&gt;-output&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;/users/ksmigiel/output&lt;/span&gt; &lt;span style=&#34;color: #960050; background-color: #1e0010&#34;&gt;\&lt;/span&gt;
-    &lt;span style=&#34;color: #f8f8f2&#34;&gt;-mapper&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;mapper.sh&lt;/span&gt; &lt;span style=&#34;color: #960050; background-color: #1e0010&#34;&gt;\&lt;/span&gt;
+&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;hadoop&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;jar&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;/usr/hdp/current/hadoop-mapreduce-client/hadoop-streaming.jar&lt;/span&gt;
+    &lt;span style=&#34;color: #f8f8f2&#34;&gt;-files&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;mapper.sh,&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;reducer.sh,&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;Mapper.exe,&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;Reducer.exe&lt;/span&gt;
+    &lt;span style=&#34;color: #f8f8f2&#34;&gt;-input&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;/user/ksmigiel/krzyzacy.txt&lt;/span&gt;
+    &lt;span style=&#34;color: #f8f8f2&#34;&gt;-output&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;/users/ksmigiel/output&lt;/span&gt;
+    &lt;span style=&#34;color: #f8f8f2&#34;&gt;-mapper&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;mapper.sh&lt;/span&gt;
     &lt;span style=&#34;color: #f8f8f2&#34;&gt;-reducer&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;reducer.sh&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 

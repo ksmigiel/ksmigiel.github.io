@@ -166,11 +166,11 @@
 
 <p>Uruchomienie joba odbywa się za pomocą komendy:</p>
 
-<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span style="color: #f8f8f2">hadoop</span> <span style="color: #f8f8f2">jar</span> <span style="color: #f8f8f2">/usr/hdp/current/hadoop-mapreduce-client/hadoop-streaming.jar</span> <span style="color: #960050; background-color: #1e0010">\</span>
-    <span style="color: #f8f8f2">-files</span> <span style="color: #f8f8f2">mapper.sh,</span> <span style="color: #f8f8f2">reducer.sh,</span> <span style="color: #f8f8f2">Mapper.exe,</span> <span style="color: #f8f8f2">Reducer.exe</span> <span style="color: #960050; background-color: #1e0010">\</span>
-    <span style="color: #f8f8f2">-input</span> <span style="color: #f8f8f2">/user/ksmigiel/krzyzacy.txt</span> <span style="color: #960050; background-color: #1e0010">\</span>
-    <span style="color: #f8f8f2">-output</span> <span style="color: #f8f8f2">/users/ksmigiel/output</span> <span style="color: #960050; background-color: #1e0010">\</span>
-    <span style="color: #f8f8f2">-mapper</span> <span style="color: #f8f8f2">mapper.sh</span> <span style="color: #960050; background-color: #1e0010">\</span>
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span style="color: #f8f8f2">hadoop</span> <span style="color: #f8f8f2">jar</span> <span style="color: #f8f8f2">/usr/hdp/current/hadoop-mapreduce-client/hadoop-streaming.jar</span>
+    <span style="color: #f8f8f2">-files</span> <span style="color: #f8f8f2">mapper.sh,</span> <span style="color: #f8f8f2">reducer.sh,</span> <span style="color: #f8f8f2">Mapper.exe,</span> <span style="color: #f8f8f2">Reducer.exe</span>
+    <span style="color: #f8f8f2">-input</span> <span style="color: #f8f8f2">/user/ksmigiel/krzyzacy.txt</span>
+    <span style="color: #f8f8f2">-output</span> <span style="color: #f8f8f2">/users/ksmigiel/output</span>
+    <span style="color: #f8f8f2">-mapper</span> <span style="color: #f8f8f2">mapper.sh</span>
     <span style="color: #f8f8f2">-reducer</span> <span style="color: #f8f8f2">reducer.sh</span>
 </pre></div>
 
