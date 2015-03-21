@@ -7,12 +7,12 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:700,600,400" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-  <link href="http://ksmigiel.com/index.xml" rel="alternate" type="application/rss+xml" title="Krzysztof Śmigiel | Blog" />
-  <meta name="title" content="http://ksmigiel.com">
-  <link rel="canonical" href="http://ksmigiel.com">
+  <link href="http://ksmigiel.com//index.xml" rel="alternate" type="application/rss+xml" title="Krzysztof Śmigiel | Blog" />
+  <meta name="title" content="http://ksmigiel.com/">
+  <link rel="canonical" href="http://ksmigiel.com/">
   <meta property="og:title" content="Krzysztof Śmigiel | Blog"/>
-  <meta property="og:url" content="http://ksmigiel.com"/>
-  <meta property="og:image" content="http://ksmigiel.com/images/"/>   
+  <meta property="og:url" content="http://ksmigiel.com/"/>
+  <meta property="og:image" content="http://ksmigiel.com//images/"/>   
   <meta property="og:site_name" content="Krzysztof Śmigiel | Blog">
 </head>
 <body>
@@ -50,11 +50,11 @@
 
 <p>Zapewne słyszeliście o <strong>MapReduce</strong>, a jeśli nie, to teraz macie okazję poczytać. <strong>MapReduce</strong> jest frameworkiem służącym do przetwarzania dużych zbiorów danych w sposób zrównoleglony. Ostatnimi czasy stał się bardzo popularny dzięki platformom takim jak <a href="http://hadoop.apache.org">Hadoop</a> (o nim w kolejnym poście) czy <a href="https://spark.apache.org">Spark</a>. Wykorzystywany jest wszędzie tam, gdzie dane liczy się w terabajtach. Duże firmy produkują dużo danych, więc znajduje on zastosowanie np. w Google czy Spotify.</p>
 
-<h2 id="toc_0">Funkcyjnie</h2>
+<h2 id="funkcyjnie:d6a86094d7ff3310f4dae7e5d0b58f2e">Funkcyjnie</h2>
 
 <p>Na początku chciałem wspomnieć o dwóch ważnych rzeczach: <code>map()</code> i <code>reduce()</code>. Te dwie funkcje, które są elementami języków funkcyjnych (choć np. C# ma swoje odpowiedniki w LINQ: <code>Select()</code> i <code>Aggregate()</code>) działają w analogiczny sposób do MapReduce, tyle że na kolekcjach. Tak więc nazwa nie wzięła się znikąd.</p>
 
-<h4 id="toc_1">F&#35;</h4>
+<h4 id="f-35:d6a86094d7ff3310f4dae7e5d0b58f2e">F&#35;</h4>
 
 <p><code>map()</code> aplikuje funkcję dla każdego elementu z kolekcji:
 <div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span style="color: #66d9ef">let</span> <span style="color: #f8f8f2">sample</span> <span style="color: #f92672">=</span> <span style="color: #f92672">[</span><span style="color: #ae81ff">1</span><span style="color: #f92672">;</span> <span style="color: #ae81ff">2</span><span style="color: #f92672">;</span> <span style="color: #ae81ff">3</span><span style="color: #f92672">;</span> <span style="color: #ae81ff">4</span><span style="color: #f92672">;</span> <span style="color: #ae81ff">5</span><span style="color: #f92672">]</span>
@@ -63,26 +63,28 @@
 <span style="color: #75715e">(* val it : int list = [3; 4; 5; 6; 7] *)</span>
 <span style="color: #75715e">// lub bardziej funkcyjnie przy pomocy operatora &quot;|&gt;&quot;</span>
 <span style="color: #f8f8f2">sample</span> <span style="color: #f92672">|&gt;</span> <span style="color: #f8f8f2">List.map</span> <span style="color: #f92672">(</span><span style="color: #66d9ef">fun</span> <span style="color: #f8f8f2">x</span> <span style="color: #f92672">-&gt;</span> <span style="color: #f8f8f2">x</span> <span style="color: #f92672">+</span> <span style="color: #ae81ff">2</span><span style="color: #f92672">)</span>
-</pre></div></p>
+</pre></div>
 
-<p><code>reduce()</code> natomiast jak się można domyślić: redukuje naszą kolekcję przy użyciu akumulatora przekazując wynik do następnego wywołania:
+<code>reduce()</code> natomiast jak się można domyślić: redukuje naszą kolekcję przy użyciu akumulatora przekazując wynik do następnego wywołania:
 <div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span style="color: #75715e">// Zredukujemy naszą listę obliczając sumę ze wszystkich jej elementów</span>
 <span style="color: #75715e">// a i b są sąsiadami</span>
 <span style="color: #f8f8f2">sample</span> <span style="color: #f92672">|&gt;</span> <span style="color: #f8f8f2">List.reduce</span> <span style="color: #f92672">(</span><span style="color: #66d9ef">fun</span> <span style="color: #f8f8f2">a</span> <span style="color: #f8f8f2">b</span> <span style="color: #f92672">-&gt;</span> <span style="color: #f8f8f2">a</span> <span style="color: #f92672">+</span> <span style="color: #f8f8f2">b</span><span style="color: #f92672">)</span>
 <span style="color: #75715e">(* val it : int = 15 *)</span>
-</pre></div></p>
+</pre></div>
+</p>
 
-<h4 id="toc_2">C&#35;</h4>
+<h4 id="c-35:d6a86094d7ff3310f4dae7e5d0b58f2e">C&#35;</h4>
 
 <p>I analogicznie przy użyciu LINQ
 <div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span style="color: #66d9ef">var</span> <span style="color: #f8f8f2">sample</span> <span style="color: #f8f8f2">=</span> <span style="color: #66d9ef">new</span> <span style="color: #f8f8f2">List&lt;</span><span style="color: #66d9ef">int</span><span style="color: #f8f8f2">&gt;()</span> <span style="color: #f8f8f2">{</span><span style="color: #ae81ff">1</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">2</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">3</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">4</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">5</span><span style="color: #f8f8f2">};</span>
 <span style="color: #f8f8f2">sample.Select(x</span> <span style="color: #f8f8f2">=&gt;</span> <span style="color: #f8f8f2">x</span> <span style="color: #f8f8f2">+</span> <span style="color: #ae81ff">2</span><span style="color: #f8f8f2">);</span>
 <span style="color: #f8f8f2">sample.Aggregate((a,</span> <span style="color: #f8f8f2">b)</span> <span style="color: #f8f8f2">=&gt;</span> <span style="color: #f8f8f2">a</span> <span style="color: #f8f8f2">+</span> <span style="color: #f8f8f2">b);</span>
-</pre></div></p>
+</pre></div>
+</p>
 
 <p>Operacje te prezentują prosty workflow jaki przeprowadza się na danych i w wersji rozszerzonej jest on wykorzystywany w MapReduce.</p>
 
-<h2 id="toc_3">map() + reduce() -&gt; MapReduce</h2>
+<h2 id="map-reduce-mapreduce:d6a86094d7ff3310f4dae7e5d0b58f2e">map() + reduce() -&gt; MapReduce</h2>
 
 <p>Wprowadźmy kilka pojęć: węzeł <strong>(node)</strong> to jeden z wielu komputerów biorących udział w tym całym zamieszaniu. Grupa takich komputerów o podobnej do siebie konfiguracji, będących w tej samej sieci nazywa się klastrem <strong>(cluster)</strong>. To powinno wystarczyć do zrozumienia zasady działania MapReduce, choć ludzie zaznajomieni z tematem prawdopodobnie zamkną przeglądarkę z powodu takiej trywializacji :]</p>
 
@@ -99,9 +101,9 @@
 <span style="color: #66d9ef">from</span> <span style="color: #f8f8f2">products</span>
 <span style="color: #66d9ef">group</span> <span style="color: #66d9ef">by</span> <span style="color: #f8f8f2">id</span>
 <span style="color: #66d9ef">order</span> <span style="color: #66d9ef">by</span> <span style="color: #f8f8f2">id</span>
-</pre></div></p>
+</pre></div>
 
-<p>Wynik takiego zapytania może być również skutkiem całego procesu MapReduce. I dopóki ilość danych i czas w jakim zapytanie się wykonuje mieszczą się w granicach wymagań biznesu, to wszystko ok! Problem zaczyna się wtedy, gdy wydajność maleje, bo instancje serwerów SQL nie radzą sobie z przetwarzaniem coraz szybciej i ciągle napływających danych. Dlatego głównie ze względu na kwestię wydajności wprowadza się paralelność, co klasyczną analizę danych wybija na wyższy poziom zaawansowania.</p>
+Wynik takiego zapytania może być również skutkiem całego procesu MapReduce. I dopóki ilość danych i czas w jakim zapytanie się wykonuje mieszczą się w granicach wymagań biznesu, to wszystko ok! Problem zaczyna się wtedy, gdy wydajność maleje, bo instancje serwerów SQL nie radzą sobie z przetwarzaniem coraz szybciej i ciągle napływających danych. Dlatego głównie ze względu na kwestię wydajności wprowadza się paralelność, co klasyczną analizę danych wybija na wyższy poziom zaawansowania.</p>
 
 <p>Dane mogą teraz zostać przetworzone szybciej. Coś, co kiedyś trwało, lub ze względu na ograniczenia mocy obliczeniowej było prawie niemożliwe, dziś za pomocą chmury i tego typu technologii pozwala niejako na nowo odkrywać algorytmy uczenia maszynowego, data-miningu. A w jaki sposób to zostanie zaprezentowane.</p>
 

@@ -1,31 +1,87 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title>Recent Content on  </title>
-      <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://ksmigiel.com/index.xml/</link>
+    <title></title>
+    <link>http://ksmigiel.com/</link>
+    <description>Recent content on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sat, 21 Mar 2015 21:38:00 +0100</lastBuildDate>
+    <atom:link href="http://ksmigiel.com/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    
-    <updated>Tue, 17 Feb 2015 21:51:00 CET</updated>
+    <item>
+      <title>&#34;R&#34;omeo i Julia</title>
+      <link>http://ksmigiel.com/2015/03/romeo-i-julia</link>
+      <pubDate>Sat, 21 Mar 2015 21:38:00 +0100</pubDate>
+      
+      <guid>http://ksmigiel.com/2015/03/romeo-i-julia</guid>
+      <description>
+
+&lt;p&gt;Każdy wie, że Excel to potężne narzędzie i odpowiednio użyte potrafi wspomóc niejeden proces. Wykorzystywany namiętnie w korporacjach do analizy danych i oglądania filmów (tak tak, pewien użytkownik reddita świetnie ominął wszelkie zabezpieczenia i wykorzystując klasyczne &lt;strong&gt;Windows API&lt;/strong&gt; - metodę &lt;code&gt;mciSendStringA&lt;/code&gt; w &lt;strong&gt;winmm.dll&lt;/strong&gt; - napisał player w VBA&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:184eed10b603a390c6ed60fbfa35091e:1&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:184eed10b603a390c6ed60fbfa35091e:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;!). Niestety większość arkuszy to prawdziwe potwory, które potrafią śnić się po nocach: przedziwne zagnieżdżone formuły, pstrokate kolorki. Nie da się tym w żaden sposób zarządzać. Niedebugowalne, nietestowalne i niekontrolowersjowalne. Oczywiście dopiero od pewnego stopnia.&lt;/p&gt;
+
+&lt;h2 id=&#34;r-na-r-atunek:184eed10b603a390c6ed60fbfa35091e&#34;&gt;R na R-atunek!&lt;/h2&gt;
+
+&lt;p&gt;Jeśli ktoś nie słyszał o pakiecie &lt;strong&gt;R&lt;/strong&gt;, to koniecznie musi zerknąć na to coś.&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:184eed10b603a390c6ed60fbfa35091e:2&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:184eed10b603a390c6ed60fbfa35091e:2&#34;&gt;2&lt;/a&gt;&lt;/sup&gt; R jest równocześnie językiem programowania i środowiskiem przeznaczonym do obliczeń statystycznych i wizualizacji. Istnieje bardzo duże prawdopodobieństwo, że jeśli potrzebujesz obliczyć jakąś skomplikowaną statystykę, przeprowadzić test na zbiorze danych, dopasować rozkład, wyestymować cokolwiek i ładnie to zaprezentować na wykresach, to jak egzotycznej metody byś nie wybrał ktoś na pewno stworzył taki pakiet i udostępnił go na stronach &lt;strong&gt;CRAN&lt;/strong&gt;&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:184eed10b603a390c6ed60fbfa35091e:3&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:184eed10b603a390c6ed60fbfa35091e:3&#34;&gt;3&lt;/a&gt;&lt;/sup&gt; - repozytorium pakietów R (co prawda strona nie zachęca i wygląda jakby czas stanął w miejscu od 1997 roku, ale to tylko złudzenie). Projekt jest bardzo aktywny i jest to jedno z najpopularniejszych narzędzi do analizy danych w tym momencie.&lt;/p&gt;
+
+&lt;p&gt;Pomimo imponującej bazy pakietów, R nie jest idealny. Składnia tego języka dla programisty jest po prostu dziwna i nieintuicyjna. Może dlatego, że został on stworzony z myślą o ułatwieniu pracy statystykom i analitykom. Jego wydajność również nie powala. Jednak świetnie sprawdza się jako narzędzie &amp;ldquo;analizy wstępnej&amp;rdquo;, a skomplikowane obliczenia lepiej wykonywać w innym środowisku (np. Pythonie).&lt;/p&gt;
+
+&lt;h2 id=&#34;i-julia:184eed10b603a390c6ed60fbfa35091e&#34;&gt;I ♥ Julia&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Julia&lt;/strong&gt;&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:184eed10b603a390c6ed60fbfa35091e:4&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:184eed10b603a390c6ed60fbfa35091e:4&#34;&gt;4&lt;/a&gt;&lt;/sup&gt; to powiew świeżości w świecie statystycznego R i szybkiego Pythona. Relatywnie młody język (pojawił się w 2012 roku), który chciałby je zastąpić w wszelkiej maści aplikacjach i obliczeniach naukowych. Można go opisać w skrócie:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;szybki&lt;/strong&gt; jak C/Fortran&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;elegancki&lt;/strong&gt; jak Python&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Community szybko zaczęło tworzyć nowe biblioteki i pomimo braku wersji finalnej (w momencie pisania 0.3.6) można próbować swoich sił w tworzeniu aplikacji lub rozwijaniu ekosystemu. Osobiście nie zalecałbym używania Julii na produkcji, bo do wersji 1.0 zapewne całkowicie się zmieni, ale do odważnych świat należy :) Julia nie jest projektem dojrzałym, aczkolwiek śledząc jego rozwój można twierdzić, że rokuje całkiem nieźle.
+Młoda, ładna, szybka i atrakcyjna - po prostu &lt;strong&gt;sexy&lt;/strong&gt;! Zresztą sami zobaczcie co potrafi:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://ksmigiel.com/images/julia.gif&#34; alt=&#34;gif&#34; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Zainteresowanym polecam ciekawe IDE&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:184eed10b603a390c6ed60fbfa35091e:5&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:184eed10b603a390c6ed60fbfa35091e:5&#34;&gt;5&lt;/a&gt;&lt;/sup&gt;, którego ficzery widać powyżej.
+Możliwość wykonywania kodu w locie to mój faworyt! Fajnie byłoby móc nazwać siebie &lt;em&gt;Julia Programmer&lt;/em&gt;, więc jak nabardziej kibicuję Julii.&lt;/p&gt;
+
+&lt;h2 id=&#34;gdzie-ta-historia-miłosna:184eed10b603a390c6ed60fbfa35091e&#34;&gt;Gdzie ta historia miłosna?&lt;/h2&gt;
+
+&lt;p&gt;Nie ma. Jak na razie nasz &amp;ldquo;R&amp;rdquo;omeo i Julia żyją i mają się dobrze. Byleby tylko nie skończyło się jak u Szekspira&amp;hellip;&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:184eed10b603a390c6ed60fbfa35091e:1&#34;&gt;&lt;a href=&#34;http://www.reddit.com/r/excel/comments/2jtd2f/worked_on_a_completely_locked_down_machine_time/&#34;&gt;http://www.reddit.com/r/excel/comments/2jtd2f/worked_on_a_completely_locked_down_machine_time/&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:184eed10b603a390c6ed60fbfa35091e:1&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:184eed10b603a390c6ed60fbfa35091e:2&#34;&gt;&lt;a href=&#34;http://www.r-project.org/&#34;&gt;http://www.r-project.org/&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:184eed10b603a390c6ed60fbfa35091e:2&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:184eed10b603a390c6ed60fbfa35091e:3&#34;&gt;&lt;a href=&#34;http://cran.r-project.org/mirrors.html&#34;&gt;http://cran.r-project.org/mirrors.html&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:184eed10b603a390c6ed60fbfa35091e:3&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:184eed10b603a390c6ed60fbfa35091e:4&#34;&gt;&lt;a href=&#34;http://julialang.org/&#34;&gt;http://julialang.org/&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:184eed10b603a390c6ed60fbfa35091e:4&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:184eed10b603a390c6ed60fbfa35091e:5&#34;&gt;&lt;a href=&#34;http://junolab.org/&#34;&gt;http://junolab.org/&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:184eed10b603a390c6ed60fbfa35091e:5&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>Hadoop Streaming w F#</title>
       <link>http://ksmigiel.com/2015/02/hadoop-streaming</link>
-      <pubDate>Tue, 17 Feb 2015 21:51:00 CET</pubDate>
+      <pubDate>Tue, 17 Feb 2015 21:51:00 +0100</pubDate>
       
       <guid>http://ksmigiel.com/2015/02/hadoop-streaming</guid>
       <description>
 
 &lt;p&gt;Klasyczny Hadoop posiada zestaw klas Javowych, dzięki którym możemy napisać swoje pierwsze zadanie &lt;strong&gt;MapReduce&lt;/strong&gt;. Jak zaglądniecie do &lt;a href=&#34;http://hadoop.apache.org/docs/r1.2.1/mapred_tutorial.html&#34;&gt;dokumentacji&lt;/a&gt;, to przekonacie się, że nie jest to najwygodniejsze rozwiązanie, ale świetnie nadaje się jako materiał do nauki. Przy zastosowaniach produkcyjnych zdecydowanie lepiej zwrócić się w stronę narzędzi takich jak &lt;a href=&#34;https://hive.apache.org/&#34;&gt;Hive&lt;/a&gt;, &lt;a href=&#34;http://pig.apache.org/&#34;&gt;Pig&lt;/a&gt; czy &lt;a href=&#34;https://github.com/twitter/scalding&#34;&gt;Scalding&lt;/a&gt;. Za pomocą specyficznej dla każdego składni można tworzyć zaawansowane analizy bez potrzeby pisania kodu low-level w Javie, np. &lt;strong&gt;HiveQL&lt;/strong&gt; jest językiem zbliżonym do SQL, a &lt;strong&gt;Pig Lating&lt;/strong&gt; ciekawym językiem proceduralnym. Oba są kompilowane do zadań MapReduce. W tym poście skupię się na czymś pośrodku, czyli &lt;strong&gt;Hadoop Streaming&lt;/strong&gt;.&lt;/p&gt;
 
-&lt;h2 id=&#34;toc_0&#34;&gt;Streaming API&lt;/h2&gt;
+&lt;h2 id=&#34;streaming-api:7428b1f511329ebc1011ee8ee83894f8&#34;&gt;Streaming API&lt;/h2&gt;
 
 &lt;p&gt;Hadoop Streaming jest częścią dystrybucji Hadoop. Pozwala na tworzenie zadań w dowolnym języku (nawet skryptowym). Warunek jaki trzeba spełnić, to utworzenie dwóch plików wykonywalnych (Mapper i Reducer), które wartości zczytują z &lt;strong&gt;stdin&lt;/strong&gt;, a przetworzone odpowiednio dane wypisują do konsoli (&lt;strong&gt;stdout&lt;/strong&gt;). Jak tytuł posta wskazuje zaimplementowałem je w F#. Dopiero raczkuję w świecie programowania funkcyjnego, dlatego z chęcią przyjmę komentarze odnośnie poprawności kodu. Za przykładowe zadanie MapReduce posłuży nam standardowy &lt;strong&gt;word count&lt;/strong&gt;.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_1&#34;&gt;Mapper.fs&lt;/h4&gt;
+&lt;h4 id=&#34;mapper-fs:7428b1f511329ebc1011ee8ee83894f8&#34;&gt;Mapper.fs&lt;/h4&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;open&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;System&lt;/span&gt;
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;open&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;System&lt;/span&gt;
 &lt;span style=&#34;color: #66d9ef&#34;&gt;open&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;System.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;IO&lt;/span&gt;
 
 &lt;span style=&#34;color: #66d9ef&#34;&gt;module&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;Mapper&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt;
@@ -54,19 +110,20 @@
       &lt;span style=&#34;color: #f92672&#34;&gt;|&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;Seq.iter&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;output&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt;
     &lt;span style=&#34;color: #ae81ff&#34;&gt;0&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
 
 &lt;p&gt;Zamiast posługiwać się pętlą przy odczytywaniu streamu z stdin wykorzystałem funkcję &lt;code&gt;Seq.initInfinite()&lt;/code&gt;, która wykonuje się aż do spełnienia warunku zdefiniowanego w &lt;code&gt;Seq.takeWhile()&lt;/code&gt;. Do konsoli wypisujemy parę &amp;ldquo;&lt;strong&gt;klucz&lt;/strong&gt; &lt;strong&gt;wartość&lt;/strong&gt;&amp;rdquo; oddzielone znakiem &lt;strong&gt;tabulacji&lt;/strong&gt;. Ponieważ interesuje nas zliczanie słów, jako wartość wychodzącą z Mappera podajemy &lt;strong&gt;1&lt;/strong&gt;, czyli&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;word&lt;/span&gt;    &lt;span style=&#34;color: #ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;word&lt;/span&gt;    &lt;span style=&#34;color: #ae81ff&#34;&gt;1&lt;/span&gt;
 &lt;span style=&#34;color: #f8f8f2&#34;&gt;count&lt;/span&gt;    &lt;span style=&#34;color: #ae81ff&#34;&gt;1&lt;/span&gt;
 &lt;span style=&#34;color: #f8f8f2&#34;&gt;example&lt;/span&gt;    &lt;span style=&#34;color: #ae81ff&#34;&gt;1&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;itd. Reducer otrzymuje posortowany już stream takich par i powinien zwracać dane w ten sam sposób, natomiast w miejsce wartości wstawiamy sumę dla danego słowa (klucza).&lt;/p&gt;
+itd. Reducer otrzymuje posortowany już stream takich par i powinien zwracać dane w ten sam sposób, natomiast w miejsce wartości wstawiamy sumę dla danego słowa (klucza).&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_2&#34;&gt;Reducer.fs&lt;/h4&gt;
+&lt;h4 id=&#34;reducer-fs:7428b1f511329ebc1011ee8ee83894f8&#34;&gt;Reducer.fs&lt;/h4&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;open&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;System&lt;/span&gt;
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;open&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;System&lt;/span&gt;
 &lt;span style=&#34;color: #66d9ef&#34;&gt;open&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;System.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;IO&lt;/span&gt;
 
 &lt;span style=&#34;color: #66d9ef&#34;&gt;module&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;Reducer&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt;
@@ -97,8 +154,9 @@
     &lt;span style=&#34;color: #f92672&#34;&gt;|&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;ignore&lt;/span&gt;
     &lt;span style=&#34;color: #f8f8f2&#34;&gt;Console.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;WriteLine&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;{0}&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;\t&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;{1}&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;!&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;currentWord&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;!&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;count&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
 
-&lt;h2 id=&#34;toc_3&#34;&gt;HDP&lt;/h2&gt;
+&lt;h2 id=&#34;hdp:7428b1f511329ebc1011ee8ee83894f8&#34;&gt;HDP&lt;/h2&gt;
 
 &lt;p&gt;Hortonworks Data Platform (HDP) to gotowa dystrybucja Hadoopa, która zawiera preinstalowane i skonfigurowane narzędzia takie jak &lt;strong&gt;Hadoop&lt;/strong&gt;, &lt;strong&gt;Hive&lt;/strong&gt;, &lt;strong&gt;Pig&lt;/strong&gt;, &lt;strong&gt;HBase&lt;/strong&gt;, &lt;strong&gt;Ambari&lt;/strong&gt;, &lt;strong&gt;Cascading&lt;/strong&gt;, &lt;strong&gt;Oozie&lt;/strong&gt; czy &lt;strong&gt;Zookeeper&lt;/strong&gt; &lt;a href=&#34;http://docs.hortonworks.com/HDPDocuments/HDP2/HDP-2.2.0/Getting_Started_v22/media/01-RawContent/Getting%20Started/Full%20View.png&#34;&gt;(architektura HDP)&lt;/a&gt;. Ogólnie polecam rozwiązania firmy &lt;a href=&#34;http://hortonworks.com/&#34;&gt;Hortonworks&lt;/a&gt; - naprawdę świetnej jakości tutoriale i narzędzia. Chcąc poeksperymentować mamy dwie opcje do wyboru &lt;a href=&#34;http://hortonworks.com/hdp/downloads/&#34;&gt;(downloads)&lt;/a&gt;:&lt;/p&gt;
 
@@ -109,35 +167,38 @@
 
 &lt;p&gt;Wypóbowałem obydwie, ale na potrzeby tego posta skorzystam z sandboxa. Działa na systemie &lt;strong&gt;CentOS&lt;/strong&gt;, także podstawowa wiedza z systemów &lt;strong&gt;Unix&lt;/strong&gt; bardzo się przyda.  Instalacja i konfiguracja HDP na Windowsie to temat nadający się na osobnego posta.&lt;/p&gt;
 
-&lt;h2 id=&#34;toc_4&#34;&gt;mono&lt;/h2&gt;
+&lt;h2 id=&#34;mono:7428b1f511329ebc1011ee8ee83894f8&#34;&gt;mono&lt;/h2&gt;
 
 &lt;p&gt;Musimy sami doinstalować &lt;code&gt;mono&lt;/code&gt; i kompilator &lt;code&gt;fsharpc&lt;/code&gt;, żeby binarki Hadoopa mogły wykonać z terminala skompilowane pliki .exe.&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;sudo&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;yum&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;install&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;mono&lt;/span&gt;
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;sudo&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;yum&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;install&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;mono&lt;/span&gt;
 &lt;span style=&#34;color: #f8f8f2&#34;&gt;sudo&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;yum&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;install&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;fsharp&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
 
 &lt;p&gt;Teraz wystarczy skompilować nasze pliki:&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;fsharpc&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;Mapper.fs&lt;/span&gt;
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;fsharpc&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;Mapper.fs&lt;/span&gt;
 &lt;span style=&#34;color: #f8f8f2&#34;&gt;fsharpc&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;Reducer.fs&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
 
 &lt;p&gt;i możemy zacząc prawdziwą zabawę :)&lt;/p&gt;
 
-&lt;h2 id=&#34;toc_5&#34;&gt;Hello world dla Big Data, czyli word count&lt;/h2&gt;
+&lt;h2 id=&#34;hello-world-dla-big-data-czyli-word-count:7428b1f511329ebc1011ee8ee83894f8&#34;&gt;Hello world dla Big Data, czyli word count&lt;/h2&gt;
 
 &lt;p&gt;Nie przez przypadek wybrałem zliczanie słów jako przykład. Jest to swoisty &amp;ldquo;Hello world!&amp;rdquo; w świecie przetwarzania danych. Zliczymy 10 najczęściej występujących słów (dłuższych niż 3 litery, aby pozbyć się &amp;ldquo;się&amp;rdquo; i &amp;ldquo;aby&amp;rdquo;) w powieści &lt;strong&gt;Krzyżacy&lt;/strong&gt; Henryka Sienkiewicza. Wszystkie pliki i skrypty znajdziecie na moim &lt;a href=&#34;https://github.com/ksmigiel/hadoop-streaming-fharp&#34;&gt;githubie&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Uruchomienie joba odbywa się za pomocą komendy:&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;hadoop&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;jar&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;/usr/hdp/current/hadoop-mapreduce-client/hadoop-streaming.jar&lt;/span&gt;
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;hadoop&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;jar&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;/usr/hdp/current/hadoop-mapreduce-client/hadoop-streaming.jar&lt;/span&gt;
     &lt;span style=&#34;color: #f8f8f2&#34;&gt;-files&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;mapper.sh,&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;reducer.sh,&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;Mapper.exe,&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;Reducer.exe&lt;/span&gt;
     &lt;span style=&#34;color: #f8f8f2&#34;&gt;-input&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;/user/ksmigiel/krzyzacy.txt&lt;/span&gt;
     &lt;span style=&#34;color: #f8f8f2&#34;&gt;-output&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;/users/ksmigiel/output&lt;/span&gt;
     &lt;span style=&#34;color: #f8f8f2&#34;&gt;-mapper&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;mapper.sh&lt;/span&gt;
     &lt;span style=&#34;color: #f8f8f2&#34;&gt;-reducer&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;reducer.sh&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;mapper.sh&lt;/strong&gt; i &lt;strong&gt;reducer.sh&lt;/strong&gt; to skrypty, które wykonują polecenie &lt;code&gt;mono [exe]&lt;/code&gt;.
 Input i output to ścieżka na HDFS, dlatego trzeba skopiować plik za pomocą &lt;code&gt;hdfs dfs -copyFromLocal &amp;lt;src&amp;gt; &amp;lt;dest&amp;gt;&lt;/code&gt;.
@@ -145,19 +206,20 @@ Jeśli będziecie chcieli użyć dowolnego pliku tekstowego, pamiętajcie o kodo
 
 &lt;p&gt;I jeszcze na zakończenie skrypcik &lt;strong&gt;Pig&lt;/strong&gt;:&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;words&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;load&lt;/span&gt; &lt;span style=&#34;color: #e6db74&#34;&gt;&amp;#39;/user/ksmigiel/out/part-00000&amp;#39;&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;using&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;PigStorage()&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;(word:chararray,&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;count&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;:int);&lt;/span&gt;
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;words&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;load&lt;/span&gt; &lt;span style=&#34;color: #e6db74&#34;&gt;&amp;#39;/user/ksmigiel/out/part-00000&amp;#39;&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;using&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;PigStorage()&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;(word:chararray,&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;count&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;:int);&lt;/span&gt;
 &lt;span style=&#34;color: #f8f8f2&#34;&gt;words_long&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;filter&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;words&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;by&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;size&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(word)&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color: #f8f8f2&#34;&gt;words_ordered&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;order&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;words_long&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;by&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;count&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;desc&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color: #f8f8f2&#34;&gt;top10&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;limit&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;words_ordered&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;10&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color: #f8f8f2&#34;&gt;dump&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;top10;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
 
 &lt;div&gt;
   &lt;a href=&#34;https://plot.ly/~ksmigiel/17/&#34; target=&#34;_blank&#34; title=&#34;Krzyżacy word count&#34; style=&#34;display: block; text-align: center;&#34;&gt;&lt;img src=&#34;https://plot.ly/~ksmigiel/17.png&#34; alt=&#34;Krzyżacy word count&#34; style=&#34;max-width: 100%;width: 564px;&#34;  width=&#34;564&#34; onerror=&#34;this.onerror=null;this.src=&#39;https://plot.ly/404.png&#39;;&#34; /&gt;&lt;/a&gt;
   &lt;script data-plotly=&#34;ksmigiel:17&#34; src=&#34;https://plot.ly/embed.js&#34; async&gt;&lt;/script&gt;
 &lt;/div&gt;
 
-&lt;h2 id=&#34;toc_6&#34;&gt;Podsumowanie&lt;/h2&gt;
+&lt;h2 id=&#34;podsumowanie:7428b1f511329ebc1011ee8ee83894f8&#34;&gt;Podsumowanie&lt;/h2&gt;
 
 &lt;p&gt;Stawianie pierwszych kroków z Hadoopem i jego przyległościami wymaga paru wolnych chwil. Jeśli nie macie doświadczenia z linuxowym terminalem, poruszanie się po sandboxie i jego obsługa mogą być kłopotliwe. Co prawda HDP udostępnia przyjemny interfejs webowy, z poziomu którego można uruchamiać zadania MapReduce napisanie w Pig lub HiveQL (jeszcze raz polecam tutoriale Hortonworks), ale chcąc poznać podstawy tej technologii dobrze jest zacząć od &amp;ldquo;niskiego poziomu&amp;rdquo;.&lt;/p&gt;
 </description>
@@ -166,18 +228,18 @@ Jeśli będziecie chcieli użyć dowolnego pliku tekstowego, pamiętajcie o kodo
     <item>
       <title>MapReduce - wstęp</title>
       <link>http://ksmigiel.com/2015/01/map-reduce</link>
-      <pubDate>Fri, 23 Jan 2015 18:16:13 CET</pubDate>
+      <pubDate>Fri, 23 Jan 2015 18:16:13 +0100</pubDate>
       
       <guid>http://ksmigiel.com/2015/01/map-reduce</guid>
       <description>
 
 &lt;p&gt;Zapewne słyszeliście o &lt;strong&gt;MapReduce&lt;/strong&gt;, a jeśli nie, to teraz macie okazję poczytać. &lt;strong&gt;MapReduce&lt;/strong&gt; jest frameworkiem służącym do przetwarzania dużych zbiorów danych w sposób zrównoleglony. Ostatnimi czasy stał się bardzo popularny dzięki platformom takim jak &lt;a href=&#34;http://hadoop.apache.org&#34;&gt;Hadoop&lt;/a&gt; (o nim w kolejnym poście) czy &lt;a href=&#34;https://spark.apache.org&#34;&gt;Spark&lt;/a&gt;. Wykorzystywany jest wszędzie tam, gdzie dane liczy się w terabajtach. Duże firmy produkują dużo danych, więc znajduje on zastosowanie np. w Google czy Spotify.&lt;/p&gt;
 
-&lt;h2 id=&#34;toc_0&#34;&gt;Funkcyjnie&lt;/h2&gt;
+&lt;h2 id=&#34;funkcyjnie:d6a86094d7ff3310f4dae7e5d0b58f2e&#34;&gt;Funkcyjnie&lt;/h2&gt;
 
 &lt;p&gt;Na początku chciałem wspomnieć o dwóch ważnych rzeczach: &lt;code&gt;map()&lt;/code&gt; i &lt;code&gt;reduce()&lt;/code&gt;. Te dwie funkcje, które są elementami języków funkcyjnych (choć np. C# ma swoje odpowiedniki w LINQ: &lt;code&gt;Select()&lt;/code&gt; i &lt;code&gt;Aggregate()&lt;/code&gt;) działają w analogiczny sposób do MapReduce, tyle że na kolekcjach. Tak więc nazwa nie wzięła się znikąd.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_1&#34;&gt;F&amp;#35;&lt;/h4&gt;
+&lt;h4 id=&#34;f-35:d6a86094d7ff3310f4dae7e5d0b58f2e&#34;&gt;F&amp;#35;&lt;/h4&gt;
 
 &lt;p&gt;&lt;code&gt;map()&lt;/code&gt; aplikuje funkcję dla każdego elementu z kolekcji:
 &lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;sample&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;4&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt;
@@ -186,26 +248,28 @@ Jeśli będziecie chcieli użyć dowolnego pliku tekstowego, pamiętajcie o kodo
 &lt;span style=&#34;color: #75715e&#34;&gt;(* val it : int list = [3; 4; 5; 6; 7] *)&lt;/span&gt;
 &lt;span style=&#34;color: #75715e&#34;&gt;// lub bardziej funkcyjnie przy pomocy operatora &amp;quot;|&amp;gt;&amp;quot;&lt;/span&gt;
 &lt;span style=&#34;color: #f8f8f2&#34;&gt;sample&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;|&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;List.map&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;code&gt;reduce()&lt;/code&gt; natomiast jak się można domyślić: redukuje naszą kolekcję przy użyciu akumulatora przekazując wynik do następnego wywołania:
+&lt;code&gt;reduce()&lt;/code&gt; natomiast jak się można domyślić: redukuje naszą kolekcję przy użyciu akumulatora przekazując wynik do następnego wywołania:
 &lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #75715e&#34;&gt;// Zredukujemy naszą listę obliczając sumę ze wszystkich jej elementów&lt;/span&gt;
 &lt;span style=&#34;color: #75715e&#34;&gt;// a i b są sąsiadami&lt;/span&gt;
 &lt;span style=&#34;color: #f8f8f2&#34;&gt;sample&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;|&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;List.reduce&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;b&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt;
 &lt;span style=&#34;color: #75715e&#34;&gt;(* val it : int = 15 *)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_2&#34;&gt;C&amp;#35;&lt;/h4&gt;
+&lt;h4 id=&#34;c-35:d6a86094d7ff3310f4dae7e5d0b58f2e&#34;&gt;C&amp;#35;&lt;/h4&gt;
 
 &lt;p&gt;I analogicznie przy użyciu LINQ
 &lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;sample&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;List&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;&amp;gt;()&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;4&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;};&lt;/span&gt;
 &lt;span style=&#34;color: #f8f8f2&#34;&gt;sample.Select(x&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;);&lt;/span&gt;
 &lt;span style=&#34;color: #f8f8f2&#34;&gt;sample.Aggregate((a,&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;b)&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;b);&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
 
 &lt;p&gt;Operacje te prezentują prosty workflow jaki przeprowadza się na danych i w wersji rozszerzonej jest on wykorzystywany w MapReduce.&lt;/p&gt;
 
-&lt;h2 id=&#34;toc_3&#34;&gt;map() + reduce() -&amp;gt; MapReduce&lt;/h2&gt;
+&lt;h2 id=&#34;map-reduce-mapreduce:d6a86094d7ff3310f4dae7e5d0b58f2e&#34;&gt;map() + reduce() -&amp;gt; MapReduce&lt;/h2&gt;
 
 &lt;p&gt;Wprowadźmy kilka pojęć: węzeł &lt;strong&gt;(node)&lt;/strong&gt; to jeden z wielu komputerów biorących udział w tym całym zamieszaniu. Grupa takich komputerów o podobnej do siebie konfiguracji, będących w tej samej sieci nazywa się klastrem &lt;strong&gt;(cluster)&lt;/strong&gt;. To powinno wystarczyć do zrozumienia zasady działania MapReduce, choć ludzie zaznajomieni z tematem prawdopodobnie zamkną przeglądarkę z powodu takiej trywializacji :]&lt;/p&gt;
 
@@ -222,9 +286,9 @@ Jeśli będziecie chcieli użyć dowolnego pliku tekstowego, pamiętajcie o kodo
 &lt;span style=&#34;color: #66d9ef&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;products&lt;/span&gt;
 &lt;span style=&#34;color: #66d9ef&#34;&gt;group&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;by&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;id&lt;/span&gt;
 &lt;span style=&#34;color: #66d9ef&#34;&gt;order&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;by&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;id&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Wynik takiego zapytania może być również skutkiem całego procesu MapReduce. I dopóki ilość danych i czas w jakim zapytanie się wykonuje mieszczą się w granicach wymagań biznesu, to wszystko ok! Problem zaczyna się wtedy, gdy wydajność maleje, bo instancje serwerów SQL nie radzą sobie z przetwarzaniem coraz szybciej i ciągle napływających danych. Dlatego głównie ze względu na kwestię wydajności wprowadza się paralelność, co klasyczną analizę danych wybija na wyższy poziom zaawansowania.&lt;/p&gt;
+Wynik takiego zapytania może być również skutkiem całego procesu MapReduce. I dopóki ilość danych i czas w jakim zapytanie się wykonuje mieszczą się w granicach wymagań biznesu, to wszystko ok! Problem zaczyna się wtedy, gdy wydajność maleje, bo instancje serwerów SQL nie radzą sobie z przetwarzaniem coraz szybciej i ciągle napływających danych. Dlatego głównie ze względu na kwestię wydajności wprowadza się paralelność, co klasyczną analizę danych wybija na wyższy poziom zaawansowania.&lt;/p&gt;
 
 &lt;p&gt;Dane mogą teraz zostać przetworzone szybciej. Coś, co kiedyś trwało, lub ze względu na ograniczenia mocy obliczeniowej było prawie niemożliwe, dziś za pomocą chmury i tego typu technologii pozwala niejako na nowo odkrywać algorytmy uczenia maszynowego, data-miningu. A w jaki sposób to zostanie zaprezentowane.&lt;/p&gt;
 </description>
@@ -233,7 +297,7 @@ Jeśli będziecie chcieli użyć dowolnego pliku tekstowego, pamiętajcie o kodo
     <item>
       <title>Pierwszy post...</title>
       <link>http://ksmigiel.com/2015/01/pierwszy-post</link>
-      <pubDate>Sun, 18 Jan 2015 18:44:12 CET</pubDate>
+      <pubDate>Sun, 18 Jan 2015 18:44:12 +0100</pubDate>
       
       <guid>http://ksmigiel.com/2015/01/pierwszy-post</guid>
       <description>&lt;p&gt;Cześć! Pomysł na stworzenie bloga chodził mi już jakiś czas po głowie, ale jak to z pomysłami bywa, trochę czasu upłynęło zanim przeszedłem z fazy planingu do fazy implementacji. Nowy rok wydaje się być idealnym momentem na rozpoczęcie czegoś nowego w swoim życiu, więc korzystając z okazji zarejestrowałem domenę i zacząłem szukać hostingu / platformy blogowej, która by mi odpowiadała. Miałem kiedyś styczność z WordPressem, ale potrzebowałem alternatywy lekkiej, prostej i najlepiej minimalistycznej. W ten sposób natrafiłem na bardzo ciekawe narzędzie: &lt;a href=&#34;http://gohugo.io&#34;&gt;Hugo&lt;/a&gt; - czyli &lt;em&gt;static website engine&lt;/em&gt;. Istnieje parę podobnych rozwiązań typu &lt;em&gt;Jekyll&lt;/em&gt; i bazujący na nim &lt;em&gt;Octopress&lt;/em&gt;, ale ten Hugo bardzo mi się spodobał i spędziłem nad nim trochę czasu rozgryzając go, doprowadzając bloga do stanu obecnego.&lt;/p&gt;
@@ -251,7 +315,7 @@ Jeśli będziecie chcieli użyć dowolnego pliku tekstowego, pamiętajcie o kodo
     <item>
       <title>O mnie</title>
       <link>http://ksmigiel.com/about/</link>
-      <pubDate>Tue, 01 Jan 2008 00:00:00 UTC</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>http://ksmigiel.com/about/</guid>
       <description>&lt;p&gt;Zawodowo jestem programistą w &lt;a href=&#34;http://new.abb.com/pl/o-nas/technologie/centrum-systemow-informatycznych-abb&#34;&gt;ABB IT&lt;/a&gt;.

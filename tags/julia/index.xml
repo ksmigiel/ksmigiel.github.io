@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Julia on </title>
+    <link>http://ksmigiel.com/tags/julia/</link>
+    <description>Recent content in Julia on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sat, 21 Mar 2015 21:38:00 +0100</lastBuildDate>
+    <atom:link href="http://ksmigiel.com/tags/julia/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>&#34;R&#34;omeo i Julia</title>
+      <link>http://ksmigiel.com/2015/03/romeo-i-julia</link>
+      <pubDate>Sat, 21 Mar 2015 21:38:00 +0100</pubDate>
+      
+      <guid>http://ksmigiel.com/2015/03/romeo-i-julia</guid>
+      <description>
+
+&lt;p&gt;Każdy wie, że Excel to potężne narzędzie i odpowiednio użyte potrafi wspomóc niejeden proces. Wykorzystywany namiętnie w korporacjach do analizy danych i oglądania filmów (tak tak, pewien użytkownik reddita świetnie ominął wszelkie zabezpieczenia i wykorzystując klasyczne &lt;strong&gt;Windows API&lt;/strong&gt; - metodę &lt;code&gt;mciSendStringA&lt;/code&gt; w &lt;strong&gt;winmm.dll&lt;/strong&gt; - napisał player w VBA&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:184eed10b603a390c6ed60fbfa35091e:1&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:184eed10b603a390c6ed60fbfa35091e:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;!). Niestety większość arkuszy to prawdziwe potwory, które potrafią śnić się po nocach: przedziwne zagnieżdżone formuły, pstrokate kolorki. Nie da się tym w żaden sposób zarządzać. Niedebugowalne, nietestowalne i niekontrolowersjowalne. Oczywiście dopiero od pewnego stopnia.&lt;/p&gt;
+
+&lt;h2 id=&#34;r-na-r-atunek:184eed10b603a390c6ed60fbfa35091e&#34;&gt;R na R-atunek!&lt;/h2&gt;
+
+&lt;p&gt;Jeśli ktoś nie słyszał o pakiecie &lt;strong&gt;R&lt;/strong&gt;, to koniecznie musi zerknąć na to coś.&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:184eed10b603a390c6ed60fbfa35091e:2&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:184eed10b603a390c6ed60fbfa35091e:2&#34;&gt;2&lt;/a&gt;&lt;/sup&gt; R jest równocześnie językiem programowania i środowiskiem przeznaczonym do obliczeń statystycznych i wizualizacji. Istnieje bardzo duże prawdopodobieństwo, że jeśli potrzebujesz obliczyć jakąś skomplikowaną statystykę, przeprowadzić test na zbiorze danych, dopasować rozkład, wyestymować cokolwiek i ładnie to zaprezentować na wykresach, to jak egzotycznej metody byś nie wybrał ktoś na pewno stworzył taki pakiet i udostępnił go na stronach &lt;strong&gt;CRAN&lt;/strong&gt;&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:184eed10b603a390c6ed60fbfa35091e:3&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:184eed10b603a390c6ed60fbfa35091e:3&#34;&gt;3&lt;/a&gt;&lt;/sup&gt; - repozytorium pakietów R (co prawda strona nie zachęca i wygląda jakby czas stanął w miejscu od 1997 roku, ale to tylko złudzenie). Projekt jest bardzo aktywny i jest to jedno z najpopularniejszych narzędzi do analizy danych w tym momencie.&lt;/p&gt;
+
+&lt;p&gt;Pomimo imponującej bazy pakietów, R nie jest idealny. Składnia tego języka dla programisty jest po prostu dziwna i nieintuicyjna. Może dlatego, że został on stworzony z myślą o ułatwieniu pracy statystykom i analitykom. Jego wydajność również nie powala. Jednak świetnie sprawdza się jako narzędzie &amp;ldquo;analizy wstępnej&amp;rdquo;, a skomplikowane obliczenia lepiej wykonywać w innym środowisku (np. Pythonie).&lt;/p&gt;
+
+&lt;h2 id=&#34;i-julia:184eed10b603a390c6ed60fbfa35091e&#34;&gt;I ♥ Julia&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Julia&lt;/strong&gt;&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:184eed10b603a390c6ed60fbfa35091e:4&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:184eed10b603a390c6ed60fbfa35091e:4&#34;&gt;4&lt;/a&gt;&lt;/sup&gt; to powiew świeżości w świecie statystycznego R i szybkiego Pythona. Relatywnie młody język (pojawił się w 2012 roku), który chciałby je zastąpić w wszelkiej maści aplikacjach i obliczeniach naukowych. Można go opisać w skrócie:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;szybki&lt;/strong&gt; jak C/Fortran&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;elegancki&lt;/strong&gt; jak Python&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Community szybko zaczęło tworzyć nowe biblioteki i pomimo braku wersji finalnej (w momencie pisania 0.3.6) można próbować swoich sił w tworzeniu aplikacji lub rozwijaniu ekosystemu. Osobiście nie zalecałbym używania Julii na produkcji, bo do wersji 1.0 zapewne całkowicie się zmieni, ale do odważnych świat należy :) Julia nie jest projektem dojrzałym, aczkolwiek śledząc jego rozwój można twierdzić, że rokuje całkiem nieźle.
+Młoda, ładna, szybka i atrakcyjna - po prostu &lt;strong&gt;sexy&lt;/strong&gt;! Zresztą sami zobaczcie co potrafi:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://ksmigiel.com/images/julia.gif&#34; alt=&#34;gif&#34; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Zainteresowanym polecam ciekawe IDE&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:184eed10b603a390c6ed60fbfa35091e:5&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:184eed10b603a390c6ed60fbfa35091e:5&#34;&gt;5&lt;/a&gt;&lt;/sup&gt;, którego ficzery widać powyżej.
+Możliwość wykonywania kodu w locie to mój faworyt! Fajnie byłoby móc nazwać siebie &lt;em&gt;Julia Programmer&lt;/em&gt;, więc jak nabardziej kibicuję Julii.&lt;/p&gt;
+
+&lt;h2 id=&#34;gdzie-ta-historia-miłosna:184eed10b603a390c6ed60fbfa35091e&#34;&gt;Gdzie ta historia miłosna?&lt;/h2&gt;
+
+&lt;p&gt;Nie ma. Jak na razie nasz &amp;ldquo;R&amp;rdquo;omeo i Julia żyją i mają się dobrze. Byleby tylko nie skończyło się jak u Szekspira&amp;hellip;&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:184eed10b603a390c6ed60fbfa35091e:1&#34;&gt;&lt;a href=&#34;http://www.reddit.com/r/excel/comments/2jtd2f/worked_on_a_completely_locked_down_machine_time/&#34;&gt;http://www.reddit.com/r/excel/comments/2jtd2f/worked_on_a_completely_locked_down_machine_time/&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:184eed10b603a390c6ed60fbfa35091e:1&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:184eed10b603a390c6ed60fbfa35091e:2&#34;&gt;&lt;a href=&#34;http://www.r-project.org/&#34;&gt;http://www.r-project.org/&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:184eed10b603a390c6ed60fbfa35091e:2&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:184eed10b603a390c6ed60fbfa35091e:3&#34;&gt;&lt;a href=&#34;http://cran.r-project.org/mirrors.html&#34;&gt;http://cran.r-project.org/mirrors.html&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:184eed10b603a390c6ed60fbfa35091e:3&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:184eed10b603a390c6ed60fbfa35091e:4&#34;&gt;&lt;a href=&#34;http://julialang.org/&#34;&gt;http://julialang.org/&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:184eed10b603a390c6ed60fbfa35091e:4&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:184eed10b603a390c6ed60fbfa35091e:5&#34;&gt;&lt;a href=&#34;http://junolab.org/&#34;&gt;http://junolab.org/&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:184eed10b603a390c6ed60fbfa35091e:5&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
