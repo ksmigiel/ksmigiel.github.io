@@ -10,6 +10,8 @@
   <link href="http://ksmigiel.com//index.xml" rel="alternate" type="application/rss+xml" title="Krzysztof Śmigiel | Blog" />
   <meta name="title" content="http://ksmigiel.com/">
   <link rel="canonical" href="http://ksmigiel.com/">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/github.min.css">
+  <script src="/js/highlight.js"></script>
   <meta property="og:title" content="Krzysztof Śmigiel | Blog"/>
   <meta property="og:url" content="http://ksmigiel.com/"/>
   <meta property="og:image" content="http://ksmigiel.com//images/"/>   
@@ -60,80 +62,78 @@
 
 <h4 id="mapper-fs:7428b1f511329ebc1011ee8ee83894f8">Mapper.fs</h4>
 
-<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span style="color: #66d9ef">open</span> <span style="color: #a6e22e">System</span>
-<span style="color: #66d9ef">open</span> <span style="color: #f8f8f2">System.</span><span style="color: #a6e22e">IO</span>
+<pre><code class="language-fsharp">open System
+open System.IO
 
-<span style="color: #66d9ef">module</span> <span style="color: #a6e22e">Mapper</span> <span style="color: #f92672">=</span>
+module Mapper =
 
-  <span style="color: #f92672">[&lt;</span><span style="color: #a6e22e">EntryPoint</span><span style="color: #f92672">&gt;]</span>
-  <span style="color: #66d9ef">let</span> <span style="color: #f8f8f2">main</span> <span style="color: #f8f8f2">argv</span> <span style="color: #f92672">=</span> 
-    <span style="color: #66d9ef">let</span> <span style="color: #f8f8f2">chars</span> <span style="color: #f92672">=</span>
-      <span style="color: #f92672">[|</span> <span style="color: #e6db74">&#39; &#39;</span><span style="color: #f92672">;</span> <span style="color: #e6db74">&#39;.&#39;</span><span style="color: #f92672">;</span> <span style="color: #e6db74">&#39;,&#39;</span><span style="color: #f92672">;</span> <span style="color: #e6db74">&#39;!&#39;</span><span style="color: #f92672">;</span> <span style="color: #e6db74">&#39;;&#39;</span><span style="color: #f92672">;</span> <span style="color: #e6db74">&#39;?&#39;</span><span style="color: #f92672">;</span> <span style="color: #e6db74">&#39;|&#39;</span><span style="color: #f92672">;</span> <span style="color: #e6db74">&#39;-&#39;</span><span style="color: #f92672">;</span> <span style="color: #e6db74">&#39;{&#39;</span><span style="color: #f92672">;</span> <span style="color: #e6db74">&#39;}&#39;</span><span style="color: #f92672">;</span> <span style="color: #e6db74">&#39;:&#39;</span><span style="color: #f92672">;</span> <span style="color: #e6db74">&#39;(&#39;</span><span style="color: #f92672">;</span> <span style="color: #e6db74">&#39;)&#39;</span> <span style="color: #f92672">|]</span>
+  [&lt;EntryPoint&gt;]
+  let main argv = 
+    let chars =
+      [| ' '; '.'; ','; '!'; ';'; '?'; '|'; '-'; '{'; '}'; ':'; '('; ')' |]
 
-    <span style="color: #66d9ef">match</span> <span style="color: #f8f8f2">argv</span><span style="color: #f92672">.</span><span style="color: #a6e22e">Length</span> <span style="color: #66d9ef">with</span>
-    <span style="color: #f92672">|</span> <span style="color: #ae81ff">1</span> <span style="color: #f92672">-&gt;</span> <span style="color: #f8f8f2">Console.</span><span style="color: #a6e22e">SetIn</span><span style="color: #f92672">(</span><span style="color: #66d9ef">new</span> <span style="color: #a6e22e">StreamReader</span><span style="color: #f92672">(</span><span style="color: #f8f8f2">argv</span><span style="color: #f92672">.[</span><span style="color: #ae81ff">0</span><span style="color: #f92672">]))</span>
-    <span style="color: #f92672">|</span> <span style="color: #f92672">_</span> <span style="color: #f92672">-&gt;</span> <span style="color: #f8f8f2">()</span>
+    match argv.Length with
+    | 1 -&gt; Console.SetIn(new StreamReader(argv.[0]))
+    | _ -&gt; ()
 
-    <span style="color: #66d9ef">let</span> <span style="color: #f8f8f2">isWord</span> <span style="color: #f8f8f2">w</span> <span style="color: #f92672">=</span>
-      <span style="color: #66d9ef">let</span> <span style="color: #f8f8f2">n</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">ref</span> <span style="color: #ae81ff">0</span>
-      <span style="color: #f92672">not</span> <span style="color: #f92672">(</span><span style="color: #f8f8f2">Int32.</span><span style="color: #a6e22e">TryParse</span><span style="color: #f92672">(</span><span style="color: #f8f8f2">w</span><span style="color: #f92672">,</span> <span style="color: #f8f8f2">n</span><span style="color: #f92672">))</span>
+    let isWord w =
+      let n = ref 0
+      not (Int32.TryParse(w, n))
 
-    <span style="color: #66d9ef">let</span> <span style="color: #f8f8f2">output</span> <span style="color: #f92672">(</span><span style="color: #f8f8f2">word</span><span style="color: #f92672">:</span><span style="color: #66d9ef">string</span><span style="color: #f92672">)</span> <span style="color: #f92672">=</span>
-      <span style="color: #f8f8f2">Console.</span><span style="color: #a6e22e">WriteLine</span><span style="color: #f92672">(</span><span style="color: #e6db74">&quot;{0}</span><span style="color: #ae81ff">\t</span><span style="color: #e6db74">{1}&quot;</span><span style="color: #f92672">,</span> <span style="color: #f8f8f2">word</span><span style="color: #f92672">.</span><span style="color: #a6e22e">Trim</span><span style="color: #f8f8f2">()</span><span style="color: #f92672">,</span> <span style="color: #ae81ff">1</span><span style="color: #f92672">)</span>
+    let output (word:string) =
+      Console.WriteLine(&quot;{0}\t{1}&quot;, word.Trim(), 1)
 
-    <span style="color: #f8f8f2">Seq.initInfinite</span> <span style="color: #f92672">(</span><span style="color: #66d9ef">fun</span> <span style="color: #f92672">_</span> <span style="color: #f92672">-&gt;</span> <span style="color: #f8f8f2">Console.</span><span style="color: #a6e22e">ReadLine</span><span style="color: #f8f8f2">()</span><span style="color: #f92672">)</span>
-    <span style="color: #f92672">|&gt;</span> <span style="color: #f8f8f2">Seq.takeWhile</span> <span style="color: #f92672">(</span><span style="color: #66d9ef">fun</span> <span style="color: #f8f8f2">line</span> <span style="color: #f92672">-&gt;</span> <span style="color: #f8f8f2">line</span> <span style="color: #f92672">&lt;&gt;</span> <span style="color: #66d9ef">null</span><span style="color: #f92672">)</span>
-    <span style="color: #f92672">|&gt;</span> <span style="color: #f8f8f2">Seq.iter</span> <span style="color: #f92672">(</span><span style="color: #66d9ef">fun</span> <span style="color: #f92672">(</span><span style="color: #f8f8f2">line</span> <span style="color: #f92672">:</span> <span style="color: #66d9ef">string</span><span style="color: #f92672">)</span> <span style="color: #f92672">-&gt;</span> 
-      <span style="color: #f8f8f2">line</span><span style="color: #f92672">.</span><span style="color: #a6e22e">ToLower</span><span style="color: #f8f8f2">()</span><span style="color: #f92672">.</span><span style="color: #a6e22e">Split</span><span style="color: #f92672">(</span><span style="color: #f8f8f2">chars</span><span style="color: #f92672">,</span> <span style="color: #f8f8f2">StringSplitOptions.</span><span style="color: #a6e22e">RemoveEmptyEntries</span><span style="color: #f92672">)</span>
-      <span style="color: #f92672">|&gt;</span> <span style="color: #f8f8f2">Seq.filter</span> <span style="color: #f8f8f2">isWord</span>
-      <span style="color: #f92672">|&gt;</span> <span style="color: #f8f8f2">Seq.iter</span> <span style="color: #f8f8f2">output</span> <span style="color: #f92672">)</span>
-    <span style="color: #ae81ff">0</span>
-</pre></div>
-</p>
+    Seq.initInfinite (fun _ -&gt; Console.ReadLine())
+    |&gt; Seq.takeWhile (fun line -&gt; line &lt;&gt; null)
+    |&gt; Seq.iter (fun (line : string) -&gt; 
+      line.ToLower().Split(chars, StringSplitOptions.RemoveEmptyEntries)
+      |&gt; Seq.filter isWord
+      |&gt; Seq.iter output )
+    0
+</code></pre>
 
 <p>Zamiast posługiwać się pętlą przy odczytywaniu streamu z stdin wykorzystałem funkcję <code>Seq.initInfinite()</code>, która wykonuje się aż do spełnienia warunku zdefiniowanego w <code>Seq.takeWhile()</code>. Do konsoli wypisujemy parę &ldquo;<strong>klucz</strong> <strong>wartość</strong>&rdquo; oddzielone znakiem <strong>tabulacji</strong>. Ponieważ interesuje nas zliczanie słów, jako wartość wychodzącą z Mappera podajemy <strong>1</strong>, czyli</p>
 
-<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span style="color: #f8f8f2">word</span>    <span style="color: #ae81ff">1</span>
-<span style="color: #f8f8f2">count</span>    <span style="color: #ae81ff">1</span>
-<span style="color: #f8f8f2">example</span>    <span style="color: #ae81ff">1</span>
-</pre></div>
+<pre><code class="language-bash">word    1
+count    1
+example    1
+</code></pre>
 
-itd. Reducer otrzymuje posortowany już stream takich par i powinien zwracać dane w ten sam sposób, natomiast w miejsce wartości wstawiamy sumę dla danego słowa (klucza).</p>
+<p>itd. Reducer otrzymuje posortowany już stream takich par i powinien zwracać dane w ten sam sposób, natomiast w miejsce wartości wstawiamy sumę dla danego słowa (klucza).</p>
 
 <h4 id="reducer-fs:7428b1f511329ebc1011ee8ee83894f8">Reducer.fs</h4>
 
-<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span style="color: #66d9ef">open</span> <span style="color: #a6e22e">System</span>
-<span style="color: #66d9ef">open</span> <span style="color: #f8f8f2">System.</span><span style="color: #a6e22e">IO</span>
+<pre><code class="language-fsharp">open System
+open System.IO
 
-<span style="color: #66d9ef">module</span> <span style="color: #a6e22e">Reducer</span> <span style="color: #f92672">=</span>
+module Reducer =
 
-  <span style="color: #f92672">[&lt;</span><span style="color: #a6e22e">EntryPoint</span><span style="color: #f92672">&gt;]</span>
-  <span style="color: #66d9ef">let</span> <span style="color: #f8f8f2">main</span> <span style="color: #f8f8f2">argv</span> <span style="color: #f92672">=</span> 
-    <span style="color: #66d9ef">match</span> <span style="color: #f8f8f2">argv</span><span style="color: #f92672">.</span><span style="color: #a6e22e">Length</span> <span style="color: #66d9ef">with</span>
-    <span style="color: #f92672">|</span> <span style="color: #ae81ff">1</span> <span style="color: #f92672">-&gt;</span> <span style="color: #f8f8f2">Console.</span><span style="color: #a6e22e">SetIn</span><span style="color: #f92672">(</span><span style="color: #66d9ef">new</span> <span style="color: #a6e22e">StreamReader</span><span style="color: #f92672">(</span><span style="color: #f8f8f2">argv</span><span style="color: #f92672">.[</span><span style="color: #ae81ff">0</span><span style="color: #f92672">]))</span>
-    <span style="color: #f92672">|</span> <span style="color: #f92672">_</span> <span style="color: #f92672">-&gt;</span> <span style="color: #f8f8f2">()</span>
+  [&lt;EntryPoint&gt;]
+  let main argv = 
+    match argv.Length with
+    | 1 -&gt; Console.SetIn(new StreamReader(argv.[0]))
+    | _ -&gt; ()
 
-    <span style="color: #66d9ef">let</span> <span style="color: #f8f8f2">currentWord</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">ref</span> <span style="color: #f8f8f2">String.</span><span style="color: #a6e22e">Empty</span>
-    <span style="color: #66d9ef">let</span> <span style="color: #f8f8f2">count</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">ref</span> <span style="color: #ae81ff">0</span>
+    let currentWord = ref String.Empty
+    let count = ref 0
 
-    <span style="color: #f8f8f2">Seq.initInfinite</span> <span style="color: #f92672">(</span><span style="color: #66d9ef">fun</span> <span style="color: #f92672">_</span> <span style="color: #f92672">-&gt;</span> <span style="color: #f8f8f2">Console.</span><span style="color: #a6e22e">ReadLine</span><span style="color: #f8f8f2">()</span><span style="color: #f92672">)</span>
-    <span style="color: #f92672">|&gt;</span> <span style="color: #f8f8f2">Seq.takeWhile</span> <span style="color: #f92672">(</span><span style="color: #66d9ef">fun</span> <span style="color: #f8f8f2">line</span> <span style="color: #f92672">-&gt;</span> <span style="color: #f8f8f2">line</span> <span style="color: #f92672">&lt;&gt;</span> <span style="color: #66d9ef">null</span><span style="color: #f92672">)</span>
-    <span style="color: #f92672">|&gt;</span> <span style="color: #f8f8f2">Seq.iter</span> <span style="color: #f92672">(</span><span style="color: #66d9ef">fun</span> <span style="color: #f8f8f2">line</span> <span style="color: #f92672">-&gt;</span>
-      <span style="color: #66d9ef">let</span> <span style="color: #f8f8f2">splitted</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">line</span><span style="color: #f92672">.</span><span style="color: #a6e22e">Split</span><span style="color: #f92672">(</span><span style="color: #e6db74">&#39;\t&#39;</span><span style="color: #f92672">)</span>
-      <span style="color: #66d9ef">let</span> <span style="color: #f8f8f2">word</span> <span style="color: #f92672">=</span> <span style="color: #f92672">(</span><span style="color: #f8f8f2">splitted</span><span style="color: #f92672">.[</span><span style="color: #ae81ff">0</span><span style="color: #f92672">])</span>
+    Seq.initInfinite (fun _ -&gt; Console.ReadLine())
+    |&gt; Seq.takeWhile (fun line -&gt; line &lt;&gt; null)
+    |&gt; Seq.iter (fun line -&gt;
+      let splitted = line.Split('\t')
+      let word = (splitted.[0])
 
-      <span style="color: #66d9ef">match</span> <span style="color: #f92672">(</span><span style="color: #f8f8f2">word</span><span style="color: #f92672">)</span> <span style="color: #66d9ef">with</span>
-      <span style="color: #f92672">|</span> <span style="color: #f8f8f2">word</span> <span style="color: #66d9ef">when</span> <span style="color: #f8f8f2">word</span> <span style="color: #f92672">=</span> <span style="color: #f92672">!</span><span style="color: #f8f8f2">currentWord</span> <span style="color: #f92672">-&gt;</span>
-        <span style="color: #f8f8f2">incr</span> <span style="color: #f8f8f2">count</span>
-      <span style="color: #f92672">|</span> <span style="color: #f92672">_</span> <span style="color: #f92672">-&gt;</span>
-        <span style="color: #66d9ef">if</span> <span style="color: #f92672">!</span><span style="color: #f8f8f2">currentWord</span> <span style="color: #f92672">&lt;&gt;</span> <span style="color: #f8f8f2">String.</span><span style="color: #a6e22e">Empty</span> <span style="color: #66d9ef">then</span>
-          <span style="color: #f8f8f2">Console.</span><span style="color: #a6e22e">WriteLine</span><span style="color: #f92672">(</span><span style="color: #e6db74">&quot;{0}</span><span style="color: #ae81ff">\t</span><span style="color: #e6db74">{1}&quot;</span><span style="color: #f92672">,</span> <span style="color: #f92672">!</span><span style="color: #f8f8f2">currentWord</span><span style="color: #f92672">,</span> <span style="color: #f92672">!</span><span style="color: #f8f8f2">count</span><span style="color: #f92672">)</span>
-        <span style="color: #f8f8f2">count</span> <span style="color: #f92672">:=</span> <span style="color: #ae81ff">1</span>
-        <span style="color: #f8f8f2">currentWord</span> <span style="color: #f92672">:=</span> <span style="color: #f8f8f2">word</span><span style="color: #f92672">)</span>
-    <span style="color: #f92672">|&gt;</span> <span style="color: #f8f8f2">ignore</span>
-    <span style="color: #f8f8f2">Console.</span><span style="color: #a6e22e">WriteLine</span><span style="color: #f92672">(</span><span style="color: #e6db74">&quot;{0}</span><span style="color: #ae81ff">\t</span><span style="color: #e6db74">{1}&quot;</span><span style="color: #f92672">,</span> <span style="color: #f92672">!</span><span style="color: #f8f8f2">currentWord</span><span style="color: #f92672">,</span> <span style="color: #f92672">!</span><span style="color: #f8f8f2">count</span><span style="color: #f92672">)</span>
-</pre></div>
-</p>
+      match (word) with
+      | word when word = !currentWord -&gt;
+        incr count
+      | _ -&gt;
+        if !currentWord &lt;&gt; String.Empty then
+          Console.WriteLine(&quot;{0}\t{1}&quot;, !currentWord, !count)
+        count := 1
+        currentWord := word)
+    |&gt; ignore
+    Console.WriteLine(&quot;{0}\t{1}&quot;, !currentWord, !count)
+</code></pre>
 
 <h2 id="hdp:7428b1f511329ebc1011ee8ee83894f8">HDP</h2>
 
@@ -150,17 +150,15 @@ itd. Reducer otrzymuje posortowany już stream takich par i powinien zwracać da
 
 <p>Musimy sami doinstalować <code>mono</code> i kompilator <code>fsharpc</code>, żeby binarki Hadoopa mogły wykonać z terminala skompilowane pliki .exe.</p>
 
-<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span style="color: #f8f8f2">sudo</span> <span style="color: #f8f8f2">yum</span> <span style="color: #f8f8f2">install</span> <span style="color: #f8f8f2">mono</span>
-<span style="color: #f8f8f2">sudo</span> <span style="color: #f8f8f2">yum</span> <span style="color: #f8f8f2">install</span> <span style="color: #f8f8f2">fsharp</span>
-</pre></div>
-</p>
+<pre><code class="language-bash">sudo yum install mono
+sudo yum install fsharp
+</code></pre>
 
 <p>Teraz wystarczy skompilować nasze pliki:</p>
 
-<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span style="color: #f8f8f2">fsharpc</span> <span style="color: #f8f8f2">Mapper.fs</span>
-<span style="color: #f8f8f2">fsharpc</span> <span style="color: #f8f8f2">Reducer.fs</span>
-</pre></div>
-</p>
+<pre><code class="language-bash">fsharpc Mapper.fs
+fsharpc Reducer.fs
+</code></pre>
 
 <p>i możemy zacząc prawdziwą zabawę :)</p>
 
@@ -170,14 +168,13 @@ itd. Reducer otrzymuje posortowany już stream takich par i powinien zwracać da
 
 <p>Uruchomienie joba odbywa się za pomocą komendy:</p>
 
-<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span style="color: #f8f8f2">hadoop</span> <span style="color: #f8f8f2">jar</span> <span style="color: #f8f8f2">/usr/hdp/current/hadoop-mapreduce-client/hadoop-streaming.jar</span>
-    <span style="color: #f8f8f2">-files</span> <span style="color: #f8f8f2">mapper.sh,</span> <span style="color: #f8f8f2">reducer.sh,</span> <span style="color: #f8f8f2">Mapper.exe,</span> <span style="color: #f8f8f2">Reducer.exe</span>
-    <span style="color: #f8f8f2">-input</span> <span style="color: #f8f8f2">/user/ksmigiel/krzyzacy.txt</span>
-    <span style="color: #f8f8f2">-output</span> <span style="color: #f8f8f2">/users/ksmigiel/output</span>
-    <span style="color: #f8f8f2">-mapper</span> <span style="color: #f8f8f2">mapper.sh</span>
-    <span style="color: #f8f8f2">-reducer</span> <span style="color: #f8f8f2">reducer.sh</span>
-</pre></div>
-</p>
+<pre><code class="language-bash">hadoop jar /usr/hdp/current/hadoop-mapreduce-client/hadoop-streaming.jar
+    -files mapper.sh, reducer.sh, Mapper.exe, Reducer.exe
+    -input /user/ksmigiel/krzyzacy.txt
+    -output /users/ksmigiel/output
+    -mapper mapper.sh
+    -reducer reducer.sh
+</code></pre>
 
 <p><strong>mapper.sh</strong> i <strong>reducer.sh</strong> to skrypty, które wykonują polecenie <code>mono [exe]</code>.
 Input i output to ścieżka na HDFS, dlatego trzeba skopiować plik za pomocą <code>hdfs dfs -copyFromLocal &lt;src&gt; &lt;dest&gt;</code>.
@@ -185,13 +182,12 @@ Jeśli będziecie chcieli użyć dowolnego pliku tekstowego, pamiętajcie o kodo
 
 <p>I jeszcze na zakończenie skrypcik <strong>Pig</strong>:</p>
 
-<p><div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span style="color: #f8f8f2">words</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">load</span> <span style="color: #e6db74">&#39;/user/ksmigiel/out/part-00000&#39;</span> <span style="color: #66d9ef">using</span> <span style="color: #f8f8f2">PigStorage()</span> <span style="color: #66d9ef">as</span> <span style="color: #f8f8f2">(word:chararray,</span> <span style="color: #66d9ef">count</span><span style="color: #f8f8f2">:int);</span>
-<span style="color: #f8f8f2">words_long</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">filter</span> <span style="color: #f8f8f2">words</span> <span style="color: #66d9ef">by</span> <span style="color: #66d9ef">size</span><span style="color: #f8f8f2">(word)</span> <span style="color: #f92672">&gt;</span> <span style="color: #ae81ff">3</span><span style="color: #f8f8f2">;</span>
-<span style="color: #f8f8f2">words_ordered</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">order</span> <span style="color: #f8f8f2">words_long</span> <span style="color: #66d9ef">by</span> <span style="color: #66d9ef">count</span> <span style="color: #66d9ef">desc</span><span style="color: #f8f8f2">;</span>
-<span style="color: #f8f8f2">top10</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">limit</span> <span style="color: #f8f8f2">words_ordered</span> <span style="color: #ae81ff">10</span><span style="color: #f8f8f2">;</span>
-<span style="color: #f8f8f2">dump</span> <span style="color: #f8f8f2">top10;</span>
-</pre></div>
-</p>
+<pre><code class="language-sql">words = load '/user/ksmigiel/out/part-00000' using PigStorage() as (word:chararray, count:int);
+words_long = filter words by size(word) &gt; 3;
+words_ordered = order words_long by count desc;
+top10 = limit words_ordered 10;
+dump top10;
+</code></pre>
 
 <div>
   <a href="https://plot.ly/~ksmigiel/17/" target="_blank" title="Krzyżacy word count" style="display: block; text-align: center;"><img src="https://plot.ly/~ksmigiel/17.png" alt="Krzyżacy word count" style="max-width: 100%;width: 564px;"  width="564" onerror="this.onerror=null;this.src='https://plot.ly/404.png';" /></a>

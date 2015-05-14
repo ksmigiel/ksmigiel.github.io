@@ -5,8 +5,67 @@
     <link>http://ksmigiel.com/post/</link>
     <description>Recent content in Posts on </description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 21 Mar 2015 21:38:00 +0100</lastBuildDate>
+    <lastBuildDate>Thu, 14 May 2015 16:38:00 +0100</lastBuildDate>
     <atom:link href="http://ksmigiel.com/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Visual Studio Code</title>
+      <link>http://ksmigiel.com/2015/05/vs-code</link>
+      <pubDate>Thu, 14 May 2015 16:38:00 +0100</pubDate>
+      
+      <guid>http://ksmigiel.com/2015/05/vs-code</guid>
+      <description>
+
+&lt;p&gt;Microsoft na tegorocznej konferencji &lt;strong&gt;//build/&lt;/strong&gt; zaskoczył nas paroma nowinkami. Jeśli nie jesteście na bieżąco polecam zerknąć na &lt;a href=&#34;http://blogs.technet.com/b/uktechnet/archive/2015/04/30/announcements-from-build-2015.aspx&#34;&gt;podsumowanie&lt;/a&gt;. Każdy znajdzie coś dla siebie.&lt;/p&gt;
+
+&lt;h2 id=&#34;vs-code:6d2be7abc42720062e9271b30ee0bbbf&#34;&gt;VS Code&lt;/h2&gt;
+
+&lt;p&gt;Mnie osobiście najbardziej spodobał się edytor &lt;a href=&#34;http://code.visualstudio.com&#34;&gt;&lt;strong&gt;Visual Studio Code&lt;/strong&gt;&lt;/a&gt;, czyli taki Sublime Text w Microsoftowym wydaniu. W całości oparty na node.js i edytorze &lt;a href=&#34;https://atom.io/&#34;&gt;&lt;strong&gt;Atom&lt;/strong&gt;&lt;/a&gt; od GitHuba, a konkretnie na bibliotece &lt;a href=&#34;https://github.com/atom/electron&#34;&gt;&lt;strong&gt;Electron&lt;/strong&gt;&lt;/a&gt; umożliwiającej pisanie cross-platformowych desktopowych aplikacji w JS/HTML/CSS. Główne cechy wyróżniające Code na tle innych edytorów to m.in.:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;cross-platformowość (sprawdzałem i faktycznie tak jest! :) )&lt;/li&gt;
+&lt;li&gt;debugging aplikacji napisanych w node.js (ASP.NET 5 w przygotowaniu)&lt;/li&gt;
+&lt;li&gt;tasks - integracja z popularnymi narzędziami do automatyzacji buildów, testowania i deployowania (Make, Ant, Gulp, Jake, Rake, MSBuild)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://schemastore.org/json/&#34;&gt;JSON schema&lt;/a&gt; - code-completion w plikach konfiguracyjnych JSON&lt;/li&gt;
+&lt;li&gt;wsparcie TypeScript (code-completion, &lt;em&gt;&amp;ldquo;go to definition&amp;rdquo;&lt;/em&gt; etc.)&lt;/li&gt;
+&lt;li&gt;fuzzy-search - przeszukiwanie plików projektu oraz ustawień edytora (&lt;em&gt;Ctrl+E&lt;/em&gt; i &lt;em&gt;Ctrl-Shift-P&lt;/em&gt;)&lt;/li&gt;
+&lt;li&gt;parsowanie i podgląd &lt;a href=&#34;http://daringfireball.net/projects/markdown/&#34;&gt;Markdown&lt;/a&gt; w locie - w ten sposób powstaje ten post :)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;W obecnej wersji brakuje mi klawiszologii VIM&amp;rsquo;a (jak się człowiek raz przyzwyczai to potem wszystkie inne skróty klawiszowe wydają się bezsensowne) oraz możliwości tworzenia własnych snippetów, co mam nadzieję zostanie dodane w nadchodzących wydaniach.&lt;/p&gt;
+
+&lt;p&gt;Polecam zapoznać się z tym edytorem. Pomimo wersji &lt;em&gt;Preview&lt;/em&gt; posiada masę fajnych funkcjonalności.&lt;/p&gt;
+
+&lt;h2 id=&#34;monaco:6d2be7abc42720062e9271b30ee0bbbf&#34;&gt;Monaco?&lt;/h2&gt;
+
+&lt;p&gt;Jeśli po ściągnięciu Code&amp;rsquo;a masz wrażenie graniczące z pewnością, że gdzieś już to widziałeś to masz całkowitą rację! Microsoft do jego budowy oprócz wspomnianego Atoma wykorzystał &lt;a href=&#34;http://blogs.msdn.com/b/monaco/archive/2014/06/26/how-to-access-visual-studio-online-monaco-from-the-new-azure-portal.aspx&#34;&gt;&lt;strong&gt;Visual Studio Monaco&lt;/strong&gt;&lt;/a&gt;, które jako rozszerzenie można doinstalować w panelu &lt;strong&gt;Azure&lt;/strong&gt; do dowolnej aplikacji na nim hostowanej. Monaco to webowy edytor w &lt;em&gt;&amp;ldquo;chmurze&amp;rdquo;&lt;/em&gt; zintegrowany z wierszem poleceń (dostęp do &lt;code&gt;node&lt;/code&gt; i &lt;code&gt;npm&lt;/code&gt;). Preinstalowany node.js pozwala na hostowanie aplikacji webowych przy użyciu &lt;a href=&#34;https://github.com/tjanczuk/iisnode&#34;&gt;iisnode&lt;/a&gt;. Może posłużyć jako pomoc podczas szybkiej edycji pliku na serwerze albo jako IDE w chmurze :)&lt;/p&gt;
+
+&lt;p&gt;Od jakiegoś czasu na blogu MSDN zaprzestano informować o jakichkolwiek newsach związanych z rozwojem Monaco. Jednak po konferencji &lt;strong&gt;//build/&lt;/strong&gt; nie mam wątpliwości, że Microsoft szykował się na premierę swojego nowego edytora i tak na prawdę tworzył dwa narzędzia równocześnie (pod spodem są te same bebechy: node.js i WebKit).&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;protip: naciśnij F12 w edytorze &lt;strong&gt;Code&lt;/strong&gt; i wszystko jasne!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Jestem ciekawy czy w przyszłości te dwa projekty staną się jednym tworem.&lt;/p&gt;
+
+&lt;h2 id=&#34;changes-changes-everywhere:6d2be7abc42720062e9271b30ee0bbbf&#34;&gt;Changes, changes everywhere!&lt;/h2&gt;
+
+&lt;p&gt;Muszę przyznać, że lubię ten &amp;ldquo;nowy Microsoft&amp;rdquo;. Edge, ASP.NET vNext, DNX, Code czy rozwój PowerShella sprawiają, że Windows i jego cały ekosystem stają się bardziej &amp;ldquo;developer-friendly&amp;rdquo;. To chyba dobrze, że chcą przyciągnąc do platformy developerów - w końcu to oni ją tworzą.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;http://blogs.technet.com/b/uktechnet/archive/2015/04/30/announcements-from-build-2015.aspx&#34;&gt;http://blogs.technet.com/b/uktechnet/archive/2015/04/30/announcements-from-build-2015.aspx&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://code.visualstudio.com&#34;&gt;http://code.visualstudio.com&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://atom.io/&#34;&gt;https://atom.io/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/atom/electron&#34;&gt;https://github.com/atom/electron&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://schemastore.org/json/&#34;&gt;http://schemastore.org/json/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://daringfireball.net/projects/markdown/&#34;&gt;http://daringfireball.net/projects/markdown/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://blogs.msdn.com/b/monaco/archive/2014/06/26/how-to-access-visual-studio-online-monaco-from-the-new-azure-portal.aspx&#34;&gt;http://blogs.msdn.com/b/monaco/archive/2014/06/26/how-to-access-visual-studio-online-monaco-from-the-new-azure-portal.aspx&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/tjanczuk/iisnode&#34;&gt;https://github.com/tjanczuk/iisnode&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
     
     <item>
       <title>&#34;R&#34;omeo i Julia</title>
@@ -81,80 +140,78 @@ Możliwość wykonywania kodu w locie to mój faworyt! Fajnie byłoby móc nazwa
 
 &lt;h4 id=&#34;mapper-fs:7428b1f511329ebc1011ee8ee83894f8&#34;&gt;Mapper.fs&lt;/h4&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;open&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;System&lt;/span&gt;
-&lt;span style=&#34;color: #66d9ef&#34;&gt;open&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;System.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;IO&lt;/span&gt;
+&lt;pre&gt;&lt;code class=&#34;language-fsharp&#34;&gt;open System
+open System.IO
 
-&lt;span style=&#34;color: #66d9ef&#34;&gt;module&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;Mapper&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt;
+module Mapper =
 
-  &lt;span style=&#34;color: #f92672&#34;&gt;[&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;EntryPoint&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;&amp;gt;]&lt;/span&gt;
-  &lt;span style=&#34;color: #66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;main&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;argv&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; 
-    &lt;span style=&#34;color: #66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;chars&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt;
-      &lt;span style=&#34;color: #f92672&#34;&gt;[|&lt;/span&gt; &lt;span style=&#34;color: #e6db74&#34;&gt;&amp;#39; &amp;#39;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #e6db74&#34;&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #e6db74&#34;&gt;&amp;#39;,&amp;#39;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #e6db74&#34;&gt;&amp;#39;!&amp;#39;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #e6db74&#34;&gt;&amp;#39;;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #e6db74&#34;&gt;&amp;#39;?&amp;#39;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #e6db74&#34;&gt;&amp;#39;|&amp;#39;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #e6db74&#34;&gt;&amp;#39;-&amp;#39;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #e6db74&#34;&gt;&amp;#39;{&amp;#39;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #e6db74&#34;&gt;&amp;#39;}&amp;#39;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #e6db74&#34;&gt;&amp;#39;:&amp;#39;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #e6db74&#34;&gt;&amp;#39;(&amp;#39;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #e6db74&#34;&gt;&amp;#39;)&amp;#39;&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;|]&lt;/span&gt;
+  [&amp;lt;EntryPoint&amp;gt;]
+  let main argv = 
+    let chars =
+      [| &#39; &#39;; &#39;.&#39;; &#39;,&#39;; &#39;!&#39;; &#39;;&#39;; &#39;?&#39;; &#39;|&#39;; &#39;-&#39;; &#39;{&#39;; &#39;}&#39;; &#39;:&#39;; &#39;(&#39;; &#39;)&#39; |]
 
-    &lt;span style=&#34;color: #66d9ef&#34;&gt;match&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;argv&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;Length&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;with&lt;/span&gt;
-    &lt;span style=&#34;color: #f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;Console.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;SetIn&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;StreamReader&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;argv&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.[&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;]))&lt;/span&gt;
-    &lt;span style=&#34;color: #f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;_&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;()&lt;/span&gt;
+    match argv.Length with
+    | 1 -&amp;gt; Console.SetIn(new StreamReader(argv.[0]))
+    | _ -&amp;gt; ()
 
-    &lt;span style=&#34;color: #66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;isWord&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;w&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt;
-      &lt;span style=&#34;color: #66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;n&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;ref&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;0&lt;/span&gt;
-      &lt;span style=&#34;color: #f92672&#34;&gt;not&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;Int32.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;TryParse&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;w&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;n&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;))&lt;/span&gt;
+    let isWord w =
+      let n = ref 0
+      not (Int32.TryParse(w, n))
 
-    &lt;span style=&#34;color: #66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;output&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;word&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt;
-      &lt;span style=&#34;color: #f8f8f2&#34;&gt;Console.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;WriteLine&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;{0}&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;\t&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;{1}&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;word&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;Trim&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;()&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt;
+    let output (word:string) =
+      Console.WriteLine(&amp;quot;{0}\t{1}&amp;quot;, word.Trim(), 1)
 
-    &lt;span style=&#34;color: #f8f8f2&#34;&gt;Seq.initInfinite&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;_&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;Console.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;ReadLine&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;()&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color: #f92672&#34;&gt;|&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;Seq.takeWhile&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;line&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;line&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;&amp;lt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color: #f92672&#34;&gt;|&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;Seq.iter&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;line&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;-&amp;gt;&lt;/span&gt; 
-      &lt;span style=&#34;color: #f8f8f2&#34;&gt;line&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;ToLower&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;()&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;Split&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;chars&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;StringSplitOptions.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;RemoveEmptyEntries&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt;
-      &lt;span style=&#34;color: #f92672&#34;&gt;|&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;Seq.filter&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;isWord&lt;/span&gt;
-      &lt;span style=&#34;color: #f92672&#34;&gt;|&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;Seq.iter&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;output&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color: #ae81ff&#34;&gt;0&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+    Seq.initInfinite (fun _ -&amp;gt; Console.ReadLine())
+    |&amp;gt; Seq.takeWhile (fun line -&amp;gt; line &amp;lt;&amp;gt; null)
+    |&amp;gt; Seq.iter (fun (line : string) -&amp;gt; 
+      line.ToLower().Split(chars, StringSplitOptions.RemoveEmptyEntries)
+      |&amp;gt; Seq.filter isWord
+      |&amp;gt; Seq.iter output )
+    0
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Zamiast posługiwać się pętlą przy odczytywaniu streamu z stdin wykorzystałem funkcję &lt;code&gt;Seq.initInfinite()&lt;/code&gt;, która wykonuje się aż do spełnienia warunku zdefiniowanego w &lt;code&gt;Seq.takeWhile()&lt;/code&gt;. Do konsoli wypisujemy parę &amp;ldquo;&lt;strong&gt;klucz&lt;/strong&gt; &lt;strong&gt;wartość&lt;/strong&gt;&amp;rdquo; oddzielone znakiem &lt;strong&gt;tabulacji&lt;/strong&gt;. Ponieważ interesuje nas zliczanie słów, jako wartość wychodzącą z Mappera podajemy &lt;strong&gt;1&lt;/strong&gt;, czyli&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;word&lt;/span&gt;    &lt;span style=&#34;color: #ae81ff&#34;&gt;1&lt;/span&gt;
-&lt;span style=&#34;color: #f8f8f2&#34;&gt;count&lt;/span&gt;    &lt;span style=&#34;color: #ae81ff&#34;&gt;1&lt;/span&gt;
-&lt;span style=&#34;color: #f8f8f2&#34;&gt;example&lt;/span&gt;    &lt;span style=&#34;color: #ae81ff&#34;&gt;1&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;word    1
+count    1
+example    1
+&lt;/code&gt;&lt;/pre&gt;
 
-itd. Reducer otrzymuje posortowany już stream takich par i powinien zwracać dane w ten sam sposób, natomiast w miejsce wartości wstawiamy sumę dla danego słowa (klucza).&lt;/p&gt;
+&lt;p&gt;itd. Reducer otrzymuje posortowany już stream takich par i powinien zwracać dane w ten sam sposób, natomiast w miejsce wartości wstawiamy sumę dla danego słowa (klucza).&lt;/p&gt;
 
 &lt;h4 id=&#34;reducer-fs:7428b1f511329ebc1011ee8ee83894f8&#34;&gt;Reducer.fs&lt;/h4&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;open&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;System&lt;/span&gt;
-&lt;span style=&#34;color: #66d9ef&#34;&gt;open&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;System.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;IO&lt;/span&gt;
+&lt;pre&gt;&lt;code class=&#34;language-fsharp&#34;&gt;open System
+open System.IO
 
-&lt;span style=&#34;color: #66d9ef&#34;&gt;module&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;Reducer&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt;
+module Reducer =
 
-  &lt;span style=&#34;color: #f92672&#34;&gt;[&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;EntryPoint&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;&amp;gt;]&lt;/span&gt;
-  &lt;span style=&#34;color: #66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;main&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;argv&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; 
-    &lt;span style=&#34;color: #66d9ef&#34;&gt;match&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;argv&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;Length&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;with&lt;/span&gt;
-    &lt;span style=&#34;color: #f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;Console.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;SetIn&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;StreamReader&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;argv&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.[&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;]))&lt;/span&gt;
-    &lt;span style=&#34;color: #f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;_&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;()&lt;/span&gt;
+  [&amp;lt;EntryPoint&amp;gt;]
+  let main argv = 
+    match argv.Length with
+    | 1 -&amp;gt; Console.SetIn(new StreamReader(argv.[0]))
+    | _ -&amp;gt; ()
 
-    &lt;span style=&#34;color: #66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;currentWord&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;ref&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;String.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;Empty&lt;/span&gt;
-    &lt;span style=&#34;color: #66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;count&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;ref&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;0&lt;/span&gt;
+    let currentWord = ref String.Empty
+    let count = ref 0
 
-    &lt;span style=&#34;color: #f8f8f2&#34;&gt;Seq.initInfinite&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;_&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;Console.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;ReadLine&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;()&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color: #f92672&#34;&gt;|&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;Seq.takeWhile&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;line&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;line&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;&amp;lt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color: #f92672&#34;&gt;|&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;Seq.iter&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;line&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;-&amp;gt;&lt;/span&gt;
-      &lt;span style=&#34;color: #66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;splitted&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;line&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;Split&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;#39;\t&amp;#39;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt;
-      &lt;span style=&#34;color: #66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;word&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;splitted&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.[&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;])&lt;/span&gt;
+    Seq.initInfinite (fun _ -&amp;gt; Console.ReadLine())
+    |&amp;gt; Seq.takeWhile (fun line -&amp;gt; line &amp;lt;&amp;gt; null)
+    |&amp;gt; Seq.iter (fun line -&amp;gt;
+      let splitted = line.Split(&#39;\t&#39;)
+      let word = (splitted.[0])
 
-      &lt;span style=&#34;color: #66d9ef&#34;&gt;match&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;word&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;with&lt;/span&gt;
-      &lt;span style=&#34;color: #f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;word&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;when&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;word&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;!&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;currentWord&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;-&amp;gt;&lt;/span&gt;
-        &lt;span style=&#34;color: #f8f8f2&#34;&gt;incr&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;count&lt;/span&gt;
-      &lt;span style=&#34;color: #f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;_&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;-&amp;gt;&lt;/span&gt;
-        &lt;span style=&#34;color: #66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;!&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;currentWord&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;&amp;lt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;String.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;Empty&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;then&lt;/span&gt;
-          &lt;span style=&#34;color: #f8f8f2&#34;&gt;Console.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;WriteLine&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;{0}&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;\t&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;{1}&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;!&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;currentWord&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;!&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;count&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt;
-        &lt;span style=&#34;color: #f8f8f2&#34;&gt;count&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;1&lt;/span&gt;
-        &lt;span style=&#34;color: #f8f8f2&#34;&gt;currentWord&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;word&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color: #f92672&#34;&gt;|&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;ignore&lt;/span&gt;
-    &lt;span style=&#34;color: #f8f8f2&#34;&gt;Console.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;WriteLine&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;{0}&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;\t&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;{1}&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;!&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;currentWord&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;!&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;count&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+      match (word) with
+      | word when word = !currentWord -&amp;gt;
+        incr count
+      | _ -&amp;gt;
+        if !currentWord &amp;lt;&amp;gt; String.Empty then
+          Console.WriteLine(&amp;quot;{0}\t{1}&amp;quot;, !currentWord, !count)
+        count := 1
+        currentWord := word)
+    |&amp;gt; ignore
+    Console.WriteLine(&amp;quot;{0}\t{1}&amp;quot;, !currentWord, !count)
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id=&#34;hdp:7428b1f511329ebc1011ee8ee83894f8&#34;&gt;HDP&lt;/h2&gt;
 
@@ -171,17 +228,15 @@ itd. Reducer otrzymuje posortowany już stream takich par i powinien zwracać da
 
 &lt;p&gt;Musimy sami doinstalować &lt;code&gt;mono&lt;/code&gt; i kompilator &lt;code&gt;fsharpc&lt;/code&gt;, żeby binarki Hadoopa mogły wykonać z terminala skompilowane pliki .exe.&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;sudo&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;yum&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;install&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;mono&lt;/span&gt;
-&lt;span style=&#34;color: #f8f8f2&#34;&gt;sudo&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;yum&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;install&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;fsharp&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo yum install mono
+sudo yum install fsharp
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Teraz wystarczy skompilować nasze pliki:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;fsharpc&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;Mapper.fs&lt;/span&gt;
-&lt;span style=&#34;color: #f8f8f2&#34;&gt;fsharpc&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;Reducer.fs&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;fsharpc Mapper.fs
+fsharpc Reducer.fs
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;i możemy zacząc prawdziwą zabawę :)&lt;/p&gt;
 
@@ -191,14 +246,13 @@ itd. Reducer otrzymuje posortowany już stream takich par i powinien zwracać da
 
 &lt;p&gt;Uruchomienie joba odbywa się za pomocą komendy:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;hadoop&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;jar&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;/usr/hdp/current/hadoop-mapreduce-client/hadoop-streaming.jar&lt;/span&gt;
-    &lt;span style=&#34;color: #f8f8f2&#34;&gt;-files&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;mapper.sh,&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;reducer.sh,&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;Mapper.exe,&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;Reducer.exe&lt;/span&gt;
-    &lt;span style=&#34;color: #f8f8f2&#34;&gt;-input&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;/user/ksmigiel/krzyzacy.txt&lt;/span&gt;
-    &lt;span style=&#34;color: #f8f8f2&#34;&gt;-output&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;/users/ksmigiel/output&lt;/span&gt;
-    &lt;span style=&#34;color: #f8f8f2&#34;&gt;-mapper&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;mapper.sh&lt;/span&gt;
-    &lt;span style=&#34;color: #f8f8f2&#34;&gt;-reducer&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;reducer.sh&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;hadoop jar /usr/hdp/current/hadoop-mapreduce-client/hadoop-streaming.jar
+    -files mapper.sh, reducer.sh, Mapper.exe, Reducer.exe
+    -input /user/ksmigiel/krzyzacy.txt
+    -output /users/ksmigiel/output
+    -mapper mapper.sh
+    -reducer reducer.sh
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;&lt;strong&gt;mapper.sh&lt;/strong&gt; i &lt;strong&gt;reducer.sh&lt;/strong&gt; to skrypty, które wykonują polecenie &lt;code&gt;mono [exe]&lt;/code&gt;.
 Input i output to ścieżka na HDFS, dlatego trzeba skopiować plik za pomocą &lt;code&gt;hdfs dfs -copyFromLocal &amp;lt;src&amp;gt; &amp;lt;dest&amp;gt;&lt;/code&gt;.
@@ -206,13 +260,12 @@ Jeśli będziecie chcieli użyć dowolnego pliku tekstowego, pamiętajcie o kodo
 
 &lt;p&gt;I jeszcze na zakończenie skrypcik &lt;strong&gt;Pig&lt;/strong&gt;:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;words&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;load&lt;/span&gt; &lt;span style=&#34;color: #e6db74&#34;&gt;&amp;#39;/user/ksmigiel/out/part-00000&amp;#39;&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;using&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;PigStorage()&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;(word:chararray,&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;count&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;:int);&lt;/span&gt;
-&lt;span style=&#34;color: #f8f8f2&#34;&gt;words_long&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;filter&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;words&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;by&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;size&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(word)&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color: #f8f8f2&#34;&gt;words_ordered&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;order&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;words_long&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;by&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;count&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;desc&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color: #f8f8f2&#34;&gt;top10&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;limit&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;words_ordered&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;10&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color: #f8f8f2&#34;&gt;dump&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;top10;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;words = load &#39;/user/ksmigiel/out/part-00000&#39; using PigStorage() as (word:chararray, count:int);
+words_long = filter words by size(word) &amp;gt; 3;
+words_ordered = order words_long by count desc;
+top10 = limit words_ordered 10;
+dump top10;
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;div&gt;
   &lt;a href=&#34;https://plot.ly/~ksmigiel/17/&#34; target=&#34;_blank&#34; title=&#34;Krzyżacy word count&#34; style=&#34;display: block; text-align: center;&#34;&gt;&lt;img src=&#34;https://plot.ly/~ksmigiel/17.png&#34; alt=&#34;Krzyżacy word count&#34; style=&#34;max-width: 100%;width: 564px;&#34;  width=&#34;564&#34; onerror=&#34;this.onerror=null;this.src=&#39;https://plot.ly/404.png&#39;;&#34; /&gt;&lt;/a&gt;
@@ -241,31 +294,32 @@ Jeśli będziecie chcieli użyć dowolnego pliku tekstowego, pamiętajcie o kodo
 
 &lt;h4 id=&#34;f-35:d6a86094d7ff3310f4dae7e5d0b58f2e&#34;&gt;F&amp;#35;&lt;/h4&gt;
 
-&lt;p&gt;&lt;code&gt;map()&lt;/code&gt; aplikuje funkcję dla każdego elementu z kolekcji:
-&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;sample&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;4&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;]&lt;/span&gt;
-&lt;span style=&#34;color: #75715e&#34;&gt;// Dodamy do każdego elementu listy &amp;quot;2&amp;quot;&lt;/span&gt;
-&lt;span style=&#34;color: #f8f8f2&#34;&gt;List.map&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;sample&lt;/span&gt;
-&lt;span style=&#34;color: #75715e&#34;&gt;(* val it : int list = [3; 4; 5; 6; 7] *)&lt;/span&gt;
-&lt;span style=&#34;color: #75715e&#34;&gt;// lub bardziej funkcyjnie przy pomocy operatora &amp;quot;|&amp;gt;&amp;quot;&lt;/span&gt;
-&lt;span style=&#34;color: #f8f8f2&#34;&gt;sample&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;|&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;List.map&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;map()&lt;/code&gt; aplikuje funkcję dla każdego elementu z kolekcji:&lt;/p&gt;
 
-&lt;code&gt;reduce()&lt;/code&gt; natomiast jak się można domyślić: redukuje naszą kolekcję przy użyciu akumulatora przekazując wynik do następnego wywołania:
-&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #75715e&#34;&gt;// Zredukujemy naszą listę obliczając sumę ze wszystkich jej elementów&lt;/span&gt;
-&lt;span style=&#34;color: #75715e&#34;&gt;// a i b są sąsiadami&lt;/span&gt;
-&lt;span style=&#34;color: #f8f8f2&#34;&gt;sample&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;|&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;List.reduce&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;b&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color: #75715e&#34;&gt;(* val it : int = 15 *)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-fsharp&#34;&gt;let sample = [1; 2; 3; 4; 5]
+// Dodamy do każdego elementu listy &amp;quot;2&amp;quot;
+List.map (fun x -&amp;gt; x + 2) sample
+(* val it : int list = [3; 4; 5; 6; 7] *)
+// lub bardziej funkcyjnie przy pomocy operatora &amp;quot;|&amp;gt;&amp;quot;
+sample |&amp;gt; List.map (fun x -&amp;gt; x + 2)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;reduce()&lt;/code&gt; natomiast jak się można domyślić: redukuje naszą kolekcję przy użyciu akumulatora przekazując wynik do następnego wywołania:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-fsharp&#34;&gt;// Zredukujemy naszą listę obliczając sumę ze wszystkich jej elementów
+// a i b są sąsiadami
+sample |&amp;gt; List.reduce (fun a b -&amp;gt; a + b)
+(* val it : int = 15 *)
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;h4 id=&#34;c-35:d6a86094d7ff3310f4dae7e5d0b58f2e&#34;&gt;C&amp;#35;&lt;/h4&gt;
 
-&lt;p&gt;I analogicznie przy użyciu LINQ
-&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;sample&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;List&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;&amp;gt;()&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;4&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;};&lt;/span&gt;
-&lt;span style=&#34;color: #f8f8f2&#34;&gt;sample.Select(x&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;);&lt;/span&gt;
-&lt;span style=&#34;color: #f8f8f2&#34;&gt;sample.Aggregate((a,&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;b)&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;b);&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+&lt;p&gt;I analogicznie przy użyciu LINQ&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;var sample = new List&amp;lt;int&amp;gt;() {1, 2, 3, 4, 5};
+sample.Select(x =&amp;gt; x + 2);
+sample.Aggregate((a, b) =&amp;gt; a + b);
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Operacje te prezentują prosty workflow jaki przeprowadza się na danych i w wersji rozszerzonej jest on wykorzystywany w MapReduce.&lt;/p&gt;
 
@@ -281,14 +335,15 @@ Jeśli będziecie chcieli użyć dowolnego pliku tekstowego, pamiętajcie o kodo
 &lt;li&gt;&lt;strong&gt;Reduce&lt;/strong&gt; - następuje agregacja danych na podstawie klucza - oczywiście w sposób równoległy&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Tak naprawdę każdy z nas (developerów) nie raz w życiu coś zmapredusił. Bo jeśli sprowadzimy ten proces z chmury i skomplikowanej topologii do pojedynczej bazy danych, to okaże się, że ten cały MapReduce to w rzeczywistości można napisać w SQLu:
-&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;select&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;id,&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;sum&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(price)&lt;/span&gt;
-&lt;span style=&#34;color: #66d9ef&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;products&lt;/span&gt;
-&lt;span style=&#34;color: #66d9ef&#34;&gt;group&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;by&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;id&lt;/span&gt;
-&lt;span style=&#34;color: #66d9ef&#34;&gt;order&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;by&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;id&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Tak naprawdę każdy z nas (developerów) nie raz w życiu coś zmapredusił. Bo jeśli sprowadzimy ten proces z chmury i skomplikowanej topologii do pojedynczej bazy danych, to okaże się, że ten cały MapReduce to w rzeczywistości można napisać w SQLu:&lt;/p&gt;
 
-Wynik takiego zapytania może być również skutkiem całego procesu MapReduce. I dopóki ilość danych i czas w jakim zapytanie się wykonuje mieszczą się w granicach wymagań biznesu, to wszystko ok! Problem zaczyna się wtedy, gdy wydajność maleje, bo instancje serwerów SQL nie radzą sobie z przetwarzaniem coraz szybciej i ciągle napływających danych. Dlatego głównie ze względu na kwestię wydajności wprowadza się paralelność, co klasyczną analizę danych wybija na wyższy poziom zaawansowania.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;select id, sum(price)
+from products
+group by id
+order by id
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Wynik takiego zapytania może być również skutkiem całego procesu MapReduce. I dopóki ilość danych i czas w jakim zapytanie się wykonuje mieszczą się w granicach wymagań biznesu, to wszystko ok! Problem zaczyna się wtedy, gdy wydajność maleje, bo instancje serwerów SQL nie radzą sobie z przetwarzaniem coraz szybciej i ciągle napływających danych. Dlatego głównie ze względu na kwestię wydajności wprowadza się paralelność, co klasyczną analizę danych wybija na wyższy poziom zaawansowania.&lt;/p&gt;
 
 &lt;p&gt;Dane mogą teraz zostać przetworzone szybciej. Coś, co kiedyś trwało, lub ze względu na ograniczenia mocy obliczeniowej było prawie niemożliwe, dziś za pomocą chmury i tego typu technologii pozwala niejako na nowo odkrywać algorytmy uczenia maszynowego, data-miningu. A w jaki sposób to zostanie zaprezentowane.&lt;/p&gt;
 </description>

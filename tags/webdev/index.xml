@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Webdev on </title>
+    <link>http://ksmigiel.com/tags/webdev/</link>
+    <description>Recent content in Webdev on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 14 May 2015 16:38:00 +0100</lastBuildDate>
+    <atom:link href="http://ksmigiel.com/tags/webdev/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Visual Studio Code</title>
+      <link>http://ksmigiel.com/2015/05/vs-code</link>
+      <pubDate>Thu, 14 May 2015 16:38:00 +0100</pubDate>
+      
+      <guid>http://ksmigiel.com/2015/05/vs-code</guid>
+      <description>
+
+&lt;p&gt;Microsoft na tegorocznej konferencji &lt;strong&gt;//build/&lt;/strong&gt; zaskoczył nas paroma nowinkami. Jeśli nie jesteście na bieżąco polecam zerknąć na &lt;a href=&#34;http://blogs.technet.com/b/uktechnet/archive/2015/04/30/announcements-from-build-2015.aspx&#34;&gt;podsumowanie&lt;/a&gt;. Każdy znajdzie coś dla siebie.&lt;/p&gt;
+
+&lt;h2 id=&#34;vs-code:6d2be7abc42720062e9271b30ee0bbbf&#34;&gt;VS Code&lt;/h2&gt;
+
+&lt;p&gt;Mnie osobiście najbardziej spodobał się edytor &lt;a href=&#34;http://code.visualstudio.com&#34;&gt;&lt;strong&gt;Visual Studio Code&lt;/strong&gt;&lt;/a&gt;, czyli taki Sublime Text w Microsoftowym wydaniu. W całości oparty na node.js i edytorze &lt;a href=&#34;https://atom.io/&#34;&gt;&lt;strong&gt;Atom&lt;/strong&gt;&lt;/a&gt; od GitHuba, a konkretnie na bibliotece &lt;a href=&#34;https://github.com/atom/electron&#34;&gt;&lt;strong&gt;Electron&lt;/strong&gt;&lt;/a&gt; umożliwiającej pisanie cross-platformowych desktopowych aplikacji w JS/HTML/CSS. Główne cechy wyróżniające Code na tle innych edytorów to m.in.:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;cross-platformowość (sprawdzałem i faktycznie tak jest! :) )&lt;/li&gt;
+&lt;li&gt;debugging aplikacji napisanych w node.js (ASP.NET 5 w przygotowaniu)&lt;/li&gt;
+&lt;li&gt;tasks - integracja z popularnymi narzędziami do automatyzacji buildów, testowania i deployowania (Make, Ant, Gulp, Jake, Rake, MSBuild)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://schemastore.org/json/&#34;&gt;JSON schema&lt;/a&gt; - code-completion w plikach konfiguracyjnych JSON&lt;/li&gt;
+&lt;li&gt;wsparcie TypeScript (code-completion, &lt;em&gt;&amp;ldquo;go to definition&amp;rdquo;&lt;/em&gt; etc.)&lt;/li&gt;
+&lt;li&gt;fuzzy-search - przeszukiwanie plików projektu oraz ustawień edytora (&lt;em&gt;Ctrl+E&lt;/em&gt; i &lt;em&gt;Ctrl-Shift-P&lt;/em&gt;)&lt;/li&gt;
+&lt;li&gt;parsowanie i podgląd &lt;a href=&#34;http://daringfireball.net/projects/markdown/&#34;&gt;Markdown&lt;/a&gt; w locie - w ten sposób powstaje ten post :)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;W obecnej wersji brakuje mi klawiszologii VIM&amp;rsquo;a (jak się człowiek raz przyzwyczai to potem wszystkie inne skróty klawiszowe wydają się bezsensowne) oraz możliwości tworzenia własnych snippetów, co mam nadzieję zostanie dodane w nadchodzących wydaniach.&lt;/p&gt;
+
+&lt;p&gt;Polecam zapoznać się z tym edytorem. Pomimo wersji &lt;em&gt;Preview&lt;/em&gt; posiada masę fajnych funkcjonalności.&lt;/p&gt;
+
+&lt;h2 id=&#34;monaco:6d2be7abc42720062e9271b30ee0bbbf&#34;&gt;Monaco?&lt;/h2&gt;
+
+&lt;p&gt;Jeśli po ściągnięciu Code&amp;rsquo;a masz wrażenie graniczące z pewnością, że gdzieś już to widziałeś to masz całkowitą rację! Microsoft do jego budowy oprócz wspomnianego Atoma wykorzystał &lt;a href=&#34;http://blogs.msdn.com/b/monaco/archive/2014/06/26/how-to-access-visual-studio-online-monaco-from-the-new-azure-portal.aspx&#34;&gt;&lt;strong&gt;Visual Studio Monaco&lt;/strong&gt;&lt;/a&gt;, które jako rozszerzenie można doinstalować w panelu &lt;strong&gt;Azure&lt;/strong&gt; do dowolnej aplikacji na nim hostowanej. Monaco to webowy edytor w &lt;em&gt;&amp;ldquo;chmurze&amp;rdquo;&lt;/em&gt; zintegrowany z wierszem poleceń (dostęp do &lt;code&gt;node&lt;/code&gt; i &lt;code&gt;npm&lt;/code&gt;). Preinstalowany node.js pozwala na hostowanie aplikacji webowych przy użyciu &lt;a href=&#34;https://github.com/tjanczuk/iisnode&#34;&gt;iisnode&lt;/a&gt;. Może posłużyć jako pomoc podczas szybkiej edycji pliku na serwerze albo jako IDE w chmurze :)&lt;/p&gt;
+
+&lt;p&gt;Od jakiegoś czasu na blogu MSDN zaprzestano informować o jakichkolwiek newsach związanych z rozwojem Monaco. Jednak po konferencji &lt;strong&gt;//build/&lt;/strong&gt; nie mam wątpliwości, że Microsoft szykował się na premierę swojego nowego edytora i tak na prawdę tworzył dwa narzędzia równocześnie (pod spodem są te same bebechy: node.js i WebKit).&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;protip: naciśnij F12 w edytorze &lt;strong&gt;Code&lt;/strong&gt; i wszystko jasne!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Jestem ciekawy czy w przyszłości te dwa projekty staną się jednym tworem.&lt;/p&gt;
+
+&lt;h2 id=&#34;changes-changes-everywhere:6d2be7abc42720062e9271b30ee0bbbf&#34;&gt;Changes, changes everywhere!&lt;/h2&gt;
+
+&lt;p&gt;Muszę przyznać, że lubię ten &amp;ldquo;nowy Microsoft&amp;rdquo;. Edge, ASP.NET vNext, DNX, Code czy rozwój PowerShella sprawiają, że Windows i jego cały ekosystem stają się bardziej &amp;ldquo;developer-friendly&amp;rdquo;. To chyba dobrze, że chcą przyciągnąc do platformy developerów - w końcu to oni ją tworzą.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;http://blogs.technet.com/b/uktechnet/archive/2015/04/30/announcements-from-build-2015.aspx&#34;&gt;http://blogs.technet.com/b/uktechnet/archive/2015/04/30/announcements-from-build-2015.aspx&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://code.visualstudio.com&#34;&gt;http://code.visualstudio.com&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://atom.io/&#34;&gt;https://atom.io/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/atom/electron&#34;&gt;https://github.com/atom/electron&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://schemastore.org/json/&#34;&gt;http://schemastore.org/json/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://daringfireball.net/projects/markdown/&#34;&gt;http://daringfireball.net/projects/markdown/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://blogs.msdn.com/b/monaco/archive/2014/06/26/how-to-access-visual-studio-online-monaco-from-the-new-azure-portal.aspx&#34;&gt;http://blogs.msdn.com/b/monaco/archive/2014/06/26/how-to-access-visual-studio-online-monaco-from-the-new-azure-portal.aspx&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/tjanczuk/iisnode&#34;&gt;https://github.com/tjanczuk/iisnode&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
