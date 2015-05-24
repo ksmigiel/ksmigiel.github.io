@@ -5,8 +5,94 @@
     <link>http://ksmigiel.com/tags/typescript/</link>
     <description>Recent content in Typescript on </description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 14 May 2015 16:38:00 +0100</lastBuildDate>
+    <lastBuildDate>Sat, 23 May 2015 18:18:10 +0200</lastBuildDate>
     <atom:link href="http://ksmigiel.com/tags/typescript/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>TypeScript i pliki definicji</title>
+      <link>http://ksmigiel.com/2015/05/jsblocks-dts</link>
+      <pubDate>Sat, 23 May 2015 18:18:10 +0200</pubDate>
+      
+      <guid>http://ksmigiel.com/2015/05/jsblocks-dts</guid>
+      <description>
+
+&lt;p&gt;Dzisiaj chciałem przybliżyć kwestię plików definicji do TypeScript. Jeśli zdarzyło wam się pracować z tym językiem, to na pewno wiecie o czym mówię. Jeśli natomiast nie macie pojęcia co to jest - zapraszam do lektury!&lt;/p&gt;
+
+&lt;h2 id=&#34;typescript-typowany-javascript:08ab5ad69c9b5eb0665d1a4bb3fb6240&#34;&gt;TypeScript - typowany JavaScript&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.typescriptlang.org/&#34;&gt;TypeScript&lt;/a&gt; to język kompilowany do JS&amp;rsquo;a prosto od Microsoftu. W wielkim skrócie pozwala na definiowanie typów dla zmiennych, co za tym idzie, deklarowanie klas i interfejsów. Chyba nie trzeba tłumaczyć jakim ułatwieniem staje się taka możliwość w pracy każdego programisty, dla którego środowisko &amp;ldquo;js&amp;rsquo;owe&amp;rdquo; nie jest codziennością, a przychodzi ze świata &amp;ldquo;mocno typowanego&amp;rdquo; (C#, Java, cpp).&lt;/p&gt;
+
+&lt;p&gt;Tworząc tego typu rozwiązanie Microsoft bardzo elegancko zachęca programistów C# do spróbowania swoich sił w tworzeniu aplikacji przy użyciu całego js-stack. Dzięki podobieństwom w składni i modelu OOP (w przeciwieństwie do klasycznego prototypowania w JavaScript) bardzo szybko można zacząć pisać pierwsze sensowne linie kodu, bez potrzeby spędzenia godzin na nauce składni etc. Oczywiście znajomość JS mile widziana, wręcz wskazana. Spójrzcie na różnice w TS &amp;lt;-&amp;gt; JS na przykładzie kompilacji z oficjalnej strony:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-typescript&#34;&gt;// test.ts
+class Greeter {
+    greeting: string;
+    constructor(message: string) {
+        this.greeting = message;
+    }
+    greet() {
+        return &amp;quot;Hello, &amp;quot; + this.greeting;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;// test.js
+var Greeter = (function () {
+    function Greeter(message) {
+        this.greeting = message;
+    }
+    Greeter.prototype.greet = function () {
+        return &amp;quot;Hello, &amp;quot; + this.greeting;
+    };
+    return Greeter;
+})();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Powyższy kod jest chyba samowyjaśniającysię. Ta śmieszna funkcja w funkcji wywołana natychmiast to tzw. &lt;a href=&#34;http://en.wikipedia.org/wiki/Immediately-invoked_function_expression&#34;&gt;IIFE&lt;/a&gt;. Popularny wzorzec, must-known.&lt;/p&gt;
+
+&lt;p&gt;TypeScript jest na tyle dojrzały, że nawet Google wraz z jego &lt;a href=&#34;https://angular.io/&#34;&gt;Angular 2.0&lt;/a&gt; postanowili wprowadzić natywne wsparcie dla niego!&lt;/p&gt;
+
+&lt;h2 id=&#34;definitywnie-typowany:08ab5ad69c9b5eb0665d1a4bb3fb6240&#34;&gt;Definitywnie typowany!&lt;/h2&gt;
+
+&lt;p&gt;Zastanawiacie się zapewne w jaki sposób można użyć TypeScript&amp;rsquo;a z istniejącymi już bibliotekami takimi jak: angular, knockout, backbone itd. Otóż istnieje &lt;strong&gt;&lt;a href=&#34;https://github.com/borisyankov/DefinitelyTyped&#34;&gt;repozytorium&lt;/a&gt;&lt;/strong&gt; definicji do przeróżnych frameworków tworzone przez społeczność open source. Sam chcąc bliżej poznać TS postanowiłem udzielić się i puściłem pull requesta z definicjami do &lt;a href=&#34;http://jsblocks.com/&#34;&gt;blocks&lt;/a&gt;. &lt;strong&gt;blocks&lt;/strong&gt; to jeden z wielu frameworków &lt;em&gt;MV*&lt;/em&gt; (dzień bez nowego frameworka js to dzień stracony) jednak zainteresował mnie ze względu na swoją prostotę i połączenie knockout+backbone (observable i modele).&lt;/p&gt;
+
+&lt;h2 id=&#34;blocks-d-ts:08ab5ad69c9b5eb0665d1a4bb3fb6240&#34;&gt;blocks.d.ts&lt;/h2&gt;
+
+&lt;p&gt;Deklaracja typów do istniejącego już kodu odbywa się za pomocą &lt;a href=&#34;http://www.typescriptlang.org/Handbook#modules-working-with-other-javascript-libraries&#34;&gt;Ambient External Modules&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-typescript&#34;&gt;declare var blocks: BlocksStatic;
+
+declare module &amp;quot;blocks&amp;quot; {
+    export = blocks;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Deklarując moduł w cudzysłowie &amp;ldquo;nadpisujemy&amp;rdquo; oryginalny moduł zaimportowany w pliku z aplikacją:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-typescript&#34;&gt;/// &amp;lt;reference path=&amp;quot;blocks.d.ts&amp;quot; /&amp;gt;
+import blocks = require(&#39;blocks&#39;);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Jest to całkiem dobra pozycja wyjściowa do otypowania dowolnej biblioteki. Przekonacie się, że całkiem pokaźna ilość bibliotek została już przetłumaczona na TS przeglądając wspomniane wyżej repozytorium.&lt;/p&gt;
+
+&lt;p&gt;TS automagicznie scala oryginalną bibliotekę z naszą definicją typów. Od teraz mamy piękny IntelliSense podpowiadający składnię, parametry funkcji i jej zwracaną wartość (patrz &lt;a href=&#34;http://usejsdoc.org/&#34;&gt;jsdoc&lt;/a&gt;) oraz sprawdzanie składni w locie - wszystko prawie jak w C#!&lt;/p&gt;
+
+&lt;p&gt;Na moim &lt;a href=&#34;https://github.com/ksmigiel/DefinitelyTyped/tree/master/blocks&#34;&gt;githubie&lt;/a&gt; znajdziecie źrodła całego pliku definicji. Dokumentacja pochodzi oczywiście z oficjalnej strony autora. Co jak co, ale ta aktywność związana z opisywaniem typów nauczyła mnie TypeScript&amp;rsquo;a i jego zawiłości szybciej i przyjemniej niż nie jedna książka :)&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.typescriptlang.org/&#34;&gt;http://www.typescriptlang.org/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://en.wikipedia.org/wiki/Immediately-invoked_function_expression&#34;&gt;http://en.wikipedia.org/wiki/Immediately-invoked_function_expression&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://angular.io/&#34;&gt;https://angular.io/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/borisyankov/DefinitelyTyped&#34;&gt;https://github.com/borisyankov/DefinitelyTyped&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://jsblocks.com/&#34;&gt;http://jsblocks.com/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.typescriptlang.org/Handbook#modules-working-with-other-javascript-libraries&#34;&gt;http://www.typescriptlang.org/Handbook#modules-working-with-other-javascript-libraries&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://usejsdoc.org/&#34;&gt;http://usejsdoc.org/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ksmigiel/DefinitelyTyped/tree/master/blocks&#34;&gt;https://github.com/ksmigiel/DefinitelyTyped/tree/master/blocks&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
     
     <item>
       <title>Visual Studio Code</title>
