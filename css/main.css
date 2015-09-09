@@ -2406,7 +2406,7 @@ article {
     display: block; }
     article pre code {
       padding-left: 5% !important;
-      /* font-size: 1.1em; */
+      font-size: 1.1em;
       border: 0; }
   article code {
     border-bottom: 1px solid #ddd;
