@@ -5,8 +5,78 @@
     <link>http://ksmigiel.com/post/</link>
     <description>Recent content in Posts on </description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 09 Sep 2015 10:26:38 +0200</lastBuildDate>
+    <lastBuildDate>Fri, 25 Sep 2015 17:26:38 +0200</lastBuildDate>
     <atom:link href="http://ksmigiel.com/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Kulisy DevTalka cz. 1</title>
+      <link>http://ksmigiel.com/2015/09/devtalk-cz1</link>
+      <pubDate>Fri, 25 Sep 2015 17:26:38 +0200</pubDate>
+      
+      <guid>http://ksmigiel.com/2015/09/devtalk-cz1</guid>
+      <description>
+
+&lt;p&gt;Tak jak obiecywałem w poprzednim poście - nadszedł moment na podsumowanie ubiegłego roku podcastowego. Z perspektywy czasu żałuję, że nie prowadziłem szczegółowych statystyk (chociażby takich jak sumaryczny czas spędzony w edytorze audio), ale postaram się to jakoś poglądowo wyestymować :).&lt;/p&gt;
+
+&lt;p&gt;W części pierwszej opiszę sprzęt z jakiego korzystałem z krótkim opisem co to jest (szczególnie dla czytelników niezaznajomionych z branżą pro-audio).
+W części drugiej postaram się krótko, lecz treściwie przedstawić proces produkcji odcinka podcasta (załadowanie ścieżek, wyrównanie poziomów głośności i normalizacja, efekty - (odszumianie, equalizacja, kompresja), edycja, mastering i render).&lt;/p&gt;
+
+&lt;h2 id=&#34;hardware:dce4ce542c9f7a851fd046a02392be71&#34;&gt;Hardware&lt;/h2&gt;
+
+&lt;p&gt;Zdążyłem się już pochwalić nowym sprzętem, a drugi raz pochwalić się nie zaszkodzi. Jest to typowy sprzęt przeznaczony do &lt;em&gt;home-recordingu&lt;/em&gt;, co wcale nie musi kojarzyć się z amatorszczyzną. Ze względu na dobre parametry techniczne i stosunkowo dobry stosunek jakości przetworników cyfrowych do ceny, wprawne ucho wyprodukuje płytę CD, udźwiękowienie filmu w żaden sposób nie odbiegające od branżowych standardów (profesjonalnych nagrań).&lt;/p&gt;
+
+&lt;h3 id=&#34;odsłuch:dce4ce542c9f7a851fd046a02392be71&#34;&gt;Odsłuch&lt;/h3&gt;
+
+&lt;p&gt;Za odsłuch służą mi monitory bliskiego pola: &lt;strong&gt;M-Audio BX5 D2&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://zapp1.staticworld.net/reviews/graphics/products/uploaded/maudio_bx5_d2s_speaker_system_1147635_g1.jpg&#34; alt=&#34;M-Audio BX5 D2&#34; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Są to monitory aktywne i nie potrzebują osobnego wzmacniacza. Studyjne monitory odsłuchowe wyróżnia spośród innego sprzętu audio charakterystyka częstotliwościowa, która w tym wypadku powinna być jak najbardziej liniowa. Pozwala ona na odsłuch w brzmieniu jak najbardziej zbliżonym do rzeczywistego (źródła dźwięku), tj. bez żadnego podbicia basu, wycięcia środka czy &amp;ldquo;wysokich&amp;rdquo; górek. Dzięki temu tak przygotowany materiał - na &amp;ldquo;surowych&amp;rdquo; głośnikach - powinien zabrzmieć dobrze w dowolnym zestawie Hi-Fi czy iPod&amp;rsquo;ie. Oczywiście nie jest to jedyny warunek jaki trzeba spełnić aby nasz materiał był &amp;ldquo;pro&amp;rdquo;, ale o tym za chwilę.&lt;/p&gt;
+
+&lt;h3 id=&#34;interfejs:dce4ce542c9f7a851fd046a02392be71&#34;&gt;Interfejs&lt;/h3&gt;
+
+&lt;p&gt;Na upratego monitory można podłączyć do komputera bez interfejsu (skręcając kable od biedy), ale to właśnie on odgrywa kluczową rolę jeśli chodzi o jakość dźwięku. Porządny przetwornik C/A (cyfrowo-analogowy) pozwala odtwarzać oraz nagrywać muzykę zapisaną w wysokiej &lt;a href=&#34;https://en.wikipedia.org/wiki/Audio_bit_depth&#34;&gt;rozdzielczości&lt;/a&gt; (np. 24-bit), czyli technicznie zawierającą więcej informacji (bitów) przesłanych/odebranych na sekundę. Jest to nic innego jak próba reprezentacji sygnału analogowego w formie cyfrowej. Przekształcenie to nazywamy &lt;a href=&#34;http://livesound.pl/tutoriale/kursy/4011-technika-cyfrowa-przetwarzanie-analogowo-cyfrowe-kwantowanie&#34;&gt;&lt;strong&gt;kwantyzacją&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://documentation.apple.com/en/finalcutpro/usermanual/Art/L01/L0108_BitGraph.png&#34; alt=&#34;quantization&#34; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Wracając do tematu: do pracy używam interfejsu audio USB: &lt;strong&gt;M-Audio M-Track MKII&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://www.muzykaitechnologia.pl/website/var/tmp/image-thumbnails/30101/thumb__auto_793e482fec1c54dd5c5708c057c0e7cc/m-track-mkii--3.jpeg&#34; alt=&#34;m-audio m-track mk2&#34; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Dołączone sterowniki &lt;a href=&#34;https://en.wikipedia.org/wiki/Audio_Stream_Input/Output&#34;&gt;ASIO&lt;/a&gt; umożliwiają uzyskanie niskiej latencji (bliskiej zeru), dzięki czemu opóźnienia między sprzętem &amp;lt;-&amp;gt; oprogramowaniem są prawie całkowicie wyeliminowane.
+Intefrejs ten posiada też wysokiej jakości wejścia mikrofonowe i instrumentalne. Daje to nieograniczone możliwości związane z nagrywaniem sygnału dźwiękowego, który potem ma zostać sklejony w całość (w przeciwieństwie do nagrywania na tzw. &lt;em&gt;&amp;ldquo;setkę&amp;rdquo;&lt;/em&gt;, gdzie każdy muzyk zajmuje osobny kanał i cała kapela nagrywa na żywca). Za często z tej możliwości nie korzystam, ponieważ wszystkie potrzebne ścieżki do odcinka czekają na mnie na GDrive. Jak w końcu umebluję pokój po przeprowadzce na to małe studyjko, to może coś nagram i się podzielę :)&lt;/p&gt;
+
+&lt;h2 id=&#34;software:dce4ce542c9f7a851fd046a02392be71&#34;&gt;Software&lt;/h2&gt;
+
+&lt;p&gt;Obecnie na rynku jest masa edytorów audio. Od prostych i darmowych (&lt;a href=&#34;http://audacityteam.org/&#34;&gt;Audacity&lt;/a&gt;) po bardzo zaawansowane kombajny takie jak: &lt;a href=&#34;http://www.avid.com/US/products/family/pro-tools/&#34;&gt;Pro Tools&lt;/a&gt;, &lt;a href=&#34;http://www.steinberg.net/en/home.html&#34;&gt;Cubase&lt;/a&gt; czy &lt;a href=&#34;https://www.ableton.com/&#34;&gt;Ableton&lt;/a&gt;, które określane są mianem &lt;strong&gt;DAW&lt;/strong&gt; (&lt;em&gt;ang. Digital Audio Workstation&lt;/em&gt;). Z którego narzędzia korzysta producent, to kwestia budżetu, przyzwyczajenia oraz &amp;ldquo;religijności&amp;rdquo; (tak, fan-boy&amp;rsquo;ie każdej technologii są wszędzie!). Ja po paru próbach (udanych bądź mniej) ostatecznie wybrałem swoje ulubione narzędzie pracy, którym jest &lt;a href=&#34;http://www.reaper.fm/&#34;&gt;&lt;strong&gt;Reaper&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;reaper:dce4ce542c9f7a851fd046a02392be71&#34;&gt;Reaper&lt;/h3&gt;
+
+&lt;div style=&#34;text-align: center&#34;&gt;
+&lt;img src=&#34;https://lh3.googleusercontent.com/-mtompVfMRoU/VNgzXSQUQDI/AAAAAAAAQvo/KD7l2ZHJFqM/s256-no/Cockos%2BREAPER.png&#34; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Relatywnie tani z potężnymi możliwościami edytor niesamowicie przypadł mi do gustu. Praktycznie podczas każdej edycji odcinka podcasta uczę się czegoś nowego, wymyślam coraz to nowe makra, które automatyzują moją pracę i póki co nie zamieniłbym się na żaden inny edytor :). W następnym poście napiszę o nim więcej.&lt;/p&gt;
+
+&lt;h2 id=&#34;óho:dce4ce542c9f7a851fd046a02392be71&#34;&gt;Óho&lt;/h2&gt;
+
+&lt;p&gt;Najważniejszym elementem jakiegokolwiek studia jest &lt;strong&gt;ucho&lt;/strong&gt; (a nawet dwa). Bez zmysłu muzycznego (i oczywiście sprawnego ucha), nawet z pomocą najlepszego sprzętu i najdroższego programu nie będziemy w stanie dorównać poziomowi profesjonalnym nagrań. W tym wypadku jak w każdej innej branży, a szczególnie naszej - programistycznej - tylko ciężka praca i ciągła praktyka przyniesie wymierne efekty, bo narzędzia to tylko narzędzia.
+A ja ciąglę praktykuję i mam nadzieję, że z przyjemnością słucha wam się każdego odcinka &lt;a href=&#34;http://www.devtalk.pl&#34;&gt;DevTalk&amp;rsquo;a&lt;/a&gt; :)&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Audio_bit_depth&#34;&gt;https://en.wikipedia.org/wiki/Audio_bit_depth&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://livesound.pl/tutoriale/kursy/4011-technika-cyfrowa-przetwarzanie-analogowo-cyfrowe-kwantowanie&#34;&gt;http://livesound.pl/tutoriale/kursy/4011-technika-cyfrowa-przetwarzanie-analogowo-cyfrowe-kwantowanie&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Audio_Stream_Input/Output&#34;&gt;https://en.wikipedia.org/wiki/Audio_Stream_Input/Output&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.reaper.fm/&#34;&gt;http://www.reaper.fm/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.devtalk.pl&#34;&gt;http://www.devtalk.pl&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
     
     <item>
       <title>Koniec odpoczynku</title>
