@@ -5,8 +5,106 @@
     <link>http://ksmigiel.com/tags/audio/</link>
     <description>Recent content in Audio on </description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 25 Sep 2015 17:26:38 +0200</lastBuildDate>
+    <lastBuildDate>Wed, 18 Nov 2015 17:26:38 +0100</lastBuildDate>
     <atom:link href="http://ksmigiel.com/tags/audio/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Kulisy DevTalka cz. 2</title>
+      <link>http://ksmigiel.com/2015/11/devtalk-cz2</link>
+      <pubDate>Wed, 18 Nov 2015 17:26:38 +0100</pubDate>
+      
+      <guid>http://ksmigiel.com/2015/11/devtalk-cz2</guid>
+      <description>
+
+&lt;p&gt;Dzisiaj przedstawię proces powstawania odcinka DevTalk&amp;rsquo;a od strony audio-technicznej. Nie zabraknie obrazków i orientalnych pojęć, więc każdy znajdzie coś dla siebie - nudy nie bedzię :)&lt;/p&gt;
+
+&lt;h2 id=&#34;przygotowanie-projektu:ee57e4abed1f49f2ac13a466738529d0&#34;&gt;Przygotowanie projektu&lt;/h2&gt;
+
+&lt;p&gt;Pierwsze co robię przed przystąpieniem do jakiejkolwiek pracy nad nowym odcinkiem DevTalk&amp;rsquo;a jest przygotowanie projektu:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;opisuję ścieżki (&lt;em&gt;ang. tracks&lt;/em&gt;) i koloruję je, żebym wiedział co jest czym.&lt;/li&gt;
+&lt;li&gt;synchronizuję - rozkładam je odpowiednio w czasie, odtwarzając przy tym naturalny przebieg rozmowy (rozmowa prowadzona przez Skype, jednakże ścieżki są zgrywane osobno). Do tego dochodzi umieszczenie takich elementów jak &lt;strong&gt;intro&lt;/strong&gt;, &lt;strong&gt;outro&lt;/strong&gt; i &lt;strong&gt;jingle&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://ksmigiel.com/images/devtalk/01.jpg&#34;&gt;&lt;img src=&#34;http://ksmigiel.com/images/devtalk/01.jpg&#34; alt=&#34;01&#34; /&gt;
+&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;normalizacja:ee57e4abed1f49f2ac13a466738529d0&#34;&gt;Normalizacja&lt;/h2&gt;
+
+&lt;p&gt;Teraz następuje bardzo ważny krok nazywany &lt;strong&gt;normalizacją&lt;/strong&gt;. Jego wynik będzie wypływał na produkcję przez cały okres pracy, aż po render, dlatego warto poświęcić temu elementowi więcej uwagi.&lt;/p&gt;
+
+&lt;p&gt;Normalizacja polega na &amp;ldquo;unormalnianiu&amp;rdquo; nagrania w zakresie jego głośności i dynamiki, w odniesieniu do reszty materiału dźwiękowego. Na chwilę obecną nasz projekt składa się z czterech plików i ścieżek, gdzie skala problemu nie jest duża. W przypadku projektów muzycznych, w których skład wchodzą 32+ ścieżki jest to już jednak znaczący problem.&lt;/p&gt;
+
+&lt;p&gt;Tak więc naszym celem jest ustandaryzowanie materiału, który dostaliśmy z zewnątrz. Dokonać tego możemy m.in stosując:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://doughnutmag.com/tutorials/music-production/daw-automation/&#34;&gt;automatyzację&lt;/a&gt; i obwiednie (&lt;em&gt;ang. envelopes&lt;/em&gt;)&lt;/li&gt;
+&lt;li&gt;kompresję sygnału audio&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;automatyzacja:ee57e4abed1f49f2ac13a466738529d0&#34;&gt;Automatyzacja&lt;/h3&gt;
+
+&lt;p&gt;Polega na zmianie w czasie pewnych parametrów sygnału (głośność, panorama lub inny dowolny parametr mapowany z &lt;a href=&#34;https://en.wikipedia.org/wiki/Virtual_Studio_Technology&#34;&gt;efektu VST&lt;/a&gt;).
+Krzywą można dowolnie modelować, co pozwala na precyzyjne manipulowanie wspomnianymi parametrami w przeciwieństwie do kompresji, która działa &amp;ldquo;automatycznie&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://ksmigiel.com/images/devtalk/02.jpg&#34;&gt;&lt;img src=&#34;http://ksmigiel.com/images/devtalk/02.jpg&#34; alt=&#34;02&#34; /&gt;
+&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;kompresja:ee57e4abed1f49f2ac13a466738529d0&#34;&gt;Kompresja&lt;/h3&gt;
+
+&lt;p&gt;Kompresor automatycznie zmniejsza dynamikę fragmentu, którego głośność przekracza ustaloną z góry granicę. Najprostszy kompresor będzie charakteryzował się kilkoma parametrami:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;próg (&lt;em&gt;ang. treshold&lt;/em&gt;) - czyli poziom, poniżej którego sygnał pozostanie bez zmian, a powyżej zostanie przekształcony w zadany przez nas sposób&lt;/li&gt;
+&lt;li&gt;współczynnik kompresji (&lt;em&gt;ang. ratio&lt;/em&gt;) - określa stosunek pomiędzy sygnałem bazowym a wtórnym&lt;/li&gt;
+&lt;li&gt;atak (&lt;em&gt;ang. attack&lt;/em&gt;) - podawany w milisekundach czas, po którym kompresor powinien się &amp;ldquo;załączyć&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;uwolnienie (&lt;em&gt;ang. release&lt;/em&gt;) - podwawany w milisekundach czas, po którym kompresor przestaje działać&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://pic002.cnblogs.com/images/2012/381603/2012030610395272.jpg&#34; alt=&#34;compressor&#34; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Zatem przy użyciu kompresora możemy elementy &amp;ldquo;wystające&amp;rdquo;, głośniejsze niż reszta, automatycznie zredukować do wspólnego poziomu. Dziać się to może w czasie rzeczywistym, kiedy efekt zostanie wpięty do ścieżki, lub możemy wyrenderować nowy plik z nałożonymi już efektami.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://ksmigiel.com/images/devtalk/04.jpg&#34;&gt;&lt;img src=&#34;http://ksmigiel.com/images/devtalk/04.jpg&#34; alt=&#34;04&#34; /&gt;
+&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;punkt-odniesienia:ee57e4abed1f49f2ac13a466738529d0&#34;&gt;Punkt odniesienia&lt;/h3&gt;
+
+&lt;p&gt;Podczas normalizacji należy monitorować sygnał i sprawdzać, czy poziomy rzeczywiście są już wyrównane i czy nie pojawia się gdzieś tzw. &amp;ldquo;przester&amp;rdquo; (czyli przekroczenie magicznej granicy 0dB). Osobiście dbam o to, aby sygnał z każdej ścieżki osobno oscylował w granicach -12dB RMS (jest to jednostka uśredniona) oraz aby &amp;ldquo;peak&amp;rdquo;, czyli najgłośniejszy element, nie przekraczał -6dB.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://ksmigiel.com/images/devtalk/03.jpg&#34;&gt;&lt;img src=&#34;http://ksmigiel.com/images/devtalk/03.jpg&#34; alt=&#34;03&#34; /&gt;
+&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Ciekawych dlaczego 0dB w świecie cyfrowym jest sygnałem maksymalnym zapraszam do poczytania wytłumaczenia na &lt;a href=&#34;http://sound.stackexchange.com/questions/25529/what-is-0-db-in-digital-audio&#34;&gt;stackexchange&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;edycja:ee57e4abed1f49f2ac13a466738529d0&#34;&gt;Edycja&lt;/h2&gt;
+
+&lt;p&gt;Następnym krokiem będzie edycja sygnału audio. Mając przygotowany w poprzednich krokach materiał możemy przystąpić do jego edycji. W moim przypadku proces ten wygląda najczęściej w ten sposób:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;odszumienie nagrań (dobrze żeby zrobic to przed kompresją) - używając wtyczki &lt;strong&gt;ReaFir (FFT EQ + Dynamic Processor)&lt;/strong&gt; wystarczy pobrać próbkę szumu z sygnału&lt;/li&gt;
+&lt;li&gt;equalizacja - za pomocą korektora graficznego zbędne pasma wycinam (high-pass filter), niektóre podbijam, aby końcowo uzyskać spójne i naturalne brzmienie całego mixu (jak i każdej ścieżek z osobna)&lt;/li&gt;
+&lt;li&gt;cięcie - usuwanie drobnych pomyłek, przerw, oddechów, mlasknięć itp. itd., czyli pozbywanie się wszystkiego czego nie powinno być w ostatecznej wersji odcinka&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;mastering:ee57e4abed1f49f2ac13a466738529d0&#34;&gt;Mastering&lt;/h2&gt;
+
+&lt;p&gt;Na ten moment odcinek jest już prawie gotowy. Jeśli mix potrzebuje jakichkolwiek zmian, to powinny się one odbywać jedynie w ujęciu globalnym, tj. na ścieżce głównej. Zazwyczaj jest to drobna korekcja EQ, lekka kompresja, raczej nic znaczącego, a jednak :) Ostatnim elementem tego audio-łańcuchu jest &lt;strong&gt;limiter&lt;/strong&gt;, który nasz mix wyrówna do ustalonego poziomu bliskiemu ~0dB, aby brzmiał tak samo głośno jak inne audio, podcasty, spotifaje itd. Potem zostaje render do wybranego przez nas formatu i gotowy produkt można publikować i czekać na lajki.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://ksmigiel.com/images/devtalk/05.jpg&#34;&gt;&lt;img src=&#34;http://ksmigiel.com/images/devtalk/05.jpg&#34; alt=&#34;05&#34; /&gt;
+&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;http://doughnutmag.com/tutorials/music-production/daw-automation/&#34;&gt;http://doughnutmag.com/tutorials/music-production/daw-automation/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Virtual_Studio_Technology&#34;&gt;https://en.wikipedia.org/wiki/Virtual_Studio_Technology&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://sound.stackexchange.com/questions/25529/what-is-0-db-in-digital-audio&#34;&gt;http://sound.stackexchange.com/questions/25529/what-is-0-db-in-digital-audio&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
     
     <item>
       <title>Kulisy DevTalka cz. 1</title>
