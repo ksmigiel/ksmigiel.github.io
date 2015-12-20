@@ -65,8 +65,7 @@
 <li>synchronizuję - rozkładam je odpowiednio w czasie, odtwarzając przy tym naturalny przebieg rozmowy (rozmowa prowadzona przez Skype, jednakże ścieżki są zgrywane osobno). Do tego dochodzi umieszczenie takich elementów jak <strong>intro</strong>, <strong>outro</strong> i <strong>jingle</strong>.</li>
 </ul>
 
-<p><a href="/images/devtalk/01.jpg"><img src="/images/devtalk/01.jpg" alt="01" />
-</a></p>
+<p><a href="/images/devtalk/01.jpg"><img src="/images/devtalk/01.jpg" alt="01" /></a></p>
 
 <h2 id="normalizacja:ee57e4abed1f49f2ac13a466738529d0">Normalizacja</h2>
 
@@ -86,8 +85,7 @@
 <p>Polega na zmianie w czasie pewnych parametrów sygnału (głośność, panorama lub inny dowolny parametr mapowany z <a href="https://en.wikipedia.org/wiki/Virtual_Studio_Technology">efektu VST</a>).
 Krzywą można dowolnie modelować, co pozwala na precyzyjne manipulowanie wspomnianymi parametrami w przeciwieństwie do kompresji, która działa &ldquo;automatycznie&rdquo;.</p>
 
-<p><a href="/images/devtalk/02.jpg"><img src="/images/devtalk/02.jpg" alt="02" />
-</a></p>
+<p><a href="/images/devtalk/02.jpg"><img src="/images/devtalk/02.jpg" alt="02" /></a></p>
 
 <h3 id="kompresja:ee57e4abed1f49f2ac13a466738529d0">Kompresja</h3>
 
@@ -100,20 +98,17 @@ Krzywą można dowolnie modelować, co pozwala na precyzyjne manipulowanie wspom
 <li>uwolnienie (<em>ang. release</em>) - podwawany w milisekundach czas, po którym kompresor przestaje działać</li>
 </ul>
 
-<p><img src="http://pic002.cnblogs.com/images/2012/381603/2012030610395272.jpg" alt="compressor" />
-</p>
+<p><img src="http://pic002.cnblogs.com/images/2012/381603/2012030610395272.jpg" alt="compressor" /></p>
 
 <p>Zatem przy użyciu kompresora możemy elementy &ldquo;wystające&rdquo;, głośniejsze niż reszta, automatycznie zredukować do wspólnego poziomu. Dziać się to może w czasie rzeczywistym, kiedy efekt zostanie wpięty do ścieżki, lub możemy wyrenderować nowy plik z nałożonymi już efektami.</p>
 
-<p><a href="/images/devtalk/04.jpg"><img src="/images/devtalk/04.jpg" alt="04" />
-</a></p>
+<p><a href="/images/devtalk/04.jpg"><img src="/images/devtalk/04.jpg" alt="04" /></a></p>
 
 <h3 id="punkt-odniesienia:ee57e4abed1f49f2ac13a466738529d0">Punkt odniesienia</h3>
 
 <p>Podczas normalizacji należy monitorować sygnał i sprawdzać, czy poziomy rzeczywiście są już wyrównane i czy nie pojawia się gdzieś tzw. &ldquo;przester&rdquo; (czyli przekroczenie magicznej granicy 0dB). Osobiście dbam o to, aby sygnał z każdej ścieżki osobno oscylował w granicach -12dB RMS (jest to jednostka uśredniona) oraz aby &ldquo;peak&rdquo;, czyli najgłośniejszy element, nie przekraczał -6dB.</p>
 
-<p><a href="/images/devtalk/03.jpg"><img src="/images/devtalk/03.jpg" alt="03" />
-</a></p>
+<p><a href="/images/devtalk/03.jpg"><img src="/images/devtalk/03.jpg" alt="03" /></a></p>
 
 <p>Ciekawych dlaczego 0dB w świecie cyfrowym jest sygnałem maksymalnym zapraszam do poczytania wytłumaczenia na <a href="http://sound.stackexchange.com/questions/25529/what-is-0-db-in-digital-audio">stackexchange</a>.</p>
 
@@ -131,8 +126,7 @@ Krzywą można dowolnie modelować, co pozwala na precyzyjne manipulowanie wspom
 
 <p>Na ten moment odcinek jest już prawie gotowy. Jeśli mix potrzebuje jakichkolwiek zmian, to powinny się one odbywać jedynie w ujęciu globalnym, tj. na ścieżce głównej. Zazwyczaj jest to drobna korekcja EQ, lekka kompresja, raczej nic znaczącego, a jednak :) Ostatnim elementem tego audio-łańcuchu jest <strong>limiter</strong>, który nasz mix wyrówna do ustalonego poziomu bliskiemu ~0dB, aby brzmiał tak samo głośno jak inne audio, podcasty, spotifaje itd. Potem zostaje render do wybranego przez nas formatu i gotowy produkt można publikować i czekać na lajki.</p>
 
-<p><a href="/images/devtalk/05.jpg"><img src="/images/devtalk/05.jpg" alt="05" />
-</a></p>
+<p><a href="/images/devtalk/05.jpg"><img src="/images/devtalk/05.jpg" alt="05" /></a></p>
 
 <hr />
 

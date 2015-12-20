@@ -27,8 +27,7 @@
 &lt;li&gt;synchronizuję - rozkładam je odpowiednio w czasie, odtwarzając przy tym naturalny przebieg rozmowy (rozmowa prowadzona przez Skype, jednakże ścieżki są zgrywane osobno). Do tego dochodzi umieszczenie takich elementów jak &lt;strong&gt;intro&lt;/strong&gt;, &lt;strong&gt;outro&lt;/strong&gt; i &lt;strong&gt;jingle&lt;/strong&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;a href=&#34;http://ksmigiel.com/images/devtalk/01.jpg&#34;&gt;&lt;img src=&#34;http://ksmigiel.com/images/devtalk/01.jpg&#34; alt=&#34;01&#34; /&gt;
-&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://ksmigiel.com/images/devtalk/01.jpg&#34;&gt;&lt;img src=&#34;http://ksmigiel.com/images/devtalk/01.jpg&#34; alt=&#34;01&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&#34;normalizacja:ee57e4abed1f49f2ac13a466738529d0&#34;&gt;Normalizacja&lt;/h2&gt;
 
@@ -48,8 +47,7 @@
 &lt;p&gt;Polega na zmianie w czasie pewnych parametrów sygnału (głośność, panorama lub inny dowolny parametr mapowany z &lt;a href=&#34;https://en.wikipedia.org/wiki/Virtual_Studio_Technology&#34;&gt;efektu VST&lt;/a&gt;).
 Krzywą można dowolnie modelować, co pozwala na precyzyjne manipulowanie wspomnianymi parametrami w przeciwieństwie do kompresji, która działa &amp;ldquo;automatycznie&amp;rdquo;.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;http://ksmigiel.com/images/devtalk/02.jpg&#34;&gt;&lt;img src=&#34;http://ksmigiel.com/images/devtalk/02.jpg&#34; alt=&#34;02&#34; /&gt;
-&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://ksmigiel.com/images/devtalk/02.jpg&#34;&gt;&lt;img src=&#34;http://ksmigiel.com/images/devtalk/02.jpg&#34; alt=&#34;02&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;kompresja:ee57e4abed1f49f2ac13a466738529d0&#34;&gt;Kompresja&lt;/h3&gt;
 
@@ -62,20 +60,17 @@ Krzywą można dowolnie modelować, co pozwala na precyzyjne manipulowanie wspom
 &lt;li&gt;uwolnienie (&lt;em&gt;ang. release&lt;/em&gt;) - podwawany w milisekundach czas, po którym kompresor przestaje działać&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://pic002.cnblogs.com/images/2012/381603/2012030610395272.jpg&#34; alt=&#34;compressor&#34; /&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://pic002.cnblogs.com/images/2012/381603/2012030610395272.jpg&#34; alt=&#34;compressor&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Zatem przy użyciu kompresora możemy elementy &amp;ldquo;wystające&amp;rdquo;, głośniejsze niż reszta, automatycznie zredukować do wspólnego poziomu. Dziać się to może w czasie rzeczywistym, kiedy efekt zostanie wpięty do ścieżki, lub możemy wyrenderować nowy plik z nałożonymi już efektami.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;http://ksmigiel.com/images/devtalk/04.jpg&#34;&gt;&lt;img src=&#34;http://ksmigiel.com/images/devtalk/04.jpg&#34; alt=&#34;04&#34; /&gt;
-&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://ksmigiel.com/images/devtalk/04.jpg&#34;&gt;&lt;img src=&#34;http://ksmigiel.com/images/devtalk/04.jpg&#34; alt=&#34;04&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;punkt-odniesienia:ee57e4abed1f49f2ac13a466738529d0&#34;&gt;Punkt odniesienia&lt;/h3&gt;
 
 &lt;p&gt;Podczas normalizacji należy monitorować sygnał i sprawdzać, czy poziomy rzeczywiście są już wyrównane i czy nie pojawia się gdzieś tzw. &amp;ldquo;przester&amp;rdquo; (czyli przekroczenie magicznej granicy 0dB). Osobiście dbam o to, aby sygnał z każdej ścieżki osobno oscylował w granicach -12dB RMS (jest to jednostka uśredniona) oraz aby &amp;ldquo;peak&amp;rdquo;, czyli najgłośniejszy element, nie przekraczał -6dB.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;http://ksmigiel.com/images/devtalk/03.jpg&#34;&gt;&lt;img src=&#34;http://ksmigiel.com/images/devtalk/03.jpg&#34; alt=&#34;03&#34; /&gt;
-&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://ksmigiel.com/images/devtalk/03.jpg&#34;&gt;&lt;img src=&#34;http://ksmigiel.com/images/devtalk/03.jpg&#34; alt=&#34;03&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;Ciekawych dlaczego 0dB w świecie cyfrowym jest sygnałem maksymalnym zapraszam do poczytania wytłumaczenia na &lt;a href=&#34;http://sound.stackexchange.com/questions/25529/what-is-0-db-in-digital-audio&#34;&gt;stackexchange&lt;/a&gt;.&lt;/p&gt;
 
@@ -93,8 +88,7 @@ Krzywą można dowolnie modelować, co pozwala na precyzyjne manipulowanie wspom
 
 &lt;p&gt;Na ten moment odcinek jest już prawie gotowy. Jeśli mix potrzebuje jakichkolwiek zmian, to powinny się one odbywać jedynie w ujęciu globalnym, tj. na ścieżce głównej. Zazwyczaj jest to drobna korekcja EQ, lekka kompresja, raczej nic znaczącego, a jednak :) Ostatnim elementem tego audio-łańcuchu jest &lt;strong&gt;limiter&lt;/strong&gt;, który nasz mix wyrówna do ustalonego poziomu bliskiemu ~0dB, aby brzmiał tak samo głośno jak inne audio, podcasty, spotifaje itd. Potem zostaje render do wybranego przez nas formatu i gotowy produkt można publikować i czekać na lajki.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;http://ksmigiel.com/images/devtalk/05.jpg&#34;&gt;&lt;img src=&#34;http://ksmigiel.com/images/devtalk/05.jpg&#34; alt=&#34;05&#34; /&gt;
-&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://ksmigiel.com/images/devtalk/05.jpg&#34;&gt;&lt;img src=&#34;http://ksmigiel.com/images/devtalk/05.jpg&#34; alt=&#34;05&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;hr /&gt;
 
@@ -127,8 +121,7 @@ W części drugiej postaram się krótko, lecz treściwie przedstawić proces pr
 
 &lt;p&gt;Za odsłuch służą mi monitory bliskiego pola: &lt;strong&gt;M-Audio BX5 D2&lt;/strong&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://zapp1.staticworld.net/reviews/graphics/products/uploaded/maudio_bx5_d2s_speaker_system_1147635_g1.jpg&#34; alt=&#34;M-Audio BX5 D2&#34; /&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zapp1.staticworld.net/reviews/graphics/products/uploaded/maudio_bx5_d2s_speaker_system_1147635_g1.jpg&#34; alt=&#34;M-Audio BX5 D2&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Są to monitory aktywne i nie potrzebują osobnego wzmacniacza. Studyjne monitory odsłuchowe wyróżnia spośród innego sprzętu audio charakterystyka częstotliwościowa, która w tym wypadku powinna być jak najbardziej liniowa. Pozwala ona na odsłuch w brzmieniu jak najbardziej zbliżonym do rzeczywistego (źródła dźwięku), tj. bez żadnego podbicia basu, wycięcia środka czy &amp;ldquo;wysokich&amp;rdquo; górek. Dzięki temu tak przygotowany materiał - na &amp;ldquo;surowych&amp;rdquo; głośnikach - powinien zabrzmieć dobrze w dowolnym zestawie Hi-Fi czy iPod&amp;rsquo;ie. Oczywiście nie jest to jedyny warunek jaki trzeba spełnić aby nasz materiał był &amp;ldquo;pro&amp;rdquo;, ale o tym za chwilę.&lt;/p&gt;
 
@@ -136,13 +129,11 @@ W części drugiej postaram się krótko, lecz treściwie przedstawić proces pr
 
 &lt;p&gt;Na upratego monitory można podłączyć do komputera bez interfejsu (skręcając kable od biedy), ale to właśnie on odgrywa kluczową rolę jeśli chodzi o jakość dźwięku. Porządny przetwornik C/A (cyfrowo-analogowy) pozwala odtwarzać oraz nagrywać muzykę zapisaną w wysokiej &lt;a href=&#34;https://en.wikipedia.org/wiki/Audio_bit_depth&#34;&gt;rozdzielczości&lt;/a&gt; (np. 24-bit), czyli technicznie zawierającą więcej informacji (bitów) przesłanych/odebranych na sekundę. Jest to nic innego jak próba reprezentacji sygnału analogowego w formie cyfrowej. Przekształcenie to nazywamy &lt;a href=&#34;http://livesound.pl/tutoriale/kursy/4011-technika-cyfrowa-przetwarzanie-analogowo-cyfrowe-kwantowanie&#34;&gt;&lt;strong&gt;kwantyzacją&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://documentation.apple.com/en/finalcutpro/usermanual/Art/L01/L0108_BitGraph.png&#34; alt=&#34;quantization&#34; /&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://documentation.apple.com/en/finalcutpro/usermanual/Art/L01/L0108_BitGraph.png&#34; alt=&#34;quantization&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Wracając do tematu: do pracy używam interfejsu audio USB: &lt;strong&gt;M-Audio M-Track MKII&lt;/strong&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://www.muzykaitechnologia.pl/website/var/tmp/image-thumbnails/30101/thumb__auto_793e482fec1c54dd5c5708c057c0e7cc/m-track-mkii--3.jpeg&#34; alt=&#34;m-audio m-track mk2&#34; /&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://www.muzykaitechnologia.pl/website/var/tmp/image-thumbnails/30101/thumb__auto_793e482fec1c54dd5c5708c057c0e7cc/m-track-mkii--3.jpeg&#34; alt=&#34;m-audio m-track mk2&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Dołączone sterowniki &lt;a href=&#34;https://en.wikipedia.org/wiki/Audio_Stream_Input/Output&#34;&gt;ASIO&lt;/a&gt; umożliwiają uzyskanie niskiej latencji (bliskiej zeru), dzięki czemu opóźnienia między sprzętem &amp;lt;-&amp;gt; oprogramowaniem są prawie całkowicie wyeliminowane.
 Intefrejs ten posiada też wysokiej jakości wejścia mikrofonowe i instrumentalne. Daje to nieograniczone możliwości związane z nagrywaniem sygnału dźwiękowego, który potem ma zostać sklejony w całość (w przeciwieństwie do nagrywania na tzw. &lt;em&gt;&amp;ldquo;setkę&amp;rdquo;&lt;/em&gt;, gdzie każdy muzyk zajmuje osobny kanał i cała kapela nagrywa na żywca). Za często z tej możliwości nie korzystam, ponieważ wszystkie potrzebne ścieżki do odcinka czekają na mnie na GDrive. Jak w końcu umebluję pokój po przeprowadzce na to małe studyjko, to może coś nagram i się podzielę :)&lt;/p&gt;
