@@ -1,0 +1,224 @@
+<!doctype html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jak naprawiłem rb-gateway - Krzysztof Śmigiel | Blog</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:700,600,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link href="http://ksmigiel.com//index.xml" rel="alternate" type="application/rss+xml" title="Krzysztof Śmigiel | Blog" />
+  <meta name="title" content="http://ksmigiel.com/">
+  <link rel="canonical" href="http://ksmigiel.com/">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/github.min.css">
+  <script src="/js/highlight.js"></script>
+  <meta property="og:title" content="Krzysztof Śmigiel | Blog"/>
+  <meta property="og:url" content="http://ksmigiel.com/"/>
+  <meta property="og:image" content="http://ksmigiel.com//images/"/>   
+  <meta property="og:site_name" content="Krzysztof Śmigiel | Blog">
+</head>
+<body>
+<section class="site-nav">
+  <header>
+    <nav id="navigation">
+      <a href="/" class="home">Blog</a>
+      <a href="/tags">Tagi</a>
+      <a href="/post">Archiwum</a>
+      <a href="/about">O mnie</a>
+    </nav>
+  </header>
+</section>
+
+
+  
+  <article>
+    <div class="container">
+      <header>
+        <div class="meta">
+          Autor <address><a rel="author" href="http://ksmigiel.com" title="Krzysztof Śmigiel" target="_blank">Krzysztof Śmigiel</a></address> &mdash;
+          <time pubdate datetime="2016-02-26" title="2016-02-26">26 February 2016</time>
+          <ul id="tags">
+            
+            <li><a href="/tags/opensource">#opensource</a> </li>
+            
+            <li><a href="/tags/golang">#golang</a> </li>
+            
+            <li><a href="/tags/reviewboard">#reviewboard</a> </li>
+            
+          </ul>
+        </div>
+        <h1 class="title">Jak naprawiłem rb-gateway</h1>
+        <h2 class="subtitle">Stąpanie po open sourcowej ziemi</h2>
+      </header>
+
+      <section>
+        
+
+<p>Zawsze zastanawiałem się jak to jest, że ci wszyscy programiści <strong>open source</strong> znajdują czas na pisanie kodu po pracy. Kod open source kojarzył mi się jednoznacznie z czymś darmowym, charytatywnym. Było dla mnie dużym zaskoczeniem, gdy dowiedziałem się o programistach opłacanych m.in przez <strong>Red Hat</strong> i uświadomiłem wtedy sobie, że otwartość kodu wcale nie sugeruje amatorskiego poziomu. Było to dawno temu, ale ten moment <em>&ldquo;olśnienia&rdquo;</em> pamiętam do dziś.</p>
+
+<h2 id="open-source:bfcbe129b554ba1a8bf5f0da631bf673">Open source</h2>
+
+<p>Jeszcze zanim zacząłem pracować, idea przynależności do projektu programistycznego, takiego z prawdziwego zdarzenia, była czymś ekscytującym. Tworzenie narzędzia używanego przez tysiące osób, dojrzały codebase z testami, dobrymi praktykami i nienaganną architekturą - nic tylko kodzić. Jednak pomimo wielu prób nie udało mi się nigdy znaleźć jednego, konkretnego projektu, z którym mógłbym się utożsamiać jako &ldquo;współtwórca&rdquo;. Repozytoriów / projektów jest ile bądź i chyba ze względu na ich zróżnicowanie (język, poziom abstrakcji, community) wybór nie należy do łatwych.</p>
+
+<h3 id="kontrybucja:bfcbe129b554ba1a8bf5f0da631bf673">Kontrybucja</h3>
+
+<p>Do open source można też podejść z innej strony: zawężając zakres poszukiwań do projektów, z których obecnie korzystamy (lub korzystaliśmy). Daje nam to pewną przewagę, gdyż mamy pojęcie co dana biblioteka lub framework robi i jak jej używać. Oprócz tego często w bug-trackerach natrafić można na tzw. <strong>low hanging fruits</strong>, czyli proste zadania dla każdego. Istnieje nawet <a href="http://up-for-grabs.net/">platforma</a> będąca agregatorem takich właśnie tasków. Kto jest bardziej ambitny niech od razu łapie się za konkrety idąc za śladem <a href="http://davidvgalbraith.com/how-i-fixed-node-js/">tego pana</a> - lenistwo po święcie dziękczynienia najlepszym motorem do pracy! To co jednak zmotywuje do <em>&ldquo;zakontrybutowania&rdquo;</em> każdego, to możliwość naprawienia znalezionego błędu w używanej przez siebie bibliotece i o tym krótko dziś napiszę.</p>
+
+<h2 id="moja-cegiełka-w-rb-gateway:bfcbe129b554ba1a8bf5f0da631bf673">Moja cegiełka w rb-gateway</h2>
+
+<p>Wspieranie lokalnych repozytoriów w <a href="http://reviewboard.org/">ReviewBoardzie</a> jest mocno ograniczone. Chcąc korzystać ze wszystkich jego funkcjonalności konieczne jest skorzystanie z narzędzia zwanego <strong>rb-gateway</strong>.  <a href="https://github.com/reviewboard/rb-gateway/">rb-gateway</a> jest to proxy między repozytorium gita, a ReviewBoardem - prosty serwer HTTP pełniący funkcję API, napisany w <a href="https://tour.golang.org/welcome/1">go</a>. Nie znalazłem do niego żadnych binarek, co za tym idzie, musiałem skompilować go samodzielnie, jednocześnie ucząc się języka z którego nigdy wcześniej nie korzystałem. Jeśli myślicie, że parę poniższych komend zaczerpniętych z oficjalnej dokumentacji było wystarczające do uruchomienia <em>&ldquo;tego czegoś&rdquo;</em>, to grubo się mylicie!</p>
+
+<pre><code class="language-bash">$ go get -d github.com/reviewboard/rb-gateway
+$ cd github.com/reviewboard/rb-gateway
+$ mv sample_config.json config.json
+$ go get
+$ go install
+</code></pre>
+
+<p>Największą przeszkodą jaką napotkałem podczas próby zbudowania rb-gateway&rsquo;a była jego zależność: <code>git2go</code> i siedzący pod spodem <code>libgit</code> wymagany w wersji <strong>0.22</strong>, a w <a href="https://fedoraproject.org/wiki/EPEL">repozytorium CentOS</a> ostatnia wersja to <strong>0.21</strong>. Co więc musiałem zrobić? Zbudować libgit v0.22 ze źródeł. Na szczęście <a href="https://github.com/libgit2/libgit2">wszystko jest opisane</a> i o dziwo nie napotkałem żadnych problemów. Potem przyszedł czas na konfigurację i testy, które bardzo szybko znalazły pewną nieprawidłowość w działaniu rb-gateway&rsquo;a.</p>
+
+<h3 id="gdzie-są-diffy:bfcbe129b554ba1a8bf5f0da631bf673">Gdzie są diffy!</h3>
+
+<p>Po stworzeniu nowego <em>review requesta</em> załączał się tylko jeden plik z diffa. W początkowej fazie myślałem, że wynika to z jakichś problemów funkcjonalnych biblioteki libgit, bo jakby nie było, to ciężko w 100% wierzyć w coś, co zostało zbudowane dosłownie przez przypadek (kompletnie się na tym nie znam). Po chwili poszukiwań natrafiłem na winowajcę - rb-gateway. To ta warstwa zwracała zły JSON, co wskazywało na problemy z przygotowywaniem / parsowaniem diffa. Specem od debugowania <code>go</code> nie jestem, jednak idąc jak po sznurku znalazłem metodę <code>GetCommit(commitId string)</code> w pliku <code>git_repository.go</code>. Posiadała błędną implementację, w zły sposób korzystającą z C API libgita. Co jest śmieszne, testy jednostkowe przechodziły bez problemów, bo uwaga: testowały przypadek generowania diffa tylko z jednego pliku własnie!</p>
+
+<p>Fix okazał się banalny (jak wszystko, co na początku jest niewyobrażalnie trudne, a po zrozumieniu staje się dziecinnie proste). Autor przez pomyłkę wywoływał metodę <code>Patch(0)</code> zawsze otrzymując pierwszy element kolekcji, w tym wypadku pierwszy plik. Po zapętleniu kawałka kodu wszystko wróciło do normy.</p>
+
+<pre><code class="language-go">var buffer bytes.Buffer
+
+if deltas &gt; 0 {
+    for i := 0; i &lt; deltas; i++ {
+        patch, err := gitDiff.Patch(i)
+        if err != nil {
+            return nil, err
+        }
+
+        patchString, err := patch.String()
+        if err != nil {
+            return nil, err
+        }
+
+        buffer.WriteString(patchString)
+
+        patch.Free()
+    }
+    diff = buffer.String()
+}
+</code></pre>
+
+<p>Dopisałem test, który sprawdzał przypadek, gdy commit zawierał więcej niż jeden plik i pokusiłem się o <strong>pull requesta</strong>, który został bez problemu <a href="https://reviews.reviewboard.org/r/7958/">zaakceptowany</a>.</p>
+
+<h2 id="jestem-osobą-wnoszącą-wkład:bfcbe129b554ba1a8bf5f0da631bf673">Jestem osobą wnoszącą wkład?</h2>
+
+<p>Chyba tak (śmiesznie Google tłumaczy słowo  <em>constributor</em>). Nie odczuwam, abym poprawiając ten kawałek kodu zbawił świat, ale świadomość, że udało się po prostu coś naprawić, zgłębić temat, nauczyć się podstaw języka go, zbudować low-level bibliotekę C, podnosząc jakość oprogramowania krążącego wokół nas i równocześnie pomagając przy tym innym - świadomość ta podnosi na duchu. Bez zawahania twierdzę, że było warto i chcę jeszcze więcej!</p>
+
+<hr />
+
+<ol>
+<li><a href="http://up-for-grabs.net/">http://up-for-grabs.net/</a></li>
+<li><a href="http://davidvgalbraith.com/how-i-fixed-node-js/">http://davidvgalbraith.com/how-i-fixed-node-js/</a></li>
+<li><a href="https://github.com/reviewboard/rb-gateway/">https://github.com/reviewboard/rb-gateway/</a></li>
+<li><a href="http://reviewboard.org/">http://reviewboard.org/</a></li>
+<li><a href="https://tour.golang.org/welcome/1">https://tour.golang.org/welcome/1</a></li>
+<li><a href="https://fedoraproject.org/wiki/EPEL">https://fedoraproject.org/wiki/EPEL</a></li>
+<li><a href="https://github.com/libgit2/libgit2">https://github.com/libgit2/libgit2</a></li>
+<li><a href="https://reviews.reviewboard.org/r/7958/">https://reviews.reviewboard.org/r/7958/</a></li>
+</ol>
+
+        <div class="social">
+  <div>
+    <a class="twitter-share-button"
+      href="https://twitter.com/share"
+      data-via="k_smigiel"
+      data-url="http://ksmigiel.com/2016/02/rb-gateway">
+      Tweet
+    </a> 
+  </div>
+  <div>
+    <div class="fb-like" data-width="450" data-layout="button_count" data-action="like" data-show-faces="false" data-send="false"></div>
+  </div>
+</div>
+
+
+      </section>
+
+      
+      <section>
+        <div id="disqus_thread"></div>
+<script type="text/javascript">
+   
+  var disqus_shortname = 'ksmigiel'; 
+
+   
+  (function() {
+     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+     dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+   })();
+</script>
+
+      </section>
+      
+
+    </div>
+  </article>
+<footer class="site-footer">
+  <div class="container">
+    <nav>
+      <a href="/">Blog</a> &middot;
+      <a href="/tags">Tagi</a> &middot;
+      <a href="/post">Archiwum</a> &middot;
+      <a href="/about">O mnie</a>
+    </nav>
+
+    <nav class="social">
+      
+      <a href="https://twitter.com/k_smigiel" title="Follow on Twitter" target="_blank"><i class="icon icon-twitter black"></i></a>
+      
+      
+      <a href="https://github.com/ksmigiel" title="Follow on Github" target="_blank"><i class="icon icon-github black"></i></a>
+      
+          
+      <a href="/index.xml" title="RSS Feed">
+        <i class="icon icon-rss black"></i>
+      </a>
+    </nav>
+  </div>
+</footer>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+<script>window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return;js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);t._e=[];t.ready=function(f){t._e.push(f);};return t;}(document,"script","twitter-wjs"));</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+var js, fjs = d.getElementsByTagName(s)[0];
+if (d.getElementById(id)) return;
+js = d.createElement(s); js.id = id;
+js.src = "//connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v2.2&appId=901391149893781";
+fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-58701947-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+
+
+
+</body>
+</html>
+

@@ -5,8 +5,88 @@
     <link>http://ksmigiel.com/post/</link>
     <description>Recent content in Posts on </description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 28 Jan 2016 21:59:09 +0100</lastBuildDate>
+    <lastBuildDate>Fri, 26 Feb 2016 21:59:09 +0100</lastBuildDate>
     <atom:link href="http://ksmigiel.com/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Jak naprawiłem rb-gateway</title>
+      <link>http://ksmigiel.com/2016/02/rb-gateway</link>
+      <pubDate>Fri, 26 Feb 2016 21:59:09 +0100</pubDate>
+      
+      <guid>http://ksmigiel.com/2016/02/rb-gateway</guid>
+      <description>
+
+&lt;p&gt;Zawsze zastanawiałem się jak to jest, że ci wszyscy programiści &lt;strong&gt;open source&lt;/strong&gt; znajdują czas na pisanie kodu po pracy. Kod open source kojarzył mi się jednoznacznie z czymś darmowym, charytatywnym. Było dla mnie dużym zaskoczeniem, gdy dowiedziałem się o programistach opłacanych m.in przez &lt;strong&gt;Red Hat&lt;/strong&gt; i uświadomiłem wtedy sobie, że otwartość kodu wcale nie sugeruje amatorskiego poziomu. Było to dawno temu, ale ten moment &lt;em&gt;&amp;ldquo;olśnienia&amp;rdquo;&lt;/em&gt; pamiętam do dziś.&lt;/p&gt;
+
+&lt;h2 id=&#34;open-source:bfcbe129b554ba1a8bf5f0da631bf673&#34;&gt;Open source&lt;/h2&gt;
+
+&lt;p&gt;Jeszcze zanim zacząłem pracować, idea przynależności do projektu programistycznego, takiego z prawdziwego zdarzenia, była czymś ekscytującym. Tworzenie narzędzia używanego przez tysiące osób, dojrzały codebase z testami, dobrymi praktykami i nienaganną architekturą - nic tylko kodzić. Jednak pomimo wielu prób nie udało mi się nigdy znaleźć jednego, konkretnego projektu, z którym mógłbym się utożsamiać jako &amp;ldquo;współtwórca&amp;rdquo;. Repozytoriów / projektów jest ile bądź i chyba ze względu na ich zróżnicowanie (język, poziom abstrakcji, community) wybór nie należy do łatwych.&lt;/p&gt;
+
+&lt;h3 id=&#34;kontrybucja:bfcbe129b554ba1a8bf5f0da631bf673&#34;&gt;Kontrybucja&lt;/h3&gt;
+
+&lt;p&gt;Do open source można też podejść z innej strony: zawężając zakres poszukiwań do projektów, z których obecnie korzystamy (lub korzystaliśmy). Daje nam to pewną przewagę, gdyż mamy pojęcie co dana biblioteka lub framework robi i jak jej używać. Oprócz tego często w bug-trackerach natrafić można na tzw. &lt;strong&gt;low hanging fruits&lt;/strong&gt;, czyli proste zadania dla każdego. Istnieje nawet &lt;a href=&#34;http://up-for-grabs.net/&#34;&gt;platforma&lt;/a&gt; będąca agregatorem takich właśnie tasków. Kto jest bardziej ambitny niech od razu łapie się za konkrety idąc za śladem &lt;a href=&#34;http://davidvgalbraith.com/how-i-fixed-node-js/&#34;&gt;tego pana&lt;/a&gt; - lenistwo po święcie dziękczynienia najlepszym motorem do pracy! To co jednak zmotywuje do &lt;em&gt;&amp;ldquo;zakontrybutowania&amp;rdquo;&lt;/em&gt; każdego, to możliwość naprawienia znalezionego błędu w używanej przez siebie bibliotece i o tym krótko dziś napiszę.&lt;/p&gt;
+
+&lt;h2 id=&#34;moja-cegiełka-w-rb-gateway:bfcbe129b554ba1a8bf5f0da631bf673&#34;&gt;Moja cegiełka w rb-gateway&lt;/h2&gt;
+
+&lt;p&gt;Wspieranie lokalnych repozytoriów w &lt;a href=&#34;http://reviewboard.org/&#34;&gt;ReviewBoardzie&lt;/a&gt; jest mocno ograniczone. Chcąc korzystać ze wszystkich jego funkcjonalności konieczne jest skorzystanie z narzędzia zwanego &lt;strong&gt;rb-gateway&lt;/strong&gt;.  &lt;a href=&#34;https://github.com/reviewboard/rb-gateway/&#34;&gt;rb-gateway&lt;/a&gt; jest to proxy między repozytorium gita, a ReviewBoardem - prosty serwer HTTP pełniący funkcję API, napisany w &lt;a href=&#34;https://tour.golang.org/welcome/1&#34;&gt;go&lt;/a&gt;. Nie znalazłem do niego żadnych binarek, co za tym idzie, musiałem skompilować go samodzielnie, jednocześnie ucząc się języka z którego nigdy wcześniej nie korzystałem. Jeśli myślicie, że parę poniższych komend zaczerpniętych z oficjalnej dokumentacji było wystarczające do uruchomienia &lt;em&gt;&amp;ldquo;tego czegoś&amp;rdquo;&lt;/em&gt;, to grubo się mylicie!&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ go get -d github.com/reviewboard/rb-gateway
+$ cd github.com/reviewboard/rb-gateway
+$ mv sample_config.json config.json
+$ go get
+$ go install
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Największą przeszkodą jaką napotkałem podczas próby zbudowania rb-gateway&amp;rsquo;a była jego zależność: &lt;code&gt;git2go&lt;/code&gt; i siedzący pod spodem &lt;code&gt;libgit&lt;/code&gt; wymagany w wersji &lt;strong&gt;0.22&lt;/strong&gt;, a w &lt;a href=&#34;https://fedoraproject.org/wiki/EPEL&#34;&gt;repozytorium CentOS&lt;/a&gt; ostatnia wersja to &lt;strong&gt;0.21&lt;/strong&gt;. Co więc musiałem zrobić? Zbudować libgit v0.22 ze źródeł. Na szczęście &lt;a href=&#34;https://github.com/libgit2/libgit2&#34;&gt;wszystko jest opisane&lt;/a&gt; i o dziwo nie napotkałem żadnych problemów. Potem przyszedł czas na konfigurację i testy, które bardzo szybko znalazły pewną nieprawidłowość w działaniu rb-gateway&amp;rsquo;a.&lt;/p&gt;
+
+&lt;h3 id=&#34;gdzie-są-diffy:bfcbe129b554ba1a8bf5f0da631bf673&#34;&gt;Gdzie są diffy!&lt;/h3&gt;
+
+&lt;p&gt;Po stworzeniu nowego &lt;em&gt;review requesta&lt;/em&gt; załączał się tylko jeden plik z diffa. W początkowej fazie myślałem, że wynika to z jakichś problemów funkcjonalnych biblioteki libgit, bo jakby nie było, to ciężko w 100% wierzyć w coś, co zostało zbudowane dosłownie przez przypadek (kompletnie się na tym nie znam). Po chwili poszukiwań natrafiłem na winowajcę - rb-gateway. To ta warstwa zwracała zły JSON, co wskazywało na problemy z przygotowywaniem / parsowaniem diffa. Specem od debugowania &lt;code&gt;go&lt;/code&gt; nie jestem, jednak idąc jak po sznurku znalazłem metodę &lt;code&gt;GetCommit(commitId string)&lt;/code&gt; w pliku &lt;code&gt;git_repository.go&lt;/code&gt;. Posiadała błędną implementację, w zły sposób korzystającą z C API libgita. Co jest śmieszne, testy jednostkowe przechodziły bez problemów, bo uwaga: testowały przypadek generowania diffa tylko z jednego pliku własnie!&lt;/p&gt;
+
+&lt;p&gt;Fix okazał się banalny (jak wszystko, co na początku jest niewyobrażalnie trudne, a po zrozumieniu staje się dziecinnie proste). Autor przez pomyłkę wywoływał metodę &lt;code&gt;Patch(0)&lt;/code&gt; zawsze otrzymując pierwszy element kolekcji, w tym wypadku pierwszy plik. Po zapętleniu kawałka kodu wszystko wróciło do normy.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;var buffer bytes.Buffer
+
+if deltas &amp;gt; 0 {
+    for i := 0; i &amp;lt; deltas; i++ {
+        patch, err := gitDiff.Patch(i)
+        if err != nil {
+            return nil, err
+        }
+
+        patchString, err := patch.String()
+        if err != nil {
+            return nil, err
+        }
+
+        buffer.WriteString(patchString)
+
+        patch.Free()
+    }
+    diff = buffer.String()
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Dopisałem test, który sprawdzał przypadek, gdy commit zawierał więcej niż jeden plik i pokusiłem się o &lt;strong&gt;pull requesta&lt;/strong&gt;, który został bez problemu &lt;a href=&#34;https://reviews.reviewboard.org/r/7958/&#34;&gt;zaakceptowany&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;jestem-osobą-wnoszącą-wkład:bfcbe129b554ba1a8bf5f0da631bf673&#34;&gt;Jestem osobą wnoszącą wkład?&lt;/h2&gt;
+
+&lt;p&gt;Chyba tak (śmiesznie Google tłumaczy słowo  &lt;em&gt;constributor&lt;/em&gt;). Nie odczuwam, abym poprawiając ten kawałek kodu zbawił świat, ale świadomość, że udało się po prostu coś naprawić, zgłębić temat, nauczyć się podstaw języka go, zbudować low-level bibliotekę C, podnosząc jakość oprogramowania krążącego wokół nas i równocześnie pomagając przy tym innym - świadomość ta podnosi na duchu. Bez zawahania twierdzę, że było warto i chcę jeszcze więcej!&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;http://up-for-grabs.net/&#34;&gt;http://up-for-grabs.net/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://davidvgalbraith.com/how-i-fixed-node-js/&#34;&gt;http://davidvgalbraith.com/how-i-fixed-node-js/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/reviewboard/rb-gateway/&#34;&gt;https://github.com/reviewboard/rb-gateway/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://reviewboard.org/&#34;&gt;http://reviewboard.org/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://tour.golang.org/welcome/1&#34;&gt;https://tour.golang.org/welcome/1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://fedoraproject.org/wiki/EPEL&#34;&gt;https://fedoraproject.org/wiki/EPEL&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/libgit2/libgit2&#34;&gt;https://github.com/libgit2/libgit2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://reviews.reviewboard.org/r/7958/&#34;&gt;https://reviews.reviewboard.org/r/7958/&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
     
     <item>
       <title>Czy Windows może zastąpić Linuxa?</title>
