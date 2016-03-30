@@ -5,8 +5,217 @@
     <link>http://ksmigiel.com/</link>
     <description>Recent content on </description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 26 Feb 2016 21:59:09 +0100</lastBuildDate>
+    <lastBuildDate>Wed, 30 Mar 2016 21:59:09 +0100</lastBuildDate>
     <atom:link href="http://ksmigiel.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Kontekst i &#39;this&#39; w JavaScripcie</title>
+      <link>http://ksmigiel.com/2016/03/js-this</link>
+      <pubDate>Wed, 30 Mar 2016 21:59:09 +0100</pubDate>
+      
+      <guid>http://ksmigiel.com/2016/03/js-this</guid>
+      <description>
+
+&lt;p&gt;Słówko &lt;code&gt;this&lt;/code&gt;, mimo podobieństwa do C# czy Javy, w JavaScripcie działa trochę inaczej niż nam się może wydawać. Kontekst na jaki wskazuje &lt;em&gt;this&lt;/em&gt; może być dowolnie zmieniany, a jego nieumiejętne użycie spowodowuje wystąpienie masy błędów w naszej aplikacji. Ustrzec przed nimi można się jedynie rozumiejąc do czego owe &lt;em&gt;this&lt;/em&gt; służy i jak się z nim obchodzić. Zapraszam do lektury :)&lt;/p&gt;
+
+&lt;h2 id=&#34;implicit-binding:aa9d6570c3e5b1909358f37548b7ef3a&#34;&gt;Implicit binding&lt;/h2&gt;
+
+&lt;p&gt;Mamy tutaj do czynienia z kontekstem zwykłych obiektów. Złota zasada w identyfikacji kontekstu to:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;this&lt;/strong&gt; to obiekt, który jest po lewej stronie kropki.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;W myśl powyższej zasady możemy stwierdzić, że kontekstem funkcji &lt;code&gt;meow()&lt;/code&gt; będzie obiekt &lt;code&gt;cat&lt;/code&gt; i tak też się dzieje.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;var cat = {
+  name: &#39;Filemon&#39;,
+  meow: function () {
+    console.log(this.name);
+  }
+}
+
+cat.meow();
+// Filemon
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Podobnie sprawa ma się w przypadku zagdnieżdżonych obiektów i ich funkcji. Najbliższy obiekt po lewej stronie (z reguły, ale o tym zaraz) jest kontekstem, w jakim zostaje wywołana dana funkcja:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;var cat = {
+  name: &#39;Filemon&#39;,
+  brother: {
+    name: &#39;Mruczek&#39;,
+    meow: function () {
+      console.log(this.name)
+    }
+  },
+  meow: function () {
+    console.log(this.name);
+  }
+}
+
+cat.meow();
+// Filemon
+
+cat.brother.meow();
+// Mruczek
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Trzeba być bardzo ostrożnym jeśli chodzi o referencje do obiektów czy funkcji, gdyż takie przypisanie również powoduje zmianę kontekstu. Jest nim nadal &lt;em&gt;cat (Filemon)&lt;/em&gt;, a nie jakby można było sądzić &lt;em&gt;brother (Mruczek)&lt;/em&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;cat.meow = cat.brother.meow;
+cat.meow();
+// Filemon
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Istnieją jednak sposoby na całkowie przejęcie kontroli nad tym co ma być w danej chwili &amp;ldquo;bazą&amp;rdquo;.&lt;/p&gt;
+
+&lt;h2 id=&#34;explicit-binding:aa9d6570c3e5b1909358f37548b7ef3a&#34;&gt;Explicit binding&lt;/h2&gt;
+
+&lt;p&gt;Oprócz operowania obiektami i zasadą &amp;ldquo;kropki&amp;rdquo; istnieją inne metody (pewne 3 funkcje), które pozwalają na zmianę kontekstu wywołania dowolnej funkcji.&lt;/p&gt;
+
+&lt;h3 id=&#34;call:aa9d6570c3e5b1909358f37548b7ef3a&#34;&gt;call()&lt;/h3&gt;
+
+&lt;p&gt;Pozwala na wywołanie funkcji z konkretnym kontekstem przekazanym jako argument.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;var meow = function () {
+  console.log(&#39;I am a cat &#39; + this.name);
+};
+
+var filemon = {
+  name: &#39;Filemon&#39;
+};
+
+var mruczek = {
+  name: &#39;Mruczek&#39;
+};
+
+meow.call(filemon);
+// I am a cat Filemon
+
+meow.call(mruczek);
+// I am a cat Mruczek
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;bind:aa9d6570c3e5b1909358f37548b7ef3a&#34;&gt;bind()&lt;/h3&gt;
+
+&lt;p&gt;Jest to bardzo podobna funkcja do &lt;code&gt;call()&lt;/code&gt; z tą różnicą, że pozwala na &amp;ldquo;przechowanie&amp;rdquo; funkcji z nowym kontekstem w postaci zmiennej, aby móc ją na przykład przekazać dalej jako parametr funkcji.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;var meow = function () {
+  console.log(&#39;I am a cat &#39; + this.name);
+};
+
+var filemon = {
+  name: &#39;Filemon&#39;
+};
+
+var mruczek = {
+  name: &#39;Mruczek&#39;
+};
+
+var filemonMeow = meow.bind(filemon);
+filemonMeow();
+// I am a cat Filemon
+
+var mruczekMeow = meow.bind(mruczek);
+mruczekMeow()
+// I am a cat Mruczek
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;apply:aa9d6570c3e5b1909358f37548b7ef3a&#34;&gt;apply()&lt;/h3&gt;
+
+&lt;p&gt;To taki helper składający tablicę w argumenty funkcji, który również jako parametr przyjmuje nowy obiekt, a ten stanie się &lt;em&gt;this&lt;/em&gt; w tej właśnie funkcji.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;var myCats = function (cat1, cat2) {
+  console.log(&#39;I am &#39; + this.name + &#39; and my cats are: &#39; + cat1 + &#39; and &#39; + cat2);
+};
+
+var me = {
+  name: &#39;Krzysztof&#39;
+};
+
+var cats = [&#39;Filemon&#39;, &#39;Mruczek&#39;];
+
+myCats.apply(me, cats);
+// I am Krzysztof and my cats are: Filemon and Mruczek
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;new-binding:aa9d6570c3e5b1909358f37548b7ef3a&#34;&gt;New binding&lt;/h2&gt;
+
+&lt;p&gt;Dochodzimy w końcu do momentu, z którym większość będzie najbardziej zaznajomiona, czyli konstruktory i keyword &lt;code&gt;new&lt;/code&gt;. Sytuacja jest tu o tyle prosta, że to &lt;em&gt;new&lt;/em&gt; nadaje kontekst całego obiektu podczas jego tworzenia.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;function Cat(name, color) {
+  this.name = name;
+  this.color = color;
+  this.sayHello = function () {
+    console.log(&#39;Hi, I am &#39; + name + &#39; colored &#39; + color);
+  };
+}
+
+var filemon = new Cat(&#39;Filemon&#39;, &#39;black&#39;);
+filemon.sayHello();
+// Hi, I am Filemon colored black
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Zwróćcie uwagę na &lt;strong&gt;brak&lt;/strong&gt; &lt;em&gt;this&lt;/em&gt; w wywołaniu funkcji &lt;code&gt;sayHello()&lt;/code&gt;. W każdym wypadku jego użycie jest opcjonalne. Domyślnie interpreter zawsze będzie wywoływał funkcję w kontekście rozwiązanym zgodnie z zasadami, które tu dzisiaj opisałem. Dla czytelności jednak lepiej jest użyć kontekstu, aby czarno na biało było widać co z czego jest wywoływane.
+Spójrzcie na przykład bardziej zawiły, gdzie gdyby nie osobna referencja do obiektu macierzystego, odwołanie się do jego własności byłoby niemożliwe.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;function Cat(name, color) {
+  var self = this;
+  
+  self.name = name;
+  self.color = color;
+  self.sayHello = function () {
+    console.log(&#39;Hi, I am &#39; + self.name + &#39; colored &#39; + self.color);
+  };
+  
+  self.brother = {
+    name: &#39;Mruczek&#39;,
+    sayHello: function () {
+      console.log(&#39;Hi, I am &#39; + this.name + &#39; and my brother is &#39; + self.name);
+    }
+  };
+}
+
+var filemon = new Cat(&#39;Filemon&#39;, &#39;black&#39;);
+filemon.sayHello();
+// Hi, I am Filemon colored black
+
+filemon.brother.sayHello()
+// Hi, I am Mruczek and my brother is Filemon
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;window-binding:aa9d6570c3e5b1909358f37548b7ef3a&#34;&gt;window binding&lt;/h3&gt;
+
+&lt;p&gt;Wyżej napisałem o tym, że pominięcie &lt;em&gt;this&lt;/em&gt; spowoduje automatyczne &amp;ldquo;dopięcie&amp;rdquo; odpowiedniego kontekstu. Jednak gdy funkcja wywołana jest globalnie, to (przynajmniej w przeglądarkach) jej kontekstem będzie obiekt &lt;code&gt;window&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;function openWindow() {
+  console.log(this);
+};
+
+openWindow();
+// Window {external: Object, chrome: Object, document: ...}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Jednak jeśli popełnimy pewien błąd, którego konsekwencje zostały opatrzone stosownym błędem w konsoli w ECMAScript 5 (&amp;lsquo;strict&amp;rsquo; mode, w ECMAScript 3 &lt;em&gt;this&lt;/em&gt; wskazywał na &lt;em&gt;window&lt;/em&gt;, stąd to całe zamieszanie), polegający na wywołaniu konstruktora funkcji bez użycia &lt;em&gt;new&lt;/em&gt;, to otrzymamy błąd.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;function someConstructor() {
+  this.a = &#39;foo&#39;;
+  this.b = &#39;bar&#39;;
+}
+
+var good = new someConstructor();
+var bad = someConstructor();
+// &amp;quot;TypeError: this is undefined&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;this-czy-nie-this-o-to-jest-pytanie:aa9d6570c3e5b1909358f37548b7ef3a&#34;&gt;this czy nie this - o to jest pytanie!&lt;/h2&gt;
+
+&lt;p&gt;Mam nadzieję, że szybki kurs z kontekstu w JS tutaj przedstawiony pomógł wam choć trochę nabrać pewności w używaniu &lt;em&gt;this&lt;/em&gt; z głową w swoich aplikacjach. Jeśli macie jakieś pytania czy uwagi z chęcią na nie odpowiem, w komentarzach czy mail/twitter.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Jak naprawiłem rb-gateway</title>

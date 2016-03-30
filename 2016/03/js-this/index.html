@@ -1,0 +1,351 @@
+<!doctype html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kontekst i &#39;this&#39; w JavaScripcie - Krzysztof Śmigiel | Blog</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:700,600,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link href="http://ksmigiel.com//index.xml" rel="alternate" type="application/rss+xml" title="Krzysztof Śmigiel | Blog" />
+  <meta name="title" content="http://ksmigiel.com/">
+  <link rel="canonical" href="http://ksmigiel.com/">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/github.min.css">
+  <script src="/js/highlight.js"></script>
+  <meta property="og:title" content="Krzysztof Śmigiel | Blog"/>
+  <meta property="og:url" content="http://ksmigiel.com/"/>
+  <meta property="og:image" content="http://ksmigiel.com//images/"/>   
+  <meta property="og:site_name" content="Krzysztof Śmigiel | Blog">
+</head>
+<body>
+<section class="site-nav">
+  <header>
+    <nav id="navigation">
+      <a href="/" class="home">Blog</a>
+      <a href="/tags">Tagi</a>
+      <a href="/post">Archiwum</a>
+      <a href="/about">O mnie</a>
+    </nav>
+  </header>
+</section>
+
+
+  
+  <article>
+    <div class="container">
+      <header>
+        <div class="meta">
+          Autor <address><a rel="author" href="http://ksmigiel.com" title="Krzysztof Śmigiel" target="_blank">Krzysztof Śmigiel</a></address> &mdash;
+          <time pubdate datetime="2016-03-30" title="2016-03-30">30 March 2016</time>
+          <ul id="tags">
+            
+            <li><a href="/tags/javascript">#javascript</a> </li>
+            
+            <li><a href="/tags/webdev">#webdev</a> </li>
+            
+          </ul>
+        </div>
+        <h1 class="title">Kontekst i &#39;this&#39; w JavaScripcie</h1>
+        <h2 class="subtitle">Jak zrozumieć &#39;this&#39; i już nigdy więcej nie mieć z tym problemu</h2>
+      </header>
+
+      <section>
+        
+
+<p>Słówko <code>this</code>, mimo podobieństwa do C# czy Javy, w JavaScripcie działa trochę inaczej niż nam się może wydawać. Kontekst na jaki wskazuje <em>this</em> może być dowolnie zmieniany, a jego nieumiejętne użycie spowodowuje wystąpienie masy błędów w naszej aplikacji. Ustrzec przed nimi można się jedynie rozumiejąc do czego owe <em>this</em> służy i jak się z nim obchodzić. Zapraszam do lektury :)</p>
+
+<h2 id="implicit-binding:aa9d6570c3e5b1909358f37548b7ef3a">Implicit binding</h2>
+
+<p>Mamy tutaj do czynienia z kontekstem zwykłych obiektów. Złota zasada w identyfikacji kontekstu to:</p>
+
+<blockquote>
+<p><strong>this</strong> to obiekt, który jest po lewej stronie kropki.</p>
+</blockquote>
+
+<p>W myśl powyższej zasady możemy stwierdzić, że kontekstem funkcji <code>meow()</code> będzie obiekt <code>cat</code> i tak też się dzieje.</p>
+
+<pre><code class="language-js">var cat = {
+  name: 'Filemon',
+  meow: function () {
+    console.log(this.name);
+  }
+}
+
+cat.meow();
+// Filemon
+</code></pre>
+
+<p>Podobnie sprawa ma się w przypadku zagdnieżdżonych obiektów i ich funkcji. Najbliższy obiekt po lewej stronie (z reguły, ale o tym zaraz) jest kontekstem, w jakim zostaje wywołana dana funkcja:</p>
+
+<pre><code class="language-js">var cat = {
+  name: 'Filemon',
+  brother: {
+    name: 'Mruczek',
+    meow: function () {
+      console.log(this.name)
+    }
+  },
+  meow: function () {
+    console.log(this.name);
+  }
+}
+
+cat.meow();
+// Filemon
+
+cat.brother.meow();
+// Mruczek
+</code></pre>
+
+<p>Trzeba być bardzo ostrożnym jeśli chodzi o referencje do obiektów czy funkcji, gdyż takie przypisanie również powoduje zmianę kontekstu. Jest nim nadal <em>cat (Filemon)</em>, a nie jakby można było sądzić <em>brother (Mruczek)</em>.</p>
+
+<pre><code class="language-js">cat.meow = cat.brother.meow;
+cat.meow();
+// Filemon
+</code></pre>
+
+<p>Istnieją jednak sposoby na całkowie przejęcie kontroli nad tym co ma być w danej chwili &ldquo;bazą&rdquo;.</p>
+
+<h2 id="explicit-binding:aa9d6570c3e5b1909358f37548b7ef3a">Explicit binding</h2>
+
+<p>Oprócz operowania obiektami i zasadą &ldquo;kropki&rdquo; istnieją inne metody (pewne 3 funkcje), które pozwalają na zmianę kontekstu wywołania dowolnej funkcji.</p>
+
+<h3 id="call:aa9d6570c3e5b1909358f37548b7ef3a">call()</h3>
+
+<p>Pozwala na wywołanie funkcji z konkretnym kontekstem przekazanym jako argument.</p>
+
+<pre><code class="language-js">var meow = function () {
+  console.log('I am a cat ' + this.name);
+};
+
+var filemon = {
+  name: 'Filemon'
+};
+
+var mruczek = {
+  name: 'Mruczek'
+};
+
+meow.call(filemon);
+// I am a cat Filemon
+
+meow.call(mruczek);
+// I am a cat Mruczek
+
+</code></pre>
+
+<h3 id="bind:aa9d6570c3e5b1909358f37548b7ef3a">bind()</h3>
+
+<p>Jest to bardzo podobna funkcja do <code>call()</code> z tą różnicą, że pozwala na &ldquo;przechowanie&rdquo; funkcji z nowym kontekstem w postaci zmiennej, aby móc ją na przykład przekazać dalej jako parametr funkcji.</p>
+
+<pre><code class="language-js">var meow = function () {
+  console.log('I am a cat ' + this.name);
+};
+
+var filemon = {
+  name: 'Filemon'
+};
+
+var mruczek = {
+  name: 'Mruczek'
+};
+
+var filemonMeow = meow.bind(filemon);
+filemonMeow();
+// I am a cat Filemon
+
+var mruczekMeow = meow.bind(mruczek);
+mruczekMeow()
+// I am a cat Mruczek
+
+</code></pre>
+
+<h3 id="apply:aa9d6570c3e5b1909358f37548b7ef3a">apply()</h3>
+
+<p>To taki helper składający tablicę w argumenty funkcji, który również jako parametr przyjmuje nowy obiekt, a ten stanie się <em>this</em> w tej właśnie funkcji.</p>
+
+<pre><code class="language-js">var myCats = function (cat1, cat2) {
+  console.log('I am ' + this.name + ' and my cats are: ' + cat1 + ' and ' + cat2);
+};
+
+var me = {
+  name: 'Krzysztof'
+};
+
+var cats = ['Filemon', 'Mruczek'];
+
+myCats.apply(me, cats);
+// I am Krzysztof and my cats are: Filemon and Mruczek
+</code></pre>
+
+<h2 id="new-binding:aa9d6570c3e5b1909358f37548b7ef3a">New binding</h2>
+
+<p>Dochodzimy w końcu do momentu, z którym większość będzie najbardziej zaznajomiona, czyli konstruktory i keyword <code>new</code>. Sytuacja jest tu o tyle prosta, że to <em>new</em> nadaje kontekst całego obiektu podczas jego tworzenia.</p>
+
+<pre><code class="language-js">function Cat(name, color) {
+  this.name = name;
+  this.color = color;
+  this.sayHello = function () {
+    console.log('Hi, I am ' + name + ' colored ' + color);
+  };
+}
+
+var filemon = new Cat('Filemon', 'black');
+filemon.sayHello();
+// Hi, I am Filemon colored black
+</code></pre>
+
+<p>Zwróćcie uwagę na <strong>brak</strong> <em>this</em> w wywołaniu funkcji <code>sayHello()</code>. W każdym wypadku jego użycie jest opcjonalne. Domyślnie interpreter zawsze będzie wywoływał funkcję w kontekście rozwiązanym zgodnie z zasadami, które tu dzisiaj opisałem. Dla czytelności jednak lepiej jest użyć kontekstu, aby czarno na biało było widać co z czego jest wywoływane.
+Spójrzcie na przykład bardziej zawiły, gdzie gdyby nie osobna referencja do obiektu macierzystego, odwołanie się do jego własności byłoby niemożliwe.</p>
+
+<pre><code class="language-js">function Cat(name, color) {
+  var self = this;
+  
+  self.name = name;
+  self.color = color;
+  self.sayHello = function () {
+    console.log('Hi, I am ' + self.name + ' colored ' + self.color);
+  };
+  
+  self.brother = {
+    name: 'Mruczek',
+    sayHello: function () {
+      console.log('Hi, I am ' + this.name + ' and my brother is ' + self.name);
+    }
+  };
+}
+
+var filemon = new Cat('Filemon', 'black');
+filemon.sayHello();
+// Hi, I am Filemon colored black
+
+filemon.brother.sayHello()
+// Hi, I am Mruczek and my brother is Filemon
+</code></pre>
+
+<h3 id="window-binding:aa9d6570c3e5b1909358f37548b7ef3a">window binding</h3>
+
+<p>Wyżej napisałem o tym, że pominięcie <em>this</em> spowoduje automatyczne &ldquo;dopięcie&rdquo; odpowiedniego kontekstu. Jednak gdy funkcja wywołana jest globalnie, to (przynajmniej w przeglądarkach) jej kontekstem będzie obiekt <code>window</code>.</p>
+
+<pre><code class="language-js">function openWindow() {
+  console.log(this);
+};
+
+openWindow();
+// Window {external: Object, chrome: Object, document: ...}
+</code></pre>
+
+<p>Jednak jeśli popełnimy pewien błąd, którego konsekwencje zostały opatrzone stosownym błędem w konsoli w ECMAScript 5 (&lsquo;strict&rsquo; mode, w ECMAScript 3 <em>this</em> wskazywał na <em>window</em>, stąd to całe zamieszanie), polegający na wywołaniu konstruktora funkcji bez użycia <em>new</em>, to otrzymamy błąd.</p>
+
+<pre><code class="language-js">function someConstructor() {
+  this.a = 'foo';
+  this.b = 'bar';
+}
+
+var good = new someConstructor();
+var bad = someConstructor();
+// &quot;TypeError: this is undefined&quot;
+</code></pre>
+
+<h2 id="this-czy-nie-this-o-to-jest-pytanie:aa9d6570c3e5b1909358f37548b7ef3a">this czy nie this - o to jest pytanie!</h2>
+
+<p>Mam nadzieję, że szybki kurs z kontekstu w JS tutaj przedstawiony pomógł wam choć trochę nabrać pewności w używaniu <em>this</em> z głową w swoich aplikacjach. Jeśli macie jakieś pytania czy uwagi z chęcią na nie odpowiem, w komentarzach czy mail/twitter.</p>
+
+        <div class="social">
+  <div>
+    <a class="twitter-share-button"
+      href="https://twitter.com/share"
+      data-via="k_smigiel"
+      data-url="http://ksmigiel.com/2016/03/js-this">
+      Tweet
+    </a> 
+  </div>
+  <div>
+    <div class="fb-like" data-width="450" data-layout="button_count" data-action="like" data-show-faces="false" data-send="false"></div>
+  </div>
+</div>
+
+
+      </section>
+
+      
+      <section>
+        <div id="disqus_thread"></div>
+<script type="text/javascript">
+   
+  var disqus_shortname = 'ksmigiel'; 
+
+   
+  (function() {
+     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+     dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+   })();
+</script>
+
+      </section>
+      
+
+    </div>
+  </article>
+<footer class="site-footer">
+  <div class="container">
+    <nav>
+      <a href="/">Blog</a> &middot;
+      <a href="/tags">Tagi</a> &middot;
+      <a href="/post">Archiwum</a> &middot;
+      <a href="/about">O mnie</a>
+    </nav>
+
+    <nav class="social">
+      
+      <a href="https://twitter.com/k_smigiel" title="Follow on Twitter" target="_blank"><i class="icon icon-twitter black"></i></a>
+      
+      
+      <a href="https://github.com/ksmigiel" title="Follow on Github" target="_blank"><i class="icon icon-github black"></i></a>
+      
+          
+      <a href="/index.xml" title="RSS Feed">
+        <i class="icon icon-rss black"></i>
+      </a>
+    </nav>
+  </div>
+</footer>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+<script>window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return;js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);t._e=[];t.ready=function(f){t._e.push(f);};return t;}(document,"script","twitter-wjs"));</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+var js, fjs = d.getElementsByTagName(s)[0];
+if (d.getElementById(id)) return;
+js = d.createElement(s); js.id = id;
+js.src = "//connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v2.2&appId=901391149893781";
+fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-58701947-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+
+
+
+</body>
+</html>
+
