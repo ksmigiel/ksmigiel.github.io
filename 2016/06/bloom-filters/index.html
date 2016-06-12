@@ -1,0 +1,313 @@
+<!doctype html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filtry Blooma - Krzysztof Śmigiel | Blog</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:700,600,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link href="http://ksmigiel.com//index.xml" rel="alternate" type="application/rss+xml" title="Krzysztof Śmigiel | Blog" />
+  <meta name="title" content="http://ksmigiel.com/">
+  <link rel="canonical" href="http://ksmigiel.com/">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/github.min.css">
+  <script src="/js/highlight.js"></script>
+  <meta property="og:title" content="Krzysztof Śmigiel | Blog"/>
+  <meta property="og:url" content="http://ksmigiel.com/"/>
+  <meta property="og:image" content="http://ksmigiel.com//images/"/>   
+  <meta property="og:site_name" content="Krzysztof Śmigiel | Blog">
+</head>
+<body>
+<section class="site-nav">
+  <header>
+    <nav id="navigation">
+      <a href="/" class="home">Blog</a>
+      <a href="/tags">Tagi</a>
+      <a href="/post">Archiwum</a>
+      <a href="/about">O mnie</a>
+    </nav>
+  </header>
+</section>
+
+
+  
+  <article>
+    <div class="container">
+      <header>
+        <div class="meta">
+          Autor <address><a rel="author" href="http://ksmigiel.com" title="Krzysztof Śmigiel" target="_blank">Krzysztof Śmigiel</a></address> &mdash;
+          <time pubdate datetime="2016-06-11" title="2016-06-11">11 June 2016</time>
+          <ul id="tags">
+            
+            <li><a href="/tags/javascript">#javascript</a> </li>
+            
+            <li><a href="/tags/bigdata">#bigdata</a> </li>
+            
+          </ul>
+        </div>
+        <h1 class="title">Filtry Blooma</h1>
+        <h2 class="subtitle">Probabilistyczna struktura danych na miarę potrzeb BigData</h2>
+      </header>
+
+      <section>
+        
+
+<p>Dzisiaj będzie trochę bardziej nisko poziomowo (nie mylić z niższym poziomem posta). Postaram się w przystepny sposób przybliżyć wam czym jest Filtr Blooma i jak można go zaimplementować w JavaScripcie.</p>
+
+<h2 id="filtra-teorie:15fbb8d9ed16407d5b96391271a178aa">Filtra teorie</h2>
+
+<p>Filtr Blooma to struktura danych pozwalająca w sposób szybki i pamięciowo optymalny odpowiedzieć na pytanie, czy dany element znajduje się w zbiorze. Niestety, ponieważ nie ma nic za darmo, za wydajność musimy zapłacić, a zapłatą będzie błąd w jaki struktura może nas wprowadzić. Nie użyłem <strong>probabilistyczna</strong> bez powodu: filtr może stwierdzić jedynie, że elementu <strong>na pewno nie ma</strong>, lub <strong>może jest</strong> w zbiorze. Założenie to prowadzi do wniosków tzw. <strong>false-positive</strong>, czyli że dany element nie istnieje w zadanym zbiorze, a jednak otrzymamy informację o jego prawdopodobnym istnieniu.</p>
+
+<h3 id="budowa-i-parametry-filtra:15fbb8d9ed16407d5b96391271a178aa">Budowa i parametry filtra</h3>
+
+<p>Filtr można opisać mniej więcej tak:</p>
+
+<blockquote>
+<p>Filtr Blooma to <strong>tablica</strong> (wektor) <em>m</em>-bitów, który ma &ldquo;przewidywać&rdquo; istnienie <em>n</em> elementów. Elementy te zostały zakodowane <em>k</em> funkcjami haszującymi.</p>
+</blockquote>
+
+<p>Dobór tych parametrów wpływa na prawdopodobieństwo wystąpienia błędu (które chcemy minimalizować). <a href="https://en.wikipedia.org/wiki/Bloom_filter">Wikipedia</a> bardzo ładnie przedstawia to od matematycznej strony. Najważniejsze są dwa wzory:</p>
+
+<p><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/76ffa4de74f3857f41900292d0fc315170cec674" alt="k" />
+<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/25b30f6928fac097a6e25aa7b7870a7722b7aea0" alt="m" /></p>
+
+<p>My do teorii aż tak wagi przywiązywać nie będziemy, ale trzeba pamiętać, że przy produkcyjnym użyciu takiej struktury bez wstępnej analizy się nie obejdzie.</p>
+
+<h3 id="działanie-filtra:15fbb8d9ed16407d5b96391271a178aa">Działanie filtra</h3>
+
+<p>Całość sprowadza się do testu, czy dany bit (lub <em>k</em> bitów w przypadku <em>k &gt; 1</em>) dla zadanej wartości (np. <em>x</em>) jest zapalonych w tablicy. Jeśli choć jeden nie jest - mamy pewność, że element jest nieobecny.</p>
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Bloom_filter.svg/649px-Bloom_filter.svg.png" alt="bloom" /></p>
+
+<h3 id="haszowanie:15fbb8d9ed16407d5b96391271a178aa">Haszowanie</h3>
+
+<p>Orłem z kryptografii nie jestem, ale wyczytałem, że użyte funkcje haszujące powinny być przede wszystkim <strong>niezależne</strong> i o <strong>jednostajnym rozkładzie prawdopodobieństwa</strong>, np. takie jak: <a href="https://sites.google.com/site/murmurhash/">murmur</a> lub <a href="https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function">fnv</a>. Zalecam dalszą lekturę w tym zakresie dla zainteresowanych szczegółami.</p>
+
+<h4 id="podwójne-haszowanie:15fbb8d9ed16407d5b96391271a178aa">Podwójne haszowanie</h4>
+
+<p>Jak i jakich funkcji używać do haszowania? Aby zapewnić prawdopodobieństwo błędu na podobnym poziomie, możemy skorzystać z <a href="http://citeseer.ist.psu.edu/viewdoc/download;jsessionid=4060353E67A356EF9528D2C57C064F5A?doi=10.1.1.152.579&amp;rep=rep1&amp;type=pdf"><strong>podwójnego haszowania</strong></a>:</p>
+
+<p><img src="https://en.wikipedia.org/api/rest_v1/media/math/render/svg/64111088b311219da1c0bc477bf1d97ee0c42b69" alt="double hash" /></p>
+
+<p>Będziemy potrzebować wtedy jedynie dwóch funkcji haszujących <em>h<sub>1</sub></em> i  <em>h<sub>2</sub></em>, <em>i</em> - numer funkcji (nasze k), <em>T</em> (nasze m). (<em>Przepraszam za zamieszanie z parametrami, ale wzory są żywcem z Wikipedii</em>).</p>
+
+<p>Myślę, że powoli możemy przejść do kodu i próby zaimplementowania tego wszystkiego, co wyżej opisałem.</p>
+
+<h2 id="implementacja:15fbb8d9ed16407d5b96391271a178aa">Implementacja</h2>
+
+<p>Dla celów edukacyjnych przyjmijmy następujące parametry:</p>
+
+<pre><code>k = 1    Jedna funkcja haszująca fnv-1
+m = 16   16-bitowa tablica
+n = 2    Dwa elementy
+</code></pre>
+
+<h3 id="fnv-1:15fbb8d9ed16407d5b96391271a178aa">fnv-1</h3>
+
+<p>Wybrałem tę, bo jest relatywnie prosta w implementacji:</p>
+
+<pre><code class="language-js">// Operacje na bitach w JS są 32-bitowe
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators
+//
+// Stałe dla 32-bitów
+// http://www.isthe.com/chongo/tech/comp/fnv/index.html#FNV-param
+const FNV_OFFSET = 0x811c9dc5;
+const FNV_PRIME = 0x01000193;
+
+function fnv1(string) {
+  let bytes = stringToBytes(string);
+  let hash = FNV_OFFSET;
+
+  for (let byte of bytes) {
+    hash = hash * FNV_PRIME;
+    hash = hash ^ byte;
+  }
+
+  return Math.abs(hash);
+}
+</code></pre>
+
+<h3 id="stringtobytes:15fbb8d9ed16407d5b96391271a178aa">stringToBytes</h3>
+
+<p>Powyższa funkcja potrzebuje tablicy bajtów z ciągu znaków. JS nie posiada takiej ładnej funkcji jak chociażby C# <code>byte[] bytes = encoding.GetBytes(AnyString)</code>, dlatego musimy napisać coś podobnego. Dla ułatwienia przyjmijmy, że ciąg znaków kodowany jest w ASCII (basic English).</p>
+
+<pre><code class="language-js">function stringToBytes(string) {
+  let bytes = [];
+
+  for (let char of string) {
+    bytes.push(char.charCodeAt(0));
+  }
+  
+  return bytes;
+}
+</code></pre>
+
+<h3 id="bloomfilter:15fbb8d9ed16407d5b96391271a178aa">BloomFilter</h3>
+
+<p>Jak zauważyliście używam składni ES6, o co by iść z duchem czasu. Filtr będzie przyjmował w konstruktorze liczbę bitów oraz funkcje haszujące, których chcemy użyć.</p>
+
+<pre><code class="language-js">class BloomFilter {
+  constructor (m, k) {
+    this.bits = m;
+    this.hashFunctions = k;
+    this.filter = new Int32Array(m);
+  }
+
+  add (value) {
+    for (let hash of this.hashFunctions) {
+      let hashIndex = hash(value) % this.bits;
+      this.filter[hashIndex] = 1;
+    }
+  }
+
+  check (value) {
+    for (let hash of this.hashFunctions) {
+      let hashIndex = hash(value) % this.bits;
+      if (this.filter[hashIndex] == 0)
+        return false;
+    }
+    return true;
+  }
+}
+</code></pre>
+
+<h2 id="testujemy:15fbb8d9ed16407d5b96391271a178aa">Testujemy!</h2>
+
+<pre><code class="language-js">var bloomFilter = new BloomFilter(16, [ fnv1 ]);
+
+bloomFilter.add('testujemy!');
+bloomFilter.add('filtr');
+
+bloomFilter.check('testujemy!');
+// true
+bloomFilter.check('filtr');
+// true
+bloomFilter.check('nie ma')
+// false
+</code></pre>
+
+<p>Prawdopodobieństwo błędu dla przyjętych parametrów wynosi:
+<img src="https://www4c.wolframalpha.com/Calculate/MSP/MSP772420gih62f6ech2f05000010ahiefh16dba6cd?MSPStoreType=image/gif&amp;s=59" alt="bloom" />
+<em>p ~= 0.12</em></p>
+
+<p>ale przy 10-ciu elementach wzrasta do <em>p ~= 0.46</em>, dlatego dobór odpowiednich parametrów jest bardzo ważny.</p>
+
+<h2 id="produkcyjne-użycia:15fbb8d9ed16407d5b96391271a178aa">Produkcyjne użycia</h2>
+
+<p>Z Filtrów Blooma korzystają m.in:</p>
+
+<ul>
+<li><a href="http://cassandra.apache.org/">Cassandra</a></li>
+<li><a href="http://hadoop.apache.org/">Hadoop</a></li>
+<li><a href="https://cloud.google.com/bigtable/">Google BigTable</a></li>
+<li><a href="https://www.akamai.com/">Akamai</a></li>
+</ul>
+
+<hr />
+
+<ol>
+<li><a href="https://en.wikipedia.org/wiki/Bloom_filter">https://en.wikipedia.org/wiki/Bloom_filter</a></li>
+<li><a href="https://sites.google.com/site/murmurhash/">https://sites.google.com/site/murmurhash/</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function">https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function</a></li>
+<li><a href="http://www.isthe.com/chongo/tech/comp/fnv/index.html#FNV-param">http://www.isthe.com/chongo/tech/comp/fnv/index.html#FNV-param</a></li>
+<li><a href="http://citeseer.ist.psu.edu/viewdoc/download;jsessionid=4060353E67A356EF9528D2C57C064F5A?doi=10.1.1.152.579&amp;rep=rep1&amp;type=pdf">http://citeseer.ist.psu.edu/viewdoc/download;jsessionid=4060353E67A356EF9528D2C57C064F5A?doi=10.1.1.152.579&amp;rep=rep1&amp;type=pdf</a></li>
+</ol>
+
+        <div class="social">
+  <div>
+    <a class="twitter-share-button"
+      href="https://twitter.com/share"
+      data-via="k_smigiel"
+      data-url="http://ksmigiel.com/2016/06/bloom-filters">
+      Tweet
+    </a> 
+  </div>
+  <div>
+    <div class="fb-like" data-width="450" data-layout="button_count" data-action="like" data-show-faces="false" data-send="false"></div>
+  </div>
+</div>
+
+
+      </section>
+
+      
+      <section>
+        <div id="disqus_thread"></div>
+<script type="text/javascript">
+   
+  var disqus_shortname = 'ksmigiel'; 
+
+   
+  (function() {
+     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+     dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+   })();
+</script>
+
+      </section>
+      
+
+    </div>
+  </article>
+<footer class="site-footer">
+  <div class="container">
+    <nav>
+      <a href="/">Blog</a> &middot;
+      <a href="/tags">Tagi</a> &middot;
+      <a href="/post">Archiwum</a> &middot;
+      <a href="/about">O mnie</a>
+    </nav>
+
+    <nav class="social">
+      
+      <a href="https://twitter.com/k_smigiel" title="Follow on Twitter" target="_blank"><i class="icon icon-twitter black"></i></a>
+      
+      
+      <a href="https://github.com/ksmigiel" title="Follow on Github" target="_blank"><i class="icon icon-github black"></i></a>
+      
+          
+      <a href="/index.xml" title="RSS Feed">
+        <i class="icon icon-rss black"></i>
+      </a>
+    </nav>
+  </div>
+</footer>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+<script>window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return;js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);t._e=[];t.ready=function(f){t._e.push(f);};return t;}(document,"script","twitter-wjs"));</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+var js, fjs = d.getElementsByTagName(s)[0];
+if (d.getElementById(id)) return;
+js = d.createElement(s); js.id = id;
+js.src = "//connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v2.2&appId=901391149893781";
+fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-58701947-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+
+
+
+</body>
+</html>
+

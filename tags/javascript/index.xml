@@ -5,8 +5,179 @@
     <link>http://ksmigiel.com/tags/javascript/</link>
     <description>Recent content in Javascript on </description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 30 Mar 2016 21:59:09 +0100</lastBuildDate>
+    <lastBuildDate>Sat, 11 Jun 2016 11:59:09 +0100</lastBuildDate>
     <atom:link href="http://ksmigiel.com/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Filtry Blooma</title>
+      <link>http://ksmigiel.com/2016/06/bloom-filters</link>
+      <pubDate>Sat, 11 Jun 2016 11:59:09 +0100</pubDate>
+      
+      <guid>http://ksmigiel.com/2016/06/bloom-filters</guid>
+      <description>
+
+&lt;p&gt;Dzisiaj będzie trochę bardziej nisko poziomowo (nie mylić z niższym poziomem posta). Postaram się w przystepny sposób przybliżyć wam czym jest Filtr Blooma i jak można go zaimplementować w JavaScripcie.&lt;/p&gt;
+
+&lt;h2 id=&#34;filtra-teorie:15fbb8d9ed16407d5b96391271a178aa&#34;&gt;Filtra teorie&lt;/h2&gt;
+
+&lt;p&gt;Filtr Blooma to struktura danych pozwalająca w sposób szybki i pamięciowo optymalny odpowiedzieć na pytanie, czy dany element znajduje się w zbiorze. Niestety, ponieważ nie ma nic za darmo, za wydajność musimy zapłacić, a zapłatą będzie błąd w jaki struktura może nas wprowadzić. Nie użyłem &lt;strong&gt;probabilistyczna&lt;/strong&gt; bez powodu: filtr może stwierdzić jedynie, że elementu &lt;strong&gt;na pewno nie ma&lt;/strong&gt;, lub &lt;strong&gt;może jest&lt;/strong&gt; w zbiorze. Założenie to prowadzi do wniosków tzw. &lt;strong&gt;false-positive&lt;/strong&gt;, czyli że dany element nie istnieje w zadanym zbiorze, a jednak otrzymamy informację o jego prawdopodobnym istnieniu.&lt;/p&gt;
+
+&lt;h3 id=&#34;budowa-i-parametry-filtra:15fbb8d9ed16407d5b96391271a178aa&#34;&gt;Budowa i parametry filtra&lt;/h3&gt;
+
+&lt;p&gt;Filtr można opisać mniej więcej tak:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Filtr Blooma to &lt;strong&gt;tablica&lt;/strong&gt; (wektor) &lt;em&gt;m&lt;/em&gt;-bitów, który ma &amp;ldquo;przewidywać&amp;rdquo; istnienie &lt;em&gt;n&lt;/em&gt; elementów. Elementy te zostały zakodowane &lt;em&gt;k&lt;/em&gt; funkcjami haszującymi.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Dobór tych parametrów wpływa na prawdopodobieństwo wystąpienia błędu (które chcemy minimalizować). &lt;a href=&#34;https://en.wikipedia.org/wiki/Bloom_filter&#34;&gt;Wikipedia&lt;/a&gt; bardzo ładnie przedstawia to od matematycznej strony. Najważniejsze są dwa wzory:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://wikimedia.org/api/rest_v1/media/math/render/svg/76ffa4de74f3857f41900292d0fc315170cec674&#34; alt=&#34;k&#34; /&gt;
+&lt;img src=&#34;https://wikimedia.org/api/rest_v1/media/math/render/svg/25b30f6928fac097a6e25aa7b7870a7722b7aea0&#34; alt=&#34;m&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;My do teorii aż tak wagi przywiązywać nie będziemy, ale trzeba pamiętać, że przy produkcyjnym użyciu takiej struktury bez wstępnej analizy się nie obejdzie.&lt;/p&gt;
+
+&lt;h3 id=&#34;działanie-filtra:15fbb8d9ed16407d5b96391271a178aa&#34;&gt;Działanie filtra&lt;/h3&gt;
+
+&lt;p&gt;Całość sprowadza się do testu, czy dany bit (lub &lt;em&gt;k&lt;/em&gt; bitów w przypadku &lt;em&gt;k &amp;gt; 1&lt;/em&gt;) dla zadanej wartości (np. &lt;em&gt;x&lt;/em&gt;) jest zapalonych w tablicy. Jeśli choć jeden nie jest - mamy pewność, że element jest nieobecny.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Bloom_filter.svg/649px-Bloom_filter.svg.png&#34; alt=&#34;bloom&#34; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;haszowanie:15fbb8d9ed16407d5b96391271a178aa&#34;&gt;Haszowanie&lt;/h3&gt;
+
+&lt;p&gt;Orłem z kryptografii nie jestem, ale wyczytałem, że użyte funkcje haszujące powinny być przede wszystkim &lt;strong&gt;niezależne&lt;/strong&gt; i o &lt;strong&gt;jednostajnym rozkładzie prawdopodobieństwa&lt;/strong&gt;, np. takie jak: &lt;a href=&#34;https://sites.google.com/site/murmurhash/&#34;&gt;murmur&lt;/a&gt; lub &lt;a href=&#34;https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function&#34;&gt;fnv&lt;/a&gt;. Zalecam dalszą lekturę w tym zakresie dla zainteresowanych szczegółami.&lt;/p&gt;
+
+&lt;h4 id=&#34;podwójne-haszowanie:15fbb8d9ed16407d5b96391271a178aa&#34;&gt;Podwójne haszowanie&lt;/h4&gt;
+
+&lt;p&gt;Jak i jakich funkcji używać do haszowania? Aby zapewnić prawdopodobieństwo błędu na podobnym poziomie, możemy skorzystać z &lt;a href=&#34;http://citeseer.ist.psu.edu/viewdoc/download;jsessionid=4060353E67A356EF9528D2C57C064F5A?doi=10.1.1.152.579&amp;amp;rep=rep1&amp;amp;type=pdf&#34;&gt;&lt;strong&gt;podwójnego haszowania&lt;/strong&gt;&lt;/a&gt;:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://en.wikipedia.org/api/rest_v1/media/math/render/svg/64111088b311219da1c0bc477bf1d97ee0c42b69&#34; alt=&#34;double hash&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Będziemy potrzebować wtedy jedynie dwóch funkcji haszujących &lt;em&gt;h&lt;sub&gt;1&lt;/sub&gt;&lt;/em&gt; i  &lt;em&gt;h&lt;sub&gt;2&lt;/sub&gt;&lt;/em&gt;, &lt;em&gt;i&lt;/em&gt; - numer funkcji (nasze k), &lt;em&gt;T&lt;/em&gt; (nasze m). (&lt;em&gt;Przepraszam za zamieszanie z parametrami, ale wzory są żywcem z Wikipedii&lt;/em&gt;).&lt;/p&gt;
+
+&lt;p&gt;Myślę, że powoli możemy przejść do kodu i próby zaimplementowania tego wszystkiego, co wyżej opisałem.&lt;/p&gt;
+
+&lt;h2 id=&#34;implementacja:15fbb8d9ed16407d5b96391271a178aa&#34;&gt;Implementacja&lt;/h2&gt;
+
+&lt;p&gt;Dla celów edukacyjnych przyjmijmy następujące parametry:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;k = 1    Jedna funkcja haszująca fnv-1
+m = 16   16-bitowa tablica
+n = 2    Dwa elementy
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;fnv-1:15fbb8d9ed16407d5b96391271a178aa&#34;&gt;fnv-1&lt;/h3&gt;
+
+&lt;p&gt;Wybrałem tę, bo jest relatywnie prosta w implementacji:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;// Operacje na bitach w JS są 32-bitowe
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators
+//
+// Stałe dla 32-bitów
+// http://www.isthe.com/chongo/tech/comp/fnv/index.html#FNV-param
+const FNV_OFFSET = 0x811c9dc5;
+const FNV_PRIME = 0x01000193;
+
+function fnv1(string) {
+  let bytes = stringToBytes(string);
+  let hash = FNV_OFFSET;
+
+  for (let byte of bytes) {
+    hash = hash * FNV_PRIME;
+    hash = hash ^ byte;
+  }
+
+  return Math.abs(hash);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;stringtobytes:15fbb8d9ed16407d5b96391271a178aa&#34;&gt;stringToBytes&lt;/h3&gt;
+
+&lt;p&gt;Powyższa funkcja potrzebuje tablicy bajtów z ciągu znaków. JS nie posiada takiej ładnej funkcji jak chociażby C# &lt;code&gt;byte[] bytes = encoding.GetBytes(AnyString)&lt;/code&gt;, dlatego musimy napisać coś podobnego. Dla ułatwienia przyjmijmy, że ciąg znaków kodowany jest w ASCII (basic English).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;function stringToBytes(string) {
+  let bytes = [];
+
+  for (let char of string) {
+    bytes.push(char.charCodeAt(0));
+  }
+  
+  return bytes;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;bloomfilter:15fbb8d9ed16407d5b96391271a178aa&#34;&gt;BloomFilter&lt;/h3&gt;
+
+&lt;p&gt;Jak zauważyliście używam składni ES6, o co by iść z duchem czasu. Filtr będzie przyjmował w konstruktorze liczbę bitów oraz funkcje haszujące, których chcemy użyć.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;class BloomFilter {
+  constructor (m, k) {
+    this.bits = m;
+    this.hashFunctions = k;
+    this.filter = new Int32Array(m);
+  }
+
+  add (value) {
+    for (let hash of this.hashFunctions) {
+      let hashIndex = hash(value) % this.bits;
+      this.filter[hashIndex] = 1;
+    }
+  }
+
+  check (value) {
+    for (let hash of this.hashFunctions) {
+      let hashIndex = hash(value) % this.bits;
+      if (this.filter[hashIndex] == 0)
+        return false;
+    }
+    return true;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;testujemy:15fbb8d9ed16407d5b96391271a178aa&#34;&gt;Testujemy!&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;var bloomFilter = new BloomFilter(16, [ fnv1 ]);
+
+bloomFilter.add(&#39;testujemy!&#39;);
+bloomFilter.add(&#39;filtr&#39;);
+
+bloomFilter.check(&#39;testujemy!&#39;);
+// true
+bloomFilter.check(&#39;filtr&#39;);
+// true
+bloomFilter.check(&#39;nie ma&#39;)
+// false
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Prawdopodobieństwo błędu dla przyjętych parametrów wynosi:
+&lt;img src=&#34;https://www4c.wolframalpha.com/Calculate/MSP/MSP772420gih62f6ech2f05000010ahiefh16dba6cd?MSPStoreType=image/gif&amp;amp;s=59&#34; alt=&#34;bloom&#34; /&gt;
+&lt;em&gt;p ~= 0.12&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;ale przy 10-ciu elementach wzrasta do &lt;em&gt;p ~= 0.46&lt;/em&gt;, dlatego dobór odpowiednich parametrów jest bardzo ważny.&lt;/p&gt;
+
+&lt;h2 id=&#34;produkcyjne-użycia:15fbb8d9ed16407d5b96391271a178aa&#34;&gt;Produkcyjne użycia&lt;/h2&gt;
+
+&lt;p&gt;Z Filtrów Blooma korzystają m.in:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://cassandra.apache.org/&#34;&gt;Cassandra&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://hadoop.apache.org/&#34;&gt;Hadoop&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://cloud.google.com/bigtable/&#34;&gt;Google BigTable&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.akamai.com/&#34;&gt;Akamai&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Bloom_filter&#34;&gt;https://en.wikipedia.org/wiki/Bloom_filter&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://sites.google.com/site/murmurhash/&#34;&gt;https://sites.google.com/site/murmurhash/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function&#34;&gt;https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.isthe.com/chongo/tech/comp/fnv/index.html#FNV-param&#34;&gt;http://www.isthe.com/chongo/tech/comp/fnv/index.html#FNV-param&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://citeseer.ist.psu.edu/viewdoc/download;jsessionid=4060353E67A356EF9528D2C57C064F5A?doi=10.1.1.152.579&amp;amp;rep=rep1&amp;amp;type=pdf&#34;&gt;http://citeseer.ist.psu.edu/viewdoc/download;jsessionid=4060353E67A356EF9528D2C57C064F5A?doi=10.1.1.152.579&amp;amp;rep=rep1&amp;amp;type=pdf&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
     
     <item>
       <title>Kontekst i &#39;this&#39; w JavaScripcie</title>
