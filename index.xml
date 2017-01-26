@@ -5,8 +5,90 @@
     <link>http://ksmigiel.com/</link>
     <description>Recent content on </description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 11 Jun 2016 11:59:09 +0100</lastBuildDate>
+    <lastBuildDate>Tue, 24 Jan 2017 18:59:09 +0100</lastBuildDate>
     <atom:link href="http://ksmigiel.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Cuckoo Filters</title>
+      <link>http://ksmigiel.com/2017/01/cuckoo-filters</link>
+      <pubDate>Tue, 24 Jan 2017 18:59:09 +0100</pubDate>
+      
+      <guid>http://ksmigiel.com/2017/01/cuckoo-filters</guid>
+      <description>
+
+&lt;p&gt;&lt;strong&gt;Cuckoo Filter&lt;/strong&gt; to &lt;strong&gt;probabilistyczna struktura danych&lt;/strong&gt; - podobnie jak &lt;a href=&#34;http://ksmigiel.com/2016/06/bloom-filters/&#34;&gt;Bloom Filter&lt;/a&gt;. W poprzednim poście znajdziecie krótki opis czym taka struktura danych się charakteryzuje (fałszywie dodatki wynik zapytania: &amp;ldquo;czy element zawiera się w danym zbiorze&amp;rdquo;).&lt;/p&gt;
+
+&lt;h2 id=&#34;o-czym-mowa:9fc3faad544296f306615c66d2b26be0&#34;&gt;O czym mowa?&lt;/h2&gt;
+
+&lt;p&gt;Filtr kukułczy jest relatywnie młodą strukturą danych opisaną w 2014 roku przez &lt;a href=&#34;https://www.cs.cmu.edu/~dga/papers/cuckoo-conext2014.pdf&#34;&gt;Fan, Andersen, Kaminsky i Mitzenmacher&lt;/a&gt;. Poszerza ona wspomniane filtry bloom&amp;rsquo;a o &lt;strong&gt;usuwanie&lt;/strong&gt; i &lt;strong&gt;zliczanie&lt;/strong&gt; dodanych elementów, utrzymując przy tym porównywalną złożoność obliczeniową. Minimalizuje ona zasoby przechowując jedynie &lt;strong&gt;odcisk&lt;/strong&gt; &lt;em&gt;(ang. fingerprint)&lt;/em&gt; wartości elementu w zbiorze. W rzeczywistości jest to pewnego rodzaju tablica haszująca, która problem kolizji rozwiązuje za pomocą &lt;a href=&#34;https://en.wikipedia.org/wiki/Cuckoo_hashing&#34;&gt;&lt;strong&gt;haszowania kukułczego&lt;/strong&gt;&lt;/a&gt; &lt;em&gt;(ang. cuckoo hashing)&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;cuckoo-hashing:9fc3faad544296f306615c66d2b26be0&#34;&gt;Cuckoo hashing&lt;/h2&gt;
+
+&lt;p&gt;Jak nietrudno się domyślić, nazwa filtra i haszowania wzięła się od &lt;strong&gt;kukułek&lt;/strong&gt;. Kukułki znane są ze składania jaj w obcych gniazdach. Gdy mała kukułka wykluje się, eliminuje ona przybrane rodzeństwo usuwając je z gniazda. Nazywamy to &lt;a href=&#34;https://pl.wikipedia.org/wiki/Paso%C5%BCyty_l%C4%99gowe&#34;&gt;pasożytnictwem lęgowym&lt;/a&gt;. Na podobnej zasadzie opiera się właśnie działanie haszowania/filtra kukułczego.&lt;/p&gt;
+
+&lt;p&gt;W przypadku haszowania każdy klucz jest haszowany przez &lt;strong&gt;dwie różne&lt;/strong&gt; funkcje haszujące, gdzie każdej przyporządkowujemy tablicę, do której będzie można dodawać elementy. Jeżeli miejsce pod zadanym indeksem w pierwszej tablicy jest puste, możemy tam umieścić zadany element. Jeżeli miejsce to jest zajęte, próbujemy dodać element do tablicy drugiej (haszując drugą funkcją). Gdy to miejsce również jest zajęte, &amp;ldquo;eksmitujemy&amp;rdquo; element tam obecny i umieszczamy w to miejsce naszą wartość.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://adriancolyer.files.wordpress.com/2016/10/cuckoo-1.png?w=600&#34; alt=&#34;cuckoo&#34; /&gt;&lt;/p&gt;
+
+&lt;h6 id=&#34;grafika-z-https-adriancolyer-files-wordpress-com:9fc3faad544296f306615c66d2b26be0&#34;&gt;&lt;em&gt;(grafika z &lt;a href=&#34;https://adriancolyer.files.wordpress.com&#34;&gt;https://adriancolyer.files.wordpress.com&lt;/a&gt;)&lt;/em&gt;&lt;/h6&gt;
+
+&lt;p&gt;Na chwilę obecną mamy jeden nigdzie nieprzypisany element (ten usunięty z drugiej tablicy w poprzedniej iteracji). Ponieważ istnieją dwie funkcje/tablice, to użyjemy tego faktu do wyliczenia nowego miejsca w tablicy przeciwnej (pierwszej) i tam spróbujemy umieścić element. Gdy nawet w tym przypadku napotkamy na kolizję, dokonamy eksmisji kolejnego elementu i powtórzymy ten proces aż do momentu znalezienia miejsca w którejś z tablic.&lt;/p&gt;
+
+&lt;h2 id=&#34;cuckoo-filter-zasada-działania:9fc3faad544296f306615c66d2b26be0&#34;&gt;Cuckoo filter - zasada działania&lt;/h2&gt;
+
+&lt;p&gt;Jak już zostało wspomniane, działanie samego filtra opiera się na powyższej strategii i przedstawia się następująco:
+Filtr przechowuje &amp;ldquo;odcisk&amp;rdquo; każdego dodanego elementu w jednym z wielu &amp;ldquo;gniazd&amp;rdquo; &lt;em&gt;(ang. bucket)&lt;/em&gt; (odcisk jest ciągiem znaków pochodzącym z wartości hasza). Każde gniazdo posiada swoją wielkość &lt;em&gt;(ang. capacity)&lt;/em&gt;, czyli ile fingerprintów jest w stanie pomieścić. Przyjęło się identyfikować filtr poprzez rozmiar odcisku oraz wielkość gniazda właśnie. Np. filtr (2,4) przechowuje odciski o długości 2 znaków w 4-elementowych koszach (gniazdach).
+&lt;img src=&#34;http://ksmigiel.com/images/cuckoo/filtr.png&#34; alt=&#34;filtr&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Ze wszystkich operacji jakie oferuje filtr (dodawanie, usuwanie, sprawdzanie), dodawanie jest najbardziej skomplikowane.
+Aby dodać element potrzebujemy dwóch indeksów gniazd na podstawie hasza elementu i jego odcisku.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;var hashedElement = Hash(element);
+var index1 = GetIndexFromHash(hashedElement);
+var fingerprint = GetFingerprint(hashedElement);
+
+// index2 -&amp;gt; index1 XOR index uzyskany z hasza odcisku
+var hashedFingerprint = Hash(fingerprint);
+var index2 = index1 ^ GetIndexFromHash(hashedFingerprint);
+var index2 = index2 % filterCapacity;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Próbujemy dodać element do gniazda spod indeksu 1-szego, a gdy ten jest pełny, to do 2-giego&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;if (filter.buckets[index1].Insert(fingerprint))
+{
+    filterSize++;
+    return;
+}
+
+if (filter.buckets[index2].Insert(fingerprint))
+{
+    filterSize++;
+    return;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I podobnie jak w opisie wyżej dotyczącym haszowania kukułczego, będziemy próbować przetasowywać elementy w tablicach aż do skutku (ustalonej z góry liczby powtórzeń) lub całkowitego wyczerpania miejsca, gdy próba dodania pod dwa indeksy się nie udała.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://ksmigiel.com/images/cuckoo/insert.png&#34; alt=&#34;insert&#34; /&gt;&lt;/p&gt;
+
+&lt;h6 id=&#34;b2-próbujemy-dodać-do-bucket-1-ale-jest-tam-element-c1-który-zostaje-wyeksmitowany-do-bucket-0-ale-jest-też-dla-niego-wolne-miejsce-w-alternatywnym-bucket-2:9fc3faad544296f306615c66d2b26be0&#34;&gt;&lt;strong&gt;b2&lt;/strong&gt; próbujemy dodać do &lt;strong&gt;bucket[1]&lt;/strong&gt;, ale jest tam element &lt;strong&gt;c1&lt;/strong&gt;, który zostaje wyeksmitowany do &lt;strong&gt;bucket[0]&lt;/strong&gt;, ale jest też dla niego wolne miejsce w alternatywnym &lt;strong&gt;bucket[2]&lt;/strong&gt;.&lt;/h6&gt;
+
+&lt;h2 id=&#34;jeżeli-nie-widać-różnicy-to-po-co-przepłacać:9fc3faad544296f306615c66d2b26be0&#34;&gt;Jeżeli nie widać różnicy, to po co przepłacać?&lt;/h2&gt;
+
+&lt;p&gt;Faworyzowałbym użycie Cuckoo Filter, dopóki aplikacja nie dodaje nowych danych (w dużej ilości) do filtra w krótkich odstępach czasu. Ze względu na rekursywną naturę algorytmu dodającego nowe elementy, która objawia się w momencie przepełnienia filtra, wydajność w porównaniu do Bloom Filtra wypada kiepsko. Autor publikacji dobrze to podsumował:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;[&amp;hellip;] for reasonably large sized sets, for the same false positive rate as a corresponding Bloom filter, cuckoo filters use less space than Bloom filters, are faster on lookups (but slower on insertions/to construct), and amazingly also allow deletions of keys (which Bloom filters cannot do)&lt;/p&gt;
+
+&lt;h6 id=&#34;michael-mitzenmacher-2014-5:9fc3faad544296f306615c66d2b26be0&#34;&gt;&lt;a href=&#34;http://mybiasedcoin.blogspot.com/2014/10/cuckoo-filters.html&#34;&gt;Michael Mitzenmacher (2014)&lt;/a&gt;&lt;/h6&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;em&gt;PS. Pracuję nad implementacją filtra pod .NET Core, więc sprawdzajcie mojego githuba :)&lt;/em&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+</description>
+    </item>
     
     <item>
       <title>Filtry Blooma</title>
@@ -1455,24 +1537,6 @@ order by id
 &lt;p&gt;Wynik takiego zapytania może być również skutkiem całego procesu MapReduce. I dopóki ilość danych i czas w jakim zapytanie się wykonuje mieszczą się w granicach wymagań biznesu, to wszystko ok! Problem zaczyna się wtedy, gdy wydajność maleje, bo instancje serwerów SQL nie radzą sobie z przetwarzaniem coraz szybciej i ciągle napływających danych. Dlatego głównie ze względu na kwestię wydajności wprowadza się paralelność, co klasyczną analizę danych wybija na wyższy poziom zaawansowania.&lt;/p&gt;
 
 &lt;p&gt;Dane mogą teraz zostać przetworzone szybciej. Coś, co kiedyś trwało, lub ze względu na ograniczenia mocy obliczeniowej było prawie niemożliwe, dziś za pomocą chmury i tego typu technologii pozwala niejako na nowo odkrywać algorytmy uczenia maszynowego, data-miningu. A w jaki sposób to zostanie zaprezentowane.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Pierwszy post...</title>
-      <link>http://ksmigiel.com/2015/01/pierwszy-post</link>
-      <pubDate>Sun, 18 Jan 2015 18:44:12 +0100</pubDate>
-      
-      <guid>http://ksmigiel.com/2015/01/pierwszy-post</guid>
-      <description>&lt;p&gt;Cześć! Pomysł na stworzenie bloga chodził mi już jakiś czas po głowie, ale jak to z pomysłami bywa, trochę czasu upłynęło zanim przeszedłem z fazy planingu do fazy implementacji. Nowy rok wydaje się być idealnym momentem na rozpoczęcie czegoś nowego w swoim życiu, więc korzystając z okazji zarejestrowałem domenę i zacząłem szukać hostingu / platformy blogowej, która by mi odpowiadała. Miałem kiedyś styczność z WordPressem, ale potrzebowałem alternatywy lekkiej, prostej i najlepiej minimalistycznej. W ten sposób natrafiłem na bardzo ciekawe narzędzie: &lt;a href=&#34;http://gohugo.io&#34;&gt;Hugo&lt;/a&gt; - czyli &lt;em&gt;static website engine&lt;/em&gt;. Istnieje parę podobnych rozwiązań typu &lt;em&gt;Jekyll&lt;/em&gt; i bazujący na nim &lt;em&gt;Octopress&lt;/em&gt;, ale ten Hugo bardzo mi się spodobał i spędziłem nad nim trochę czasu rozgryzając go, doprowadzając bloga do stanu obecnego.&lt;/p&gt;
-
-&lt;p&gt;Prawdopodobnie jak większość podobnych blogów, tak i ten powstał po to, aby dokumentować swoją pracę i przy okazji pomóc innym szukającym odpowiedzi na pytanie, których nie ma na stackoverflow. Zawsze narzekałem na brak swojej prywatnej dokumentacji, szczególnie wtedy, gdy nie mogłem sobie przypomnieć rozwiązania problemu, który już kiedyś rozwiązałem. Liczę więc na to, że blog zwiększy moją i Waszą produktywność :)&lt;/p&gt;
-
-&lt;p&gt;Posty będą o różnej tematyce: &lt;strong&gt;webdev&lt;/strong&gt; (.NET, js, MVC, REST API), &lt;strong&gt;data science&lt;/strong&gt; i &lt;strong&gt;big data&lt;/strong&gt; (no-sql, Hadoop, machine learning, AI, statystyka, ekonometria), &lt;strong&gt;programowanie funkcyjne&lt;/strong&gt; (F#), &lt;strong&gt;dobre praktyki&lt;/strong&gt; i &lt;strong&gt;protipy&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Jak zrealizuję chociaż 50% z tematów, które zamierzam poruszyć na ten rok to będzie sukces! A jak znajdą się czytelnicy, to i artykuły się znajdą.&lt;/p&gt;
-
-&lt;p&gt;Miłego czytania!&lt;/p&gt;
 </description>
     </item>
     
