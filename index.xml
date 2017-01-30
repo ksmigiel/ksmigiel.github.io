@@ -87,6 +87,14 @@ if (filter.buckets[index2].Insert(fingerprint))
 &lt;p&gt;&lt;em&gt;PS. Pracuję nad implementacją filtra pod .NET Core, więc sprawdzajcie mojego githuba :)&lt;/em&gt;&lt;/p&gt;
 
 &lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;http://ksmigiel.com/2016/06/bloom-filters/&#34;&gt;http://ksmigiel.com/2016/06/bloom-filters/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.cs.cmu.edu/~dga/papers/cuckoo-conext2014.pdf&#34;&gt;https://www.cs.cmu.edu/~dga/papers/cuckoo-conext2014.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Cuckoo_hashing&#34;&gt;https://en.wikipedia.org/wiki/Cuckoo_hashing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://pl.wikipedia.org/wiki/Paso%C5%BCyty_l%C4%99gowe&#34;&gt;https://pl.wikipedia.org/wiki/Paso%C5%BCyty_l%C4%99gowe&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://mybiasedcoin.blogspot.com/2014/10/cuckoo-filters.html&#34;&gt;http://mybiasedcoin.blogspot.com/2014/10/cuckoo-filters.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
 </description>
     </item>
     
