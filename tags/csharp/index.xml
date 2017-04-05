@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Csharp on </title>
+    <link>http://ksmigiel.com/tags/csharp/</link>
+    <description>Recent content in Csharp on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 05 Apr 2017 20:13:09 +0000</lastBuildDate>
+    <atom:link href="http://ksmigiel.com/tags/csharp/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Inicjalizacja Dictionary&lt;TKey, TValue&gt; w C# 6</title>
+      <link>http://ksmigiel.com/2017/04/csharp6-dictionary</link>
+      <pubDate>Wed, 05 Apr 2017 20:13:09 +0000</pubDate>
+      
+      <guid>http://ksmigiel.com/2017/04/csharp6-dictionary</guid>
+      <description>
+
+&lt;p&gt;Chciałem po krótce zaprezentować błąd (albo feature?) C# związany z dodanym w wersji 6 &lt;strong&gt;inicjalizatorem słownika&lt;/strong&gt;. Jest to o tyle ciekawa kwestia, że nie ustrzeże nas przed tym błędem ani statyczna analiza kodu, ani kompilacja - dopiero
+&lt;em&gt;runtime&lt;/em&gt; rzuci w nas wyjątkiem!.&lt;/p&gt;
+
+&lt;h2 id=&#34;dictionary-initializers:083bdf9bd1debcd24a12f782dbb060bc&#34;&gt;Dictionary initializers&lt;/h2&gt;
+
+&lt;p&gt;Zapewne znana jest wam składnia pozwalająca na stworzenie słownika &lt;code&gt;Dictionary&amp;lt;TKey, TValue&amp;gt;&lt;/code&gt; razem z wartościami:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;var dictionary = new Dictionary&amp;lt;int, List&amp;lt;int&amp;gt;&amp;gt;
+{
+	{ 0, new List&amp;lt;int&amp;gt; { 0, 1, 2 } },
+	{ 1, new List&amp;lt;int&amp;gt; { 1, 2, 3 } },
+	{ 2, new List&amp;lt;int&amp;gt; { 2, 3, 4 } }
+};
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;C# 6 wprowadził mały &lt;em&gt;syntactic sugar&lt;/em&gt; odnośnie tworzenia słowników i powyższy kod możemy zapisać następująco:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;var dictionary = new Dictionary&amp;lt;int, List&amp;lt;int&amp;gt;&amp;gt;
+{
+	[0] = new List&amp;lt;int&amp;gt; { 0, 1, 2 },
+	[1] = new List&amp;lt;int&amp;gt; { 1, 2, 3 },
+	[2] = new List&amp;lt;int&amp;gt; { 2, 3, 4 }
+};
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Nie jest to oczywiście zmiana funkcjonalna, lecz conajwyżej poprawiająca czytelność kodu.&lt;/p&gt;
+
+&lt;h2 id=&#34;mały-błąd-ciekawe-odkrycie:083bdf9bd1debcd24a12f782dbb060bc&#34;&gt;Mały błąd - ciekawe odkrycie&lt;/h2&gt;
+
+&lt;p&gt;Jakiś czas temu pisząc kod chciałem na szybko użyć dokładnie takiej samej struktury danych jak wyżej, jednak omyłkowo stworzyłem takiego potwora:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;var test = new Dictionary&amp;lt;int, List&amp;lt;int&amp;gt;&amp;gt;
+{
+	[0] = { 0, 1, 2 },
+	[1] = { 1, 2, 3 },
+	[2] = { 2, 3, 4 }
+};
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Jak widzicie zapomniałem użyć &lt;strong&gt;new&lt;/strong&gt; razem &lt;strong&gt;inicjalizatorem listy&lt;/strong&gt;. Kod się skompilował, Visual Studio i ReSharper nie miał nic do powiedzenia, po czym w trakcie wykonywania kodu otrzymałem wyjątek &lt;code&gt;KeyNotFoundException: The given key was not present in the dictionary&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Wygląda więc na to, że&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;składnia jest poprawna&lt;/li&gt;
+&lt;li&gt;kod jest kompilowalny&lt;/li&gt;
+&lt;li&gt;.NET próbuje coś wyciągnąć ze słownika, ale niestety bezskutecznie&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Zaciekawiony tym co się dzieje pod maską postanowiłem spojrzeć na &lt;strong&gt;IL&lt;/strong&gt;, który generują obydwa (poprawny i ten mniej poprawny) przykłady, aby dowiedzieć się do czego tak naprawdę został skompilowany ten błędny kod.&lt;/p&gt;
+
+&lt;h2 id=&#34;analiza-il-feels-like-a-hacker:083bdf9bd1debcd24a12f782dbb060bc&#34;&gt;Analiza IL - feels like a hacker!&lt;/h2&gt;
+
+&lt;p&gt;Rzadko mam okazję analizować &lt;em&gt;IL&lt;/em&gt; czy &lt;em&gt;asm x86&lt;/em&gt;, ale jak już się taka okazja nadarzy, to sama przyjemność patrzeć na te bebechy :)
+Weźmy na tapetę jako pierwszy poprawny przykład kodu (powycinałem z &lt;em&gt;IL&amp;rsquo;a&lt;/em&gt; niepotrzebne rzeczy, co by się wszystko mogło zmieścić w poście).&lt;/p&gt;
+
+&lt;h4 id=&#34;il-poprawny:083bdf9bd1debcd24a12f782dbb060bc&#34;&gt;IL - poprawny&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;var dictionary = new Dictionary&amp;lt;int, List&amp;lt;int&amp;gt;&amp;gt;
+{
+    [0] = new List&amp;lt;int&amp;gt; { 1 }
+}
+
+// Stwórz nową instancję Dictionary&amp;lt;int, List&amp;lt;int&amp;gt;&amp;gt; i wrzuć referencję na stos
+// stos: ref Dictionary
+IL_0001: newobj       instance void class Dictionary`2&amp;lt;int32, class List`1&amp;lt;int32&amp;gt;&amp;gt;::.ctor()
+// Duplikuj referencję i wrzuć na stos
+// stos: ref Dictionary, ref Dictionary
+IL_0006: dup          
+// Wrzuć na stos int32 o wartości 0
+// stos: ref Dictionary, ref Dictionary, 0
+IL_0007: ldc.i4.0     
+// Stwórz nową instancję List&amp;lt;int&amp;gt; i wrzuć referencję na stos
+// stos: ref Dictionary, ref Dictionary, 0, ref List
+IL_0008: newobj       instance void class List`1&amp;lt;int32&amp;gt;::.ctor()
+// Duplikuj referencję i wrzuć na stos
+// stos: ref Dictionary, ref Dictionary, 0, ref List, ref List
+IL_000d: dup          
+// Wrzuć na stos int32 o wartości 1
+// stos: ref Dictionary, ref Dictionary, 0, ref List, ref List, 1
+IL_000e: ldc.i4.1     
+// Wołaj metodę Add() na List&amp;lt;int&amp;gt;
+// stos: ref Dictionary, ref Dictionary, 0, ref List
+IL_000f: callvirt     instance void class List`1&amp;lt;int32&amp;gt;::Add(!0/*int32*/)
+// Wołaj metodę set_Item na Dictionary&amp;lt;int, List&amp;lt;int&amp;gt;&amp;gt;
+// stos: ref Dictionary
+IL_0015: callvirt     instance void class Dictionary`2&amp;lt;int32, class List`1&amp;lt;int32&amp;gt;&amp;gt;::set_Item(!0, !1)
+// Zapisz referencję do zmiennej lokalnej
+// stos: [pusty]
+IL_001b: stloc.0      
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Nic podejrzanego, wszystko przebiega zgodnie z planem. Dla tych, którzy nie mają zielonego pojęcia co się wydarzyło polecam zaznajomić się z &lt;em&gt;intermidiate language&lt;/em&gt; i jego naturą &amp;ldquo;stosową&amp;rdquo; (&lt;em&gt;stack-based&lt;/em&gt;).&lt;/p&gt;
+
+&lt;p&gt;Popatrzmy teraz na kod, który nas bardziej ciekawi:&lt;/p&gt;
+
+&lt;h4 id=&#34;il-mniej-poprawny:083bdf9bd1debcd24a12f782dbb060bc&#34;&gt;IL - mniej poprawny&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;var dictionary = new Dictionary&amp;lt;int, List&amp;lt;int&amp;gt;&amp;gt;
+{
+    [0] = { 1 }
+}
+
+// Stwórz nową instancję Dictionary&amp;lt;int, List&amp;lt;int&amp;gt;&amp;gt; i wrzuć referencję na stos
+// stos: ref Dictionary
+IL_0001: newobj       instance void class Dictionary`2&amp;lt;int32, class List`1&amp;lt;int32&amp;gt;&amp;gt;::.ctor()
+// Duplikuj referencję i wrzuć na stos
+// stos: ref Dictionary, ref Dictionary
+IL_0006: dup          
+// Wrzuć na stos int32 o wartości 0
+// stos: ref Dictionary, ref Dictionary, 0
+IL_0007: ldc.i4.0     
+// Zawołaj get_Item() na stworzonej instancji słownika i wrzuć referencję listy na stos
+// stos: ref Dictionary, ref List
+// Tutaj rzuca wyjątek, że nic pod kluczem &amp;quot;0&amp;quot; nie istnieje
+IL_0008: callvirt     instance !1 class Dictionary`2&amp;lt;int32, class List`1&amp;lt;int32&amp;gt;&amp;gt;::get_Item(!0)
+// Wrzuć na stos int32 o wartości 1
+// stos: ref Dictionary, ref List, 1
+IL_000d: ldc.i4.1     
+// Zawołaj Add() na List&amp;lt;int&amp;gt;
+// stos: ref Dictionary
+IL_000e: callvirt     instance void class List`1&amp;lt;int32&amp;gt;::Add(!0)
+// Zapisz referencję do zmiennej lokalnej
+// stos&amp;quot; [pusty]
+IL_0014: stloc.0      
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Jak widzicie instrukcja &lt;code&gt;IL_0008&lt;/code&gt; próbuje otrzymać referencję do listy (nie została stworzona prawdopodobnie przez brak &lt;code&gt;new List&amp;lt;int&amp;gt;&lt;/code&gt;). Idąc dalej tym tokiem myślenia wydaje się całkowicie sensowne (i absurdalne zarazem), aby spreparować kod, gdzie będziemy mieli już istniejącą listę (czyli nie rzuci wyjątkiem), co powinno skutkować dodaniem nowego elementu za pomocą zepsutego inicjalizatora - kod zepsutego celowo inicjalizatora kompiluje się jako operacja &lt;code&gt;Add()&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Odpalcie zatem u siebie coś takiego i niech się teraz panowie z Microsoftu tłumaczą:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;var dictionary = new Dictionary&amp;lt;int, List&amp;lt;int&amp;gt;&amp;gt;
+{
+    [0] = new List&amp;lt;int&amp;gt;{ 1 },
+    [0] = { 2 }
+};
+
+Console.WriteLine(test[0].Count);
+// 2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Właśnie udało nam się pokracznie dodać element do istniejącej już listy :D.&lt;/p&gt;
+
+&lt;h2 id=&#34;co-dalej:083bdf9bd1debcd24a12f782dbb060bc&#34;&gt;Co dalej?&lt;/h2&gt;
+
+&lt;p&gt;Postanowiłem zgłosić błąd na GitHub&amp;rsquo;ie Roslyn&amp;rsquo;a (&lt;a href=&#34;https://github.com/dotnet/roslyn/issues/18475&#34;&gt;https://github.com/dotnet/roslyn/issues/18475&lt;/a&gt;) i zaczekać na odpowiedź. Może się okazać, że jest to &lt;em&gt;feature&lt;/em&gt;, nie &lt;em&gt;bug&lt;/em&gt; i jestem bardzo ciekawy czy tego typu problem był już przerabiany wcześniej.&lt;/p&gt;
+
+&lt;p&gt;PS. Pozdrawiam Dawida, który dzielnie walczył ze mną nad rozbrojeniem tej bomby!&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
