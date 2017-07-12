@@ -9,12 +9,24 @@
     <atom:link href="http://ksmigiel.com/tags/bug/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>Inicjalizacja Dictionary&lt;TKey, TValue&gt; w C# 6</title>
+      <title>[AKTUALIZACJA] Inicjalizacja Dictionary&lt;TKey, TValue&gt; w C# 6</title>
       <link>http://ksmigiel.com/2017/04/csharp6-dictionary</link>
       <pubDate>Wed, 05 Apr 2017 20:13:09 +0000</pubDate>
       
       <guid>http://ksmigiel.com/2017/04/csharp6-dictionary</guid>
       <description>
+
+&lt;h2 id=&#34;aktualizacja-17-06-2017:083bdf9bd1debcd24a12f782dbb060bc&#34;&gt;AKTUALIZACJA 17.06.2017&lt;/h2&gt;
+
+&lt;p&gt;Jak się okazuje &lt;em&gt;&amp;ldquo;it&amp;rsquo;s not a bug, it&amp;rsquo;s a feature!&amp;rdquo;&lt;/em&gt;. Dokładnie takie zachowanie, jak opisanie w poście, jest zawarte w &lt;a href=&#34;https://github.com/dotnet/roslyn/issues/18475#issuecomment-309168670&#34;&gt;specyfikacji języka&lt;/a&gt;.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;A member initializer that specifies a collection initializer after the equals sign is an initialization of an embedded collection. Instead of assigning a new collection to the target field, property or indexer, the elements given in the initializer are added to the collection referenced by the target. The target must be of a collection type that satisfies the requirements specified in §7.6.11.3.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Wypada następnym razem zejść jeszcze niżej niż do IL i grzebać w specyfikacji :) Fajnie, że ktoś na te zgłoszenia w ogóle patrzy i liczy się ze środowiskiem open source - tutaj duży plus dla Microsoftu!&lt;/p&gt;
+
+&lt;hr /&gt;
 
 &lt;p&gt;Chciałem po krótce zaprezentować błąd (albo feature?) C# związany z dodanym w wersji 6 &lt;strong&gt;inicjalizatorem słownika&lt;/strong&gt;. Jest to o tyle ciekawa kwestia, że nie ustrzeże nas przed tym błędem ani statyczna analiza kodu, ani kompilacja - dopiero
 &lt;em&gt;runtime&lt;/em&gt; rzuci w nas wyjątkiem!.&lt;/p&gt;

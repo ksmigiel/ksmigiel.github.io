@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inicjalizacja Dictionary&lt;TKey, TValue&gt; w C# 6 - Krzysztof Śmigiel | Blog</title>
+  <title>[AKTUALIZACJA] Inicjalizacja Dictionary&lt;TKey, TValue&gt; w C# 6 - Krzysztof Śmigiel | Blog</title>
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:700,600,400" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
@@ -45,12 +45,24 @@
             
           </ul>
         </div>
-        <h1 class="title">Inicjalizacja Dictionary&lt;TKey, TValue&gt; w C# 6</h1>
+        <h1 class="title">[AKTUALIZACJA] Inicjalizacja Dictionary&lt;TKey, TValue&gt; w C# 6</h1>
         <h2 class="subtitle">Oraz dziwne zachowanie razem z List&lt;T&gt;</h2>
       </header>
 
       <section>
         
+
+<h2 id="aktualizacja-17-06-2017:083bdf9bd1debcd24a12f782dbb060bc">AKTUALIZACJA 17.06.2017</h2>
+
+<p>Jak się okazuje <em>&ldquo;it&rsquo;s not a bug, it&rsquo;s a feature!&rdquo;</em>. Dokładnie takie zachowanie, jak opisanie w poście, jest zawarte w <a href="https://github.com/dotnet/roslyn/issues/18475#issuecomment-309168670">specyfikacji języka</a>.</p>
+
+<blockquote>
+<p>A member initializer that specifies a collection initializer after the equals sign is an initialization of an embedded collection. Instead of assigning a new collection to the target field, property or indexer, the elements given in the initializer are added to the collection referenced by the target. The target must be of a collection type that satisfies the requirements specified in §7.6.11.3.</p>
+</blockquote>
+
+<p>Wypada następnym razem zejść jeszcze niżej niż do IL i grzebać w specyfikacji :) Fajnie, że ktoś na te zgłoszenia w ogóle patrzy i liczy się ze środowiskiem open source - tutaj duży plus dla Microsoftu!</p>
+
+<hr />
 
 <p>Chciałem po krótce zaprezentować błąd (albo feature?) C# związany z dodanym w wersji 6 <strong>inicjalizatorem słownika</strong>. Jest to o tyle ciekawa kwestia, że nie ustrzeże nas przed tym błędem ani statyczna analiza kodu, ani kompilacja - dopiero
 <em>runtime</em> rzuci w nas wyjątkiem!.</p>
