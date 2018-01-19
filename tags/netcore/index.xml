@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Dotnet on </title>
-    <link>http://ksmigiel.com/tags/dotnet/</link>
-    <description>Recent content in Dotnet on </description>
+    <title>Netcore on </title>
+    <link>http://ksmigiel.com/tags/netcore/</link>
+    <description>Recent content in Netcore on </description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Thu, 18 Jan 2018 13:13:09 +0000</lastBuildDate>
     
-	<atom:link href="http://ksmigiel.com/tags/dotnet/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://ksmigiel.com/tags/netcore/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -19,16 +19,6 @@
       <description>Zapewne dla tych, którzy mieli styczność z frameworkiem ASP.NET Core zagadnienia takie jak pliki konfiguracyjne projektu, logowanie zdrarzeń i dependency injection nie są żadną nowością. Cała filozofia nowego ASP.NET opiera się na DI i modułowości, a większość poradników właśnie od tego zaczyna.
 Ponieważ ostatnio dużo eksperymentuję z .NET Core i Visual Studio Code postanowiłem sprawdzić, czy klasy używane w ASP.NET Core są re-używalne w aplikacji konsolowej.
 Okazuje się, że istnieje skończona kombinacja paczek NuGet&amp;rsquo;owych pozwalająca uzyskać taką samą funkcjonalność - zawdzięczamy to architekturze ASP.</description>
-    </item>
-    
-    <item>
-      <title>Cuckoo Filters</title>
-      <link>http://ksmigiel.com/2017/01/cuckoo-filters/</link>
-      <pubDate>Tue, 24 Jan 2017 18:59:09 +0100</pubDate>
-      
-      <guid>http://ksmigiel.com/2017/01/cuckoo-filters/</guid>
-      <description>Cuckoo Filter to probabilistyczna struktura danych - podobnie jak Bloom Filter. W poprzednim poście znajdziecie krótki opis czym taka struktura danych się charakteryzuje (fałszywie dodatki wynik zapytania: &amp;ldquo;czy element zawiera się w danym zbiorze&amp;rdquo;).
-O czym mowa? Filtr kukułczy jest relatywnie młodą strukturą danych opisaną w 2014 roku przez Fan, Andersen, Kaminsky i Mitzenmacher. Poszerza ona wspomniane filtry bloom&amp;rsquo;a o usuwanie i zliczanie dodanych elementów, utrzymując przy tym porównywalną złożoność obliczeniową.</description>
     </item>
     
   </channel>

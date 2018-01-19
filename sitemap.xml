@@ -1,99 +1,278 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>http://ksmigiel.com/2018/01/netcore-console/</loc>
+    <lastmod>2018-01-18T13:13:09+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/2017/04/csharp6-dictionary/</loc>
+    <lastmod>2017-04-05T20:13:09+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/2017/01/cuckoo-filters/</loc>
+    <lastmod>2017-01-24T18:59:09+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/2016/06/bloom-filters/</loc>
+    <lastmod>2016-06-11T11:59:09+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/2016/03/js-this/</loc>
+    <lastmod>2016-03-30T21:59:09+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/2016/02/rb-gateway/</loc>
+    <lastmod>2016-02-26T21:59:09+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/2016/01/powershell/</loc>
+    <lastmod>2016-01-28T21:59:09+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/2016/01/rocznica/</loc>
+    <lastmod>2016-01-20T20:03:40+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/2015/12/u-sql/</loc>
+    <lastmod>2015-12-20T20:26:38+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/2015/11/devtalk-cz2/</loc>
+    <lastmod>2015-11-18T17:26:38+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/2015/09/devtalk-cz1/</loc>
+    <lastmod>2015-09-25T17:26:38+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/2015/09/koniec-odpoczynku/</loc>
+    <lastmod>2015-09-09T10:26:38+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/2015/05/jsblocks-dts/</loc>
+    <lastmod>2015-05-23T18:18:10+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/2015/05/vs-code/</loc>
+    <lastmod>2015-05-14T16:38:00+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/2015/03/romeo-i-julia/</loc>
+    <lastmod>2015-03-21T21:38:00+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/2015/02/hadoop-streaming/</loc>
+    <lastmod>2015-02-17T21:51:00+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/2015/01/map-reduce/</loc>
+    <lastmod>2015-01-23T18:16:13+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/2015/01/pierwszy-post/</loc>
+    <lastmod>2015-01-18T18:44:12+01:00</lastmod>
+  </url>
   
   <url>
     <loc>http://ksmigiel.com/</loc>
+    <lastmod>2018-01-18T13:13:09+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/tags/audio/</loc>
+    <lastmod>2015-11-18T17:26:38+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/tags/azure/</loc>
+    <lastmod>2015-12-20T20:26:38+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/tags/bigdata/</loc>
+    <lastmod>2017-01-24T18:59:09+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/tags/blog/</loc>
+    <lastmod>2016-01-20T20:03:40+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/tags/bug/</loc>
     <lastmod>2017-04-05T20:13:09+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://ksmigiel.com/2017/04/csharp6-dictionary</loc>
+    <loc>http://ksmigiel.com/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/tags/csharp/</loc>
     <lastmod>2017-04-05T20:13:09+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://ksmigiel.com/2017/01/cuckoo-filters</loc>
-    <lastmod>2017-01-24T18:59:09+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://ksmigiel.com/2016/06/bloom-filters</loc>
-    <lastmod>2016-06-11T11:59:09+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://ksmigiel.com/2016/03/js-this</loc>
-    <lastmod>2016-03-30T21:59:09+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://ksmigiel.com/2016/02/rb-gateway</loc>
-    <lastmod>2016-02-26T21:59:09+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://ksmigiel.com/2016/01/powershell</loc>
-    <lastmod>2016-01-28T21:59:09+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://ksmigiel.com/2016/01/rocznica</loc>
-    <lastmod>2016-01-20T20:03:40+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://ksmigiel.com/2015/12/u-sql</loc>
-    <lastmod>2015-12-20T20:26:38+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://ksmigiel.com/2015/11/devtalk-cz2</loc>
+    <loc>http://ksmigiel.com/tags/devtalk/</loc>
     <lastmod>2015-11-18T17:26:38+01:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://ksmigiel.com/2015/09/devtalk-cz1</loc>
-    <lastmod>2015-09-25T17:26:38+02:00</lastmod>
+    <loc>http://ksmigiel.com/tags/dotnet/</loc>
+    <lastmod>2018-01-18T13:13:09+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://ksmigiel.com/2015/09/koniec-odpoczynku</loc>
-    <lastmod>2015-09-09T10:26:38+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://ksmigiel.com/2015/05/jsblocks-dts</loc>
-    <lastmod>2015-05-23T18:18:10+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://ksmigiel.com/2015/05/vs-code</loc>
-    <lastmod>2015-05-14T16:38:00+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://ksmigiel.com/2015/03/romeo-i-julia</loc>
-    <lastmod>2015-03-21T21:38:00+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://ksmigiel.com/2015/02/hadoop-streaming</loc>
+    <loc>http://ksmigiel.com/tags/fsharp/</loc>
     <lastmod>2015-02-17T21:51:00+01:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://ksmigiel.com/2015/01/map-reduce</loc>
+    <loc>http://ksmigiel.com/tags/golang/</loc>
+    <lastmod>2016-02-26T21:59:09+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/tags/hadoop/</loc>
+    <lastmod>2015-02-17T21:51:00+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/tags/javascript/</loc>
+    <lastmod>2016-06-11T11:59:09+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/tags/julia/</loc>
+    <lastmod>2015-03-21T21:38:00+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/tags/linux/</loc>
+    <lastmod>2016-01-28T21:59:09+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/tags/mapreduce/</loc>
     <lastmod>2015-01-23T18:16:13+01:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://ksmigiel.com/2015/01/pierwszy-post</loc>
-    <lastmod>2015-01-18T18:44:12+01:00</lastmod>
+    <loc>http://ksmigiel.com/tags/mono/</loc>
+    <lastmod>2015-02-17T21:51:00+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/tags/netcore/</loc>
+    <lastmod>2018-01-18T13:13:09+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://ksmigiel.com/about/</loc>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/tags/opensource/</loc>
+    <lastmod>2016-02-26T21:59:09+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/tags/podcast/</loc>
+    <lastmod>2015-11-18T17:26:38+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/post/</loc>
+    <lastmod>2018-01-18T13:13:09+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/tags/powershell/</loc>
+    <lastmod>2016-01-28T21:59:09+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/tags/r/</loc>
+    <lastmod>2015-03-21T21:38:00+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/tags/reviewboard/</loc>
+    <lastmod>2016-02-26T21:59:09+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/tags/sql/</loc>
+    <lastmod>2015-12-20T20:26:38+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/tags/</loc>
+    <lastmod>2015-11-18T17:26:38+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/tags/typescript/</loc>
+    <lastmod>2015-05-23T18:18:10+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/tags/vs/</loc>
+    <lastmod>2015-05-14T16:38:00+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://ksmigiel.com/tags/webdev/</loc>
+    <lastmod>2016-03-30T21:59:09+01:00</lastmod>
+    <priority>0</priority>
   </url>
   
 </urlset>

@@ -7,14 +7,14 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:700,600,400" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-  <link href="http://ksmigiel.com//index.xml" rel="alternate" type="application/rss+xml" title="Krzysztof Śmigiel | Blog" />
-  <meta name="title" content="http://ksmigiel.com/">
-  <link rel="canonical" href="http://ksmigiel.com/">
+  <link href="http://ksmigiel.com/index.xml" rel="alternate" type="application/rss+xml" title="Krzysztof Śmigiel | Blog" />
+  <meta name="title" content="http://ksmigiel.com">
+  <link rel="canonical" href="http://ksmigiel.com">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/github.min.css">
   <script src="/js/highlight.js"></script>
   <meta property="og:title" content="Krzysztof Śmigiel | Blog"/>
-  <meta property="og:url" content="http://ksmigiel.com/"/>
-  <meta property="og:image" content="http://ksmigiel.com//images/"/>   
+  <meta property="og:url" content="http://ksmigiel.com"/>
+  <meta property="og:image" content="http://ksmigiel.com/images/"/>   
   <meta property="og:site_name" content="Krzysztof Śmigiel | Blog">
 </head>
 <body>
@@ -54,7 +54,7 @@
 
 <p>Słówko <code>this</code>, mimo podobieństwa do C# czy Javy, w JavaScripcie działa trochę inaczej niż nam się może wydawać. Kontekst na jaki wskazuje <em>this</em> może być dowolnie zmieniany, a jego nieumiejętne użycie spowodowuje wystąpienie masy błędów w naszej aplikacji. Ustrzec przed nimi można się jedynie rozumiejąc do czego owe <em>this</em> służy i jak się z nim obchodzić. Zapraszam do lektury :)</p>
 
-<h2 id="implicit-binding:aa9d6570c3e5b1909358f37548b7ef3a">Implicit binding</h2>
+<h2 id="implicit-binding">Implicit binding</h2>
 
 <p>Mamy tutaj do czynienia z kontekstem zwykłych obiektów. Złota zasada w identyfikacji kontekstu to:</p>
 
@@ -106,11 +106,11 @@ cat.meow();
 
 <p>Istnieją jednak sposoby na całkowie przejęcie kontroli nad tym co ma być w danej chwili &ldquo;bazą&rdquo;.</p>
 
-<h2 id="explicit-binding:aa9d6570c3e5b1909358f37548b7ef3a">Explicit binding</h2>
+<h2 id="explicit-binding">Explicit binding</h2>
 
 <p>Oprócz operowania obiektami i zasadą &ldquo;kropki&rdquo; istnieją inne metody (pewne 3 funkcje), które pozwalają na zmianę kontekstu wywołania dowolnej funkcji.</p>
 
-<h3 id="call:aa9d6570c3e5b1909358f37548b7ef3a">call()</h3>
+<h3 id="call">call()</h3>
 
 <p>Pozwala na wywołanie funkcji z konkretnym kontekstem przekazanym jako argument.</p>
 
@@ -134,7 +134,7 @@ meow.call(mruczek);
 
 </code></pre>
 
-<h3 id="bind:aa9d6570c3e5b1909358f37548b7ef3a">bind()</h3>
+<h3 id="bind">bind()</h3>
 
 <p>Jest to bardzo podobna funkcja do <code>call()</code> z tą różnicą, że pozwala na &ldquo;przechowanie&rdquo; funkcji z nowym kontekstem w postaci zmiennej, aby móc ją na przykład przekazać dalej jako parametr funkcji.</p>
 
@@ -160,7 +160,7 @@ mruczekMeow()
 
 </code></pre>
 
-<h3 id="apply:aa9d6570c3e5b1909358f37548b7ef3a">apply()</h3>
+<h3 id="apply">apply()</h3>
 
 <p>To taki helper składający tablicę w argumenty funkcji, który również jako parametr przyjmuje nowy obiekt, a ten stanie się <em>this</em> w tej właśnie funkcji.</p>
 
@@ -178,7 +178,7 @@ myCats.apply(me, cats);
 // I am Krzysztof and my cats are: Filemon and Mruczek
 </code></pre>
 
-<h2 id="new-binding:aa9d6570c3e5b1909358f37548b7ef3a">New binding</h2>
+<h2 id="new-binding">New binding</h2>
 
 <p>Dochodzimy w końcu do momentu, z którym większość będzie najbardziej zaznajomiona, czyli konstruktory i keyword <code>new</code>. Sytuacja jest tu o tyle prosta, że to <em>new</em> nadaje kontekst całego obiektu podczas jego tworzenia.</p>
 
@@ -223,7 +223,7 @@ filemon.brother.sayHello()
 // Hi, I am Mruczek and my brother is Filemon
 </code></pre>
 
-<h3 id="window-binding:aa9d6570c3e5b1909358f37548b7ef3a">window binding</h3>
+<h3 id="window-binding">window binding</h3>
 
 <p>Wyżej napisałem o tym, że pominięcie <em>this</em> spowoduje automatyczne &ldquo;dopięcie&rdquo; odpowiedniego kontekstu. Jednak gdy funkcja wywołana jest globalnie, to (przynajmniej w przeglądarkach) jej kontekstem będzie obiekt <code>window</code>.</p>
 
@@ -247,7 +247,7 @@ var bad = someConstructor();
 // &quot;TypeError: this is undefined&quot;
 </code></pre>
 
-<h2 id="this-czy-nie-this-o-to-jest-pytanie:aa9d6570c3e5b1909358f37548b7ef3a">this czy nie this - o to jest pytanie!</h2>
+<h2 id="this-czy-nie-this-o-to-jest-pytanie">this czy nie this - o to jest pytanie!</h2>
 
 <p>Mam nadzieję, że szybki kurs z kontekstu w JS tutaj przedstawiony pomógł wam choć trochę nabrać pewności w używaniu <em>this</em> z głową w swoich aplikacjach. Jeśli macie jakieś pytania czy uwagi z chęcią na nie odpowiem, w komentarzach czy mail/twitter.</p>
 
@@ -256,7 +256,7 @@ var bad = someConstructor();
     <a class="twitter-share-button"
       href="https://twitter.com/share"
       data-via="k_smigiel"
-      data-url="http://ksmigiel.com/2016/03/js-this">
+      data-url="http://ksmigiel.com/2016/03/js-this/">
       Tweet
     </a> 
   </div>

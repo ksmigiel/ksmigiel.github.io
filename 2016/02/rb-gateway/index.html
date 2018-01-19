@@ -7,14 +7,14 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:700,600,400" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-  <link href="http://ksmigiel.com//index.xml" rel="alternate" type="application/rss+xml" title="Krzysztof Śmigiel | Blog" />
-  <meta name="title" content="http://ksmigiel.com/">
-  <link rel="canonical" href="http://ksmigiel.com/">
+  <link href="http://ksmigiel.com/index.xml" rel="alternate" type="application/rss+xml" title="Krzysztof Śmigiel | Blog" />
+  <meta name="title" content="http://ksmigiel.com">
+  <link rel="canonical" href="http://ksmigiel.com">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/github.min.css">
   <script src="/js/highlight.js"></script>
   <meta property="og:title" content="Krzysztof Śmigiel | Blog"/>
-  <meta property="og:url" content="http://ksmigiel.com/"/>
-  <meta property="og:image" content="http://ksmigiel.com//images/"/>   
+  <meta property="og:url" content="http://ksmigiel.com"/>
+  <meta property="og:image" content="http://ksmigiel.com/images/"/>   
   <meta property="og:site_name" content="Krzysztof Śmigiel | Blog">
 </head>
 <body>
@@ -56,15 +56,15 @@
 
 <p>Zawsze zastanawiałem się jak to jest, że ci wszyscy programiści <strong>open source</strong> znajdują czas na pisanie kodu po pracy. Kod open source kojarzył mi się jednoznacznie z czymś darmowym, charytatywnym. Było dla mnie dużym zaskoczeniem, gdy dowiedziałem się o programistach opłacanych m.in przez <strong>Red Hat</strong> i uświadomiłem wtedy sobie, że otwartość kodu wcale nie sugeruje amatorskiego poziomu. Było to dawno temu, ale ten moment <em>&ldquo;olśnienia&rdquo;</em> pamiętam do dziś.</p>
 
-<h2 id="open-source:bfcbe129b554ba1a8bf5f0da631bf673">Open source</h2>
+<h2 id="open-source">Open source</h2>
 
 <p>Jeszcze zanim zacząłem pracować, idea przynależności do projektu programistycznego, takiego z prawdziwego zdarzenia, była czymś ekscytującym. Tworzenie narzędzia używanego przez tysiące osób, dojrzały codebase z testami, dobrymi praktykami i nienaganną architekturą - nic tylko kodzić. Jednak pomimo wielu prób nie udało mi się nigdy znaleźć jednego, konkretnego projektu, z którym mógłbym się utożsamiać jako &ldquo;współtwórca&rdquo;. Repozytoriów / projektów jest ile bądź i chyba ze względu na ich zróżnicowanie (język, poziom abstrakcji, community) wybór nie należy do łatwych.</p>
 
-<h3 id="kontrybucja:bfcbe129b554ba1a8bf5f0da631bf673">Kontrybucja</h3>
+<h3 id="kontrybucja">Kontrybucja</h3>
 
 <p>Do open source można też podejść z innej strony: zawężając zakres poszukiwań do projektów, z których obecnie korzystamy (lub korzystaliśmy). Daje nam to pewną przewagę, gdyż mamy pojęcie co dana biblioteka lub framework robi i jak jej używać. Oprócz tego często w bug-trackerach natrafić można na tzw. <strong>low hanging fruits</strong>, czyli proste zadania dla każdego. Istnieje nawet <a href="http://up-for-grabs.net/">platforma</a> będąca agregatorem takich właśnie tasków. Kto jest bardziej ambitny niech od razu łapie się za konkrety idąc za śladem <a href="http://davidvgalbraith.com/how-i-fixed-node-js/">tego pana</a> - lenistwo po święcie dziękczynienia najlepszym motorem do pracy! To co jednak zmotywuje do <em>&ldquo;zakontrybutowania&rdquo;</em> każdego, to możliwość naprawienia znalezionego błędu w używanej przez siebie bibliotece i o tym krótko dziś napiszę.</p>
 
-<h2 id="moja-cegiełka-w-rb-gateway:bfcbe129b554ba1a8bf5f0da631bf673">Moja cegiełka w rb-gateway</h2>
+<h2 id="moja-cegiełka-w-rb-gateway">Moja cegiełka w rb-gateway</h2>
 
 <p>Wspieranie lokalnych repozytoriów w <a href="http://reviewboard.org/">ReviewBoardzie</a> jest mocno ograniczone. Chcąc korzystać ze wszystkich jego funkcjonalności konieczne jest skorzystanie z narzędzia zwanego <strong>rb-gateway</strong>.  <a href="https://github.com/reviewboard/rb-gateway/">rb-gateway</a> jest to proxy między repozytorium gita, a ReviewBoardem - prosty serwer HTTP pełniący funkcję API, napisany w <a href="https://tour.golang.org/welcome/1">go</a>. Nie znalazłem do niego żadnych binarek, co za tym idzie, musiałem skompilować go samodzielnie, jednocześnie ucząc się języka z którego nigdy wcześniej nie korzystałem. Jeśli myślicie, że parę poniższych komend zaczerpniętych z oficjalnej dokumentacji było wystarczające do uruchomienia <em>&ldquo;tego czegoś&rdquo;</em>, to grubo się mylicie!</p>
 
@@ -77,7 +77,7 @@ $ go install
 
 <p>Największą przeszkodą jaką napotkałem podczas próby zbudowania rb-gateway&rsquo;a była jego zależność: <code>git2go</code> i siedzący pod spodem <code>libgit</code> wymagany w wersji <strong>0.22</strong>, a w <a href="https://fedoraproject.org/wiki/EPEL">repozytorium CentOS</a> ostatnia wersja to <strong>0.21</strong>. Co więc musiałem zrobić? Zbudować libgit v0.22 ze źródeł. Na szczęście <a href="https://github.com/libgit2/libgit2">wszystko jest opisane</a> i o dziwo nie napotkałem żadnych problemów. Potem przyszedł czas na konfigurację i testy, które bardzo szybko znalazły pewną nieprawidłowość w działaniu rb-gateway&rsquo;a.</p>
 
-<h3 id="gdzie-są-diffy:bfcbe129b554ba1a8bf5f0da631bf673">Gdzie są diffy!</h3>
+<h3 id="gdzie-są-diffy">Gdzie są diffy!</h3>
 
 <p>Po stworzeniu nowego <em>review requesta</em> załączał się tylko jeden plik z diffa. W początkowej fazie myślałem, że wynika to z jakichś problemów funkcjonalnych biblioteki libgit, bo jakby nie było, to ciężko w 100% wierzyć w coś, co zostało zbudowane dosłownie przez przypadek (kompletnie się na tym nie znam). Po chwili poszukiwań natrafiłem na winowajcę - rb-gateway. To ta warstwa zwracała zły JSON, co wskazywało na problemy z przygotowywaniem / parsowaniem diffa. Specem od debugowania <code>go</code> nie jestem, jednak idąc jak po sznurku znalazłem metodę <code>GetCommit(commitId string)</code> w pliku <code>git_repository.go</code>. Posiadała błędną implementację, w zły sposób korzystającą z C API libgita. Co jest śmieszne, testy jednostkowe przechodziły bez problemów, bo uwaga: testowały przypadek generowania diffa tylko z jednego pliku własnie!</p>
 
@@ -107,7 +107,7 @@ if deltas &gt; 0 {
 
 <p>Dopisałem test, który sprawdzał przypadek, gdy commit zawierał więcej niż jeden plik i pokusiłem się o <strong>pull requesta</strong>, który został bez problemu <a href="https://reviews.reviewboard.org/r/7958/">zaakceptowany</a>.</p>
 
-<h2 id="jestem-osobą-wnoszącą-wkład:bfcbe129b554ba1a8bf5f0da631bf673">Jestem osobą wnoszącą wkład?</h2>
+<h2 id="jestem-osobą-wnoszącą-wkład">Jestem osobą wnoszącą wkład?</h2>
 
 <p>Chyba tak (śmiesznie Google tłumaczy słowo  <em>constributor</em>). Nie odczuwam, abym poprawiając ten kawałek kodu zbawił świat, ale świadomość, że udało się po prostu coś naprawić, zgłębić temat, nauczyć się podstaw języka go, zbudować low-level bibliotekę C, podnosząc jakość oprogramowania krążącego wokół nas i równocześnie pomagając przy tym innym - świadomość ta podnosi na duchu. Bez zawahania twierdzę, że było warto i chcę jeszcze więcej!</p>
 
@@ -129,7 +129,7 @@ if deltas &gt; 0 {
     <a class="twitter-share-button"
       href="https://twitter.com/share"
       data-via="k_smigiel"
-      data-url="http://ksmigiel.com/2016/02/rb-gateway">
+      data-url="http://ksmigiel.com/2016/02/rb-gateway/">
       Tweet
     </a> 
   </div>

@@ -1,0 +1,289 @@
+<!doctype html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aplikacja konsolowa w .NET Core - Krzysztof Śmigiel | Blog</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:700,600,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link href="http://ksmigiel.com/index.xml" rel="alternate" type="application/rss+xml" title="Krzysztof Śmigiel | Blog" />
+  <meta name="title" content="http://ksmigiel.com">
+  <link rel="canonical" href="http://ksmigiel.com">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/github.min.css">
+  <script src="/js/highlight.js"></script>
+  <meta property="og:title" content="Krzysztof Śmigiel | Blog"/>
+  <meta property="og:url" content="http://ksmigiel.com"/>
+  <meta property="og:image" content="http://ksmigiel.com/images/"/>   
+  <meta property="og:site_name" content="Krzysztof Śmigiel | Blog">
+</head>
+<body>
+<section class="site-nav">
+  <header>
+    <nav id="navigation">
+      <a href="/" class="home">Blog</a>
+      <a href="/tags">Tagi</a>
+      <a href="/post">Archiwum</a>
+      <a href="/about">O mnie</a>
+    </nav>
+  </header>
+</section>
+
+
+  
+  <article>
+    <div class="container">
+      <header>
+        <div class="meta">
+          Autor <address><a rel="author" href="http://ksmigiel.com" title="Krzysztof Śmigiel" target="_blank">Krzysztof Śmigiel</a></address> &mdash;
+          <time class="visibility-hidden" pubdate datetime="2018-01-18" title="2018-01-18">18 January 2018</time>
+          <ul id="tags">
+            
+            <li><a href="/tags/netcore">#netcore</a> </li>
+            
+            <li><a href="/tags/dotnet">#dotnet</a> </li>
+            
+          </ul>
+        </div>
+        <h1 class="title">Aplikacja konsolowa w .NET Core</h1>
+        <h2 class="subtitle">Konfiguracja, logowanie i dependency injection</h2>
+      </header>
+
+      <section>
+        
+
+<p>Zapewne dla tych, którzy mieli styczność z frameworkiem ASP.NET Core zagadnienia takie jak pliki konfiguracyjne projektu, logowanie zdrarzeń i dependency injection nie są żadną nowością. Cała filozofia nowego ASP.NET opiera się na DI i modułowości, a większość poradników właśnie od tego zaczyna.</p>
+
+<p>Ponieważ ostatnio dużo eksperymentuję z .NET Core i Visual Studio Code postanowiłem sprawdzić, czy klasy używane w ASP.NET Core są re-używalne w aplikacji konsolowej.</p>
+
+<p>Okazuje się, że istnieje skończona kombinacja paczek NuGet&rsquo;owych pozwalająca uzyskać taką samą funkcjonalność - zawdzięczamy to architekturze ASP.NET Core, który jest frameworkiem złożonym z niezależnych komponentów.</p>
+
+<h2 id="pliki-konfiguracyjne">Pliki konfiguracyjne</h2>
+
+<p>W klasycznej wersji .NET korzystaliśmy z plików XML <code>*.config</code> i klas <code>ConfigurationManager</code> czy <code>Configuration</code>. W przypadku .NET Core do przechowywania konfiguracji domyślnie stosowany jest format JSON. Spójrzmy na przykładowy kawałek kodu.</p>
+
+<pre><code class="language-csharp">using System.IO;
+using Microsoft.Extensions.Configuration;
+
+namespace Configuration
+{
+    public sealed class AppConfiguration
+    {
+        private readonly IConfigurationRoot _configuration;
+
+        public AppConfiguration()
+        {
+            _configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile(&quot;appsettings.json&quot;)
+                .Build();
+        }
+
+        public IConfigurationRoot Configuration =&gt; _configuration;
+    }
+}
+</code></pre>
+
+<p>Główną rolę odgrywa tutaj namespace <code>Microsoft.Extensions.Configuration</code>. Niestety poza ASP.NET Core musimy sami zadbać o ściągnięcie odpowiednich paczek z <em>extension methods</em>, których chcemy użyć.
+Tak więc do naszego .csproj&rsquo;a musimy wrzucić: (lub z linii komend odpalić <code>dotnet add package &lt;PACKAGE_NAME&gt;</code>)</p>
+
+<pre><code>&lt;PackageReference Include=&quot;Microsoft.Extensions.Configuration&quot; Version=&quot;2.0.0&quot; /&gt;
+&lt;!-- SetBasePath() --&gt;
+&lt;PackageReference Include=&quot;Microsoft.Extensions.Configuration.FileExtensions&quot; Version=&quot;2.0.0&quot; /&gt;
+&lt;!-- AddJsonFile() --&gt;
+&lt;PackageReference Include=&quot;Microsoft.Extensions.Configuration.Json&quot; Version=&quot;2.0.0&quot; /&gt;
+</code></pre>
+
+<p>Plik <code>appsettings.json</code> może zawierać m.in. konfigurację logowania. W <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/?tabs=aspnetcore2x">dokumentacji</a> znajdziesz wiele przydatynch informacji o logowaniu, do którego zaraz zresztą przejdziemy.</p>
+
+<pre><code>{
+    &quot;Logging&quot;: {
+        &quot;IncludeScopes&quot;: true,
+        &quot;LogLevel&quot;: {
+            &quot;Default&quot;: &quot;Debug&quot;
+        }
+    }
+}
+</code></pre>
+
+<h2 id="logowanie">Logowanie</h2>
+
+<p>Dodanie logowania do aplikacji ociera się już o wstrzykiwanie zależności.</p>
+
+<pre><code class="language-csharp">var appConfiguration = new AppConfiguration(); // (1)
+
+var services = new ServiceCollection(); //        (2)
+services.AddLogging((builder) =&gt; //               (3)
+{
+    builder
+        .AddConfiguration(appConfiguration.Configuration.GetSection(&quot;Logging&quot;)) // (4)
+        .AddConsole() //                                                           (5)
+        .AddDebug(); //                                                            (6)
+});
+</code></pre>
+
+<p>Przeanalizujmy co się tutaj podziało. Tworzymy konfigurację przy pomocy poprzednio omówionej klasy (1). Tworzymy nowy kontener DI (2). Do kontenera dodajemy logowanie (3). Konfigurujemy logowanie przy pomocy naszej klasy konfiguracyjnej (4) i ustawiamy wyjście loggera na konsolę (5) i okno debug (6).</p>
+
+<p>Aby kod się kompilował musimy dodać kolejne paczki NuGet:</p>
+
+<pre><code>&lt;!-- ServiceCollection() --&gt;
+&lt;PackageReference Include=&quot;Microsoft.Extensions.DependencyInjection&quot; Version=&quot;2.0.0&quot; /&gt;
+&lt;!-- AddLogging() --&gt;
+&lt;PackageReference Include=&quot;Microsoft.Extensions.Logging&quot; Version=&quot;2.0.0&quot; /&gt;
+&lt;!-- AddConfiguration() --&gt;
+&lt;PackageReference Include=&quot;Microsoft.Extensions.Logging.Configuration&quot; Version=&quot;2.0.0&quot; /&gt;
+&lt;!--  AddConsole() --&gt;
+&lt;PackageReference Include=&quot;Microsoft.Extensions.Logging.Console&quot; Version=&quot;2.0.0&quot; /&gt;
+&lt;!-- AddDebug() --&gt;
+&lt;PackageReference Include=&quot;Microsoft.Extensions.Logging.Debug&quot; Version=&quot;2.0.0&quot; /&gt;
+</code></pre>
+
+<p>Pozostało nam jedynie zarejestrować odpowiednie komponenty w kontenerze DI i gotowe!</p>
+
+<h2 id="dependency-injection">Dependency Injection</h2>
+
+<p>W tym momencie do stworzonej instancji <code>ServiceCollection</code> musimy dodać potrzebne zależności. Posłużą nam do tego metody:</p>
+
+<ul>
+<li><code>AddTransient()</code> - instancja tworzona za każdym razem</li>
+<li><code>AddScoped()</code> - instancja tworzona per request</li>
+<li><code>AddSingleton()</code> - jedna instancja</li>
+</ul>
+
+<pre><code class="language-csharp">services.AddSingleton&lt;AppConfiguration&gt;(appConfiguration);
+services.AddTransient&lt;Server&gt;();
+var container = services.BuildServiceProvider();
+var server = container.GetService&lt;Server&gt;();
+server.Start();
+</code></pre>
+
+<p>W tym momencie w klasie <code>Server</code> możemy wstrzykiwać zależności przez konstruktor.</p>
+
+<pre><code class="language-csharp">public class Server
+{
+    private readonly IConfigurationRoot _configuration;
+    private readonly ILogger _logger;
+
+    public Server(ILoggerFactory loggerFactory, AppConfiguration configuration)
+    {
+        _logger = loggerFactory.CreateLogger&lt;Server&gt;();
+        _configuration = configuration.Configuration;
+    }
+}
+</code></pre>
+
+<p><code>ILoggerFactory</code> jest automatycznie zarejestrowany w kontenerze poprzez wcześniejszą rejestrację <code>services.AddLogging(...)</code>.</p>
+
+<h2 id="podsumowanie">Podsumowanie</h2>
+
+<p>Jak widać .NET Core udostępnia wiele gotowych rozwiązań, dzięki czemu nie musimy korzystać z bibliotek third-party. Oczywiście nic nie stoi na przeszkodzie, aby do logowania podpiąć <a href="https://github.com/serilog/serilog-extensions-logging">Serilog</a>, a zależności rozwiązać <a href="http://autofaccn.readthedocs.io/en/latest/integration/netcore.html">Autofac&rsquo;iem</a>. Wszystko zależy od przypadku użycia, aczkolwiek dla małych projektów rozwiązania od teamu .NET Core wydają się całkiem sensowne.</p>
+
+<p>Cały kod z przykładów możecie znaleźć na moim <a href="https://github.com/ksmigiel/SSHServer">GitHub</a>.</p>
+
+<hr />
+
+<ol>
+<li><a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/?tabs=aspnetcore2x">https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/?tabs=aspnetcore2x</a></li>
+<li><a href="https://github.com/serilog/serilog-extensions-logging">https://github.com/serilog/serilog-extensions-logging</a></li>
+<li><a href="http://autofaccn.readthedocs.io/en/latest/integration/netcore.html">http://autofaccn.readthedocs.io/en/latest/integration/netcore.html</a></li>
+<li><a href="https://github.com/ksmigiel/SSHServer">https://github.com/ksmigiel/SSHServer</a></li>
+</ol>
+
+        <div class="social">
+  <div>
+    <a class="twitter-share-button"
+      href="https://twitter.com/share"
+      data-via="k_smigiel"
+      data-url="http://ksmigiel.com/2018/01/netcore-console/">
+      Tweet
+    </a> 
+  </div>
+  <div>
+    <div class="fb-like" data-width="450" data-layout="button_count" data-action="like" data-show-faces="false" data-send="false"></div>
+  </div>
+</div>
+
+
+      </section>
+
+      
+      <section>
+        <div id="disqus_thread"></div>
+<script type="text/javascript">
+   
+  var disqus_shortname = 'ksmigiel'; 
+
+   
+  (function() {
+     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+     dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+   })();
+</script>
+
+      </section>
+      
+
+    </div>
+  </article>
+<footer class="site-footer">
+  <div class="container">
+    <nav>
+      <a href="/">Blog</a> &middot;
+      <a href="/tags">Tagi</a> &middot;
+      <a href="/post">Archiwum</a> &middot;
+      <a href="/about">O mnie</a>
+    </nav>
+
+    <nav class="social">
+      
+      <a href="https://twitter.com/k_smigiel" title="Follow on Twitter" target="_blank"><i class="icon icon-twitter black"></i></a>
+      
+      
+      <a href="https://github.com/ksmigiel" title="Follow on Github" target="_blank"><i class="icon icon-github black"></i></a>
+      
+          
+      <a href="/index.xml" title="RSS Feed">
+        <i class="icon icon-rss black"></i>
+      </a>
+    </nav>
+  </div>
+</footer>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+<script>window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return;js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);t._e=[];t.ready=function(f){t._e.push(f);};return t;}(document,"script","twitter-wjs"));</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+var js, fjs = d.getElementsByTagName(s)[0];
+if (d.getElementById(id)) return;
+js = d.createElement(s); js.id = id;
+js.src = "//connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v2.2&appId=901391149893781";
+fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-58701947-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+
+
+
+</body>
+</html>
+

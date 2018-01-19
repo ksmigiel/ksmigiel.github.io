@@ -5,1647 +5,197 @@
     <link>http://ksmigiel.com/</link>
     <description>Recent content on </description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 05 Apr 2017 20:13:09 +0000</lastBuildDate>
-    <atom:link href="http://ksmigiel.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 18 Jan 2018 13:13:09 +0000</lastBuildDate>
+    
+	<atom:link href="http://ksmigiel.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Aplikacja konsolowa w .NET Core</title>
+      <link>http://ksmigiel.com/2018/01/netcore-console/</link>
+      <pubDate>Thu, 18 Jan 2018 13:13:09 +0000</pubDate>
+      
+      <guid>http://ksmigiel.com/2018/01/netcore-console/</guid>
+      <description>Zapewne dla tych, którzy mieli styczność z frameworkiem ASP.NET Core zagadnienia takie jak pliki konfiguracyjne projektu, logowanie zdrarzeń i dependency injection nie są żadną nowością. Cała filozofia nowego ASP.NET opiera się na DI i modułowości, a większość poradników właśnie od tego zaczyna.
+Ponieważ ostatnio dużo eksperymentuję z .NET Core i Visual Studio Code postanowiłem sprawdzić, czy klasy używane w ASP.NET Core są re-używalne w aplikacji konsolowej.
+Okazuje się, że istnieje skończona kombinacja paczek NuGet&amp;rsquo;owych pozwalająca uzyskać taką samą funkcjonalność - zawdzięczamy to architekturze ASP.</description>
+    </item>
     
     <item>
       <title>[AKTUALIZACJA] Inicjalizacja Dictionary&lt;TKey, TValue&gt; w C# 6</title>
-      <link>http://ksmigiel.com/2017/04/csharp6-dictionary</link>
+      <link>http://ksmigiel.com/2017/04/csharp6-dictionary/</link>
       <pubDate>Wed, 05 Apr 2017 20:13:09 +0000</pubDate>
       
-      <guid>http://ksmigiel.com/2017/04/csharp6-dictionary</guid>
-      <description>
-
-&lt;h2 id=&#34;aktualizacja-17-06-2017:083bdf9bd1debcd24a12f782dbb060bc&#34;&gt;AKTUALIZACJA 17.06.2017&lt;/h2&gt;
-
-&lt;p&gt;Jak się okazuje &lt;em&gt;&amp;ldquo;it&amp;rsquo;s not a bug, it&amp;rsquo;s a feature!&amp;rdquo;&lt;/em&gt;. Dokładnie takie zachowanie, jak opisanie w poście, jest zawarte w &lt;a href=&#34;https://github.com/dotnet/roslyn/issues/18475#issuecomment-309168670&#34;&gt;specyfikacji języka&lt;/a&gt;.&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;A member initializer that specifies a collection initializer after the equals sign is an initialization of an embedded collection. Instead of assigning a new collection to the target field, property or indexer, the elements given in the initializer are added to the collection referenced by the target. The target must be of a collection type that satisfies the requirements specified in §7.6.11.3.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Wypada następnym razem zejść jeszcze niżej niż do IL i grzebać w specyfikacji :) Fajnie, że ktoś na te zgłoszenia w ogóle patrzy i liczy się ze środowiskiem open source - tutaj duży plus dla Microsoftu!&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;Chciałem po krótce zaprezentować błąd (albo feature?) C# związany z dodanym w wersji 6 &lt;strong&gt;inicjalizatorem słownika&lt;/strong&gt;. Jest to o tyle ciekawa kwestia, że nie ustrzeże nas przed tym błędem ani statyczna analiza kodu, ani kompilacja - dopiero
-&lt;em&gt;runtime&lt;/em&gt; rzuci w nas wyjątkiem!.&lt;/p&gt;
-
-&lt;h2 id=&#34;dictionary-initializers:083bdf9bd1debcd24a12f782dbb060bc&#34;&gt;Dictionary initializers&lt;/h2&gt;
-
-&lt;p&gt;Zapewne znana jest wam składnia pozwalająca na stworzenie słownika &lt;code&gt;Dictionary&amp;lt;TKey, TValue&amp;gt;&lt;/code&gt; razem z wartościami:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;var dictionary = new Dictionary&amp;lt;int, List&amp;lt;int&amp;gt;&amp;gt;
-{
-	{ 0, new List&amp;lt;int&amp;gt; { 0, 1, 2 } },
-	{ 1, new List&amp;lt;int&amp;gt; { 1, 2, 3 } },
-	{ 2, new List&amp;lt;int&amp;gt; { 2, 3, 4 } }
-};
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;C# 6 wprowadził mały &lt;em&gt;syntactic sugar&lt;/em&gt; odnośnie tworzenia słowników i powyższy kod możemy zapisać następująco:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;var dictionary = new Dictionary&amp;lt;int, List&amp;lt;int&amp;gt;&amp;gt;
-{
-	[0] = new List&amp;lt;int&amp;gt; { 0, 1, 2 },
-	[1] = new List&amp;lt;int&amp;gt; { 1, 2, 3 },
-	[2] = new List&amp;lt;int&amp;gt; { 2, 3, 4 }
-};
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Nie jest to oczywiście zmiana funkcjonalna, lecz conajwyżej poprawiająca czytelność kodu.&lt;/p&gt;
-
-&lt;h2 id=&#34;mały-błąd-ciekawe-odkrycie:083bdf9bd1debcd24a12f782dbb060bc&#34;&gt;Mały błąd - ciekawe odkrycie&lt;/h2&gt;
-
-&lt;p&gt;Jakiś czas temu pisząc kod chciałem na szybko użyć dokładnie takiej samej struktury danych jak wyżej, jednak omyłkowo stworzyłem takiego potwora:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;var test = new Dictionary&amp;lt;int, List&amp;lt;int&amp;gt;&amp;gt;
-{
-	[0] = { 0, 1, 2 },
-	[1] = { 1, 2, 3 },
-	[2] = { 2, 3, 4 }
-};
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Jak widzicie zapomniałem użyć &lt;strong&gt;new&lt;/strong&gt; razem &lt;strong&gt;inicjalizatorem listy&lt;/strong&gt;. Kod się skompilował, Visual Studio i ReSharper nie miał nic do powiedzenia, po czym w trakcie wykonywania kodu otrzymałem wyjątek &lt;code&gt;KeyNotFoundException: The given key was not present in the dictionary&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Wygląda więc na to, że&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;składnia jest poprawna&lt;/li&gt;
-&lt;li&gt;kod jest kompilowalny&lt;/li&gt;
-&lt;li&gt;.NET próbuje coś wyciągnąć ze słownika, ale niestety bezskutecznie&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Zaciekawiony tym co się dzieje pod maską postanowiłem spojrzeć na &lt;strong&gt;IL&lt;/strong&gt;, który generują obydwa (poprawny i ten mniej poprawny) przykłady, aby dowiedzieć się do czego tak naprawdę został skompilowany ten błędny kod.&lt;/p&gt;
-
-&lt;h2 id=&#34;analiza-il-feels-like-a-hacker:083bdf9bd1debcd24a12f782dbb060bc&#34;&gt;Analiza IL - feels like a hacker!&lt;/h2&gt;
-
-&lt;p&gt;Rzadko mam okazję analizować &lt;em&gt;IL&lt;/em&gt; czy &lt;em&gt;asm x86&lt;/em&gt;, ale jak już się taka okazja nadarzy, to sama przyjemność patrzeć na te bebechy :)
-Weźmy na tapetę jako pierwszy poprawny przykład kodu (powycinałem z &lt;em&gt;IL&amp;rsquo;a&lt;/em&gt; niepotrzebne rzeczy, co by się wszystko mogło zmieścić w poście).&lt;/p&gt;
-
-&lt;h4 id=&#34;il-poprawny:083bdf9bd1debcd24a12f782dbb060bc&#34;&gt;IL - poprawny&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code&gt;var dictionary = new Dictionary&amp;lt;int, List&amp;lt;int&amp;gt;&amp;gt;
-{
-    [0] = new List&amp;lt;int&amp;gt; { 1 }
-}
-
-// Stwórz nową instancję Dictionary&amp;lt;int, List&amp;lt;int&amp;gt;&amp;gt; i wrzuć referencję na stos
-// stos: ref Dictionary
-IL_0001: newobj       instance void class Dictionary`2&amp;lt;int32, class List`1&amp;lt;int32&amp;gt;&amp;gt;::.ctor()
-// Duplikuj referencję i wrzuć na stos
-// stos: ref Dictionary, ref Dictionary
-IL_0006: dup          
-// Wrzuć na stos int32 o wartości 0
-// stos: ref Dictionary, ref Dictionary, 0
-IL_0007: ldc.i4.0     
-// Stwórz nową instancję List&amp;lt;int&amp;gt; i wrzuć referencję na stos
-// stos: ref Dictionary, ref Dictionary, 0, ref List
-IL_0008: newobj       instance void class List`1&amp;lt;int32&amp;gt;::.ctor()
-// Duplikuj referencję i wrzuć na stos
-// stos: ref Dictionary, ref Dictionary, 0, ref List, ref List
-IL_000d: dup          
-// Wrzuć na stos int32 o wartości 1
-// stos: ref Dictionary, ref Dictionary, 0, ref List, ref List, 1
-IL_000e: ldc.i4.1     
-// Wołaj metodę Add() na List&amp;lt;int&amp;gt;
-// stos: ref Dictionary, ref Dictionary, 0, ref List
-IL_000f: callvirt     instance void class List`1&amp;lt;int32&amp;gt;::Add(!0/*int32*/)
-// Wołaj metodę set_Item na Dictionary&amp;lt;int, List&amp;lt;int&amp;gt;&amp;gt;
-// stos: ref Dictionary
-IL_0015: callvirt     instance void class Dictionary`2&amp;lt;int32, class List`1&amp;lt;int32&amp;gt;&amp;gt;::set_Item(!0, !1)
-// Zapisz referencję do zmiennej lokalnej
-// stos: [pusty]
-IL_001b: stloc.0      
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Nic podejrzanego, wszystko przebiega zgodnie z planem. Dla tych, którzy nie mają zielonego pojęcia co się wydarzyło polecam zaznajomić się z &lt;em&gt;intermidiate language&lt;/em&gt; i jego naturą &amp;ldquo;stosową&amp;rdquo; (&lt;em&gt;stack-based&lt;/em&gt;).&lt;/p&gt;
-
-&lt;p&gt;Popatrzmy teraz na kod, który nas bardziej ciekawi:&lt;/p&gt;
-
-&lt;h4 id=&#34;il-mniej-poprawny:083bdf9bd1debcd24a12f782dbb060bc&#34;&gt;IL - mniej poprawny&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code&gt;var dictionary = new Dictionary&amp;lt;int, List&amp;lt;int&amp;gt;&amp;gt;
-{
-    [0] = { 1 }
-}
-
-// Stwórz nową instancję Dictionary&amp;lt;int, List&amp;lt;int&amp;gt;&amp;gt; i wrzuć referencję na stos
-// stos: ref Dictionary
-IL_0001: newobj       instance void class Dictionary`2&amp;lt;int32, class List`1&amp;lt;int32&amp;gt;&amp;gt;::.ctor()
-// Duplikuj referencję i wrzuć na stos
-// stos: ref Dictionary, ref Dictionary
-IL_0006: dup          
-// Wrzuć na stos int32 o wartości 0
-// stos: ref Dictionary, ref Dictionary, 0
-IL_0007: ldc.i4.0     
-// Zawołaj get_Item() na stworzonej instancji słownika i wrzuć referencję listy na stos
-// stos: ref Dictionary, ref List
-// Tutaj rzuca wyjątek, że nic pod kluczem &amp;quot;0&amp;quot; nie istnieje
-IL_0008: callvirt     instance !1 class Dictionary`2&amp;lt;int32, class List`1&amp;lt;int32&amp;gt;&amp;gt;::get_Item(!0)
-// Wrzuć na stos int32 o wartości 1
-// stos: ref Dictionary, ref List, 1
-IL_000d: ldc.i4.1     
-// Zawołaj Add() na List&amp;lt;int&amp;gt;
-// stos: ref Dictionary
-IL_000e: callvirt     instance void class List`1&amp;lt;int32&amp;gt;::Add(!0)
-// Zapisz referencję do zmiennej lokalnej
-// stos&amp;quot; [pusty]
-IL_0014: stloc.0      
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Jak widzicie instrukcja &lt;code&gt;IL_0008&lt;/code&gt; próbuje otrzymać referencję do listy (nie została stworzona prawdopodobnie przez brak &lt;code&gt;new List&amp;lt;int&amp;gt;&lt;/code&gt;). Idąc dalej tym tokiem myślenia wydaje się całkowicie sensowne (i absurdalne zarazem), aby spreparować kod, gdzie będziemy mieli już istniejącą listę (czyli nie rzuci wyjątkiem), co powinno skutkować dodaniem nowego elementu za pomocą zepsutego inicjalizatora - kod zepsutego celowo inicjalizatora kompiluje się jako operacja &lt;code&gt;Add()&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Odpalcie zatem u siebie coś takiego i niech się teraz panowie z Microsoftu tłumaczą:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;var dictionary = new Dictionary&amp;lt;int, List&amp;lt;int&amp;gt;&amp;gt;
-{
-    [0] = new List&amp;lt;int&amp;gt;{ 1 },
-    [0] = { 2 }
-};
-
-Console.WriteLine(test[0].Count);
-// 2
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Właśnie udało nam się pokracznie dodać element do istniejącej już listy :D.&lt;/p&gt;
-
-&lt;h2 id=&#34;co-dalej:083bdf9bd1debcd24a12f782dbb060bc&#34;&gt;Co dalej?&lt;/h2&gt;
-
-&lt;p&gt;Postanowiłem zgłosić błąd na GitHub&amp;rsquo;ie Roslyn&amp;rsquo;a (&lt;a href=&#34;https://github.com/dotnet/roslyn/issues/18475&#34;&gt;https://github.com/dotnet/roslyn/issues/18475&lt;/a&gt;) i zaczekać na odpowiedź. Może się okazać, że jest to &lt;em&gt;feature&lt;/em&gt;, nie &lt;em&gt;bug&lt;/em&gt; i jestem bardzo ciekawy czy tego typu problem był już przerabiany wcześniej.&lt;/p&gt;
-
-&lt;p&gt;PS. Pozdrawiam Dawida, który dzielnie walczył ze mną nad rozbrojeniem tej bomby!&lt;/p&gt;
-</description>
+      <guid>http://ksmigiel.com/2017/04/csharp6-dictionary/</guid>
+      <description>AKTUALIZACJA 17.06.2017 Jak się okazuje &amp;ldquo;it&amp;rsquo;s not a bug, it&amp;rsquo;s a feature!&amp;rdquo;. Dokładnie takie zachowanie, jak opisanie w poście, jest zawarte w specyfikacji języka.
+ A member initializer that specifies a collection initializer after the equals sign is an initialization of an embedded collection. Instead of assigning a new collection to the target field, property or indexer, the elements given in the initializer are added to the collection referenced by the target.</description>
     </item>
     
     <item>
       <title>Cuckoo Filters</title>
-      <link>http://ksmigiel.com/2017/01/cuckoo-filters</link>
+      <link>http://ksmigiel.com/2017/01/cuckoo-filters/</link>
       <pubDate>Tue, 24 Jan 2017 18:59:09 +0100</pubDate>
       
-      <guid>http://ksmigiel.com/2017/01/cuckoo-filters</guid>
-      <description>
-
-&lt;p&gt;&lt;strong&gt;Cuckoo Filter&lt;/strong&gt; to &lt;strong&gt;probabilistyczna struktura danych&lt;/strong&gt; - podobnie jak &lt;a href=&#34;http://ksmigiel.com/2016/06/bloom-filters/&#34;&gt;Bloom Filter&lt;/a&gt;. W poprzednim poście znajdziecie krótki opis czym taka struktura danych się charakteryzuje (fałszywie dodatki wynik zapytania: &amp;ldquo;czy element zawiera się w danym zbiorze&amp;rdquo;).&lt;/p&gt;
-
-&lt;h2 id=&#34;o-czym-mowa:9fc3faad544296f306615c66d2b26be0&#34;&gt;O czym mowa?&lt;/h2&gt;
-
-&lt;p&gt;Filtr kukułczy jest relatywnie młodą strukturą danych opisaną w 2014 roku przez &lt;a href=&#34;https://www.cs.cmu.edu/~dga/papers/cuckoo-conext2014.pdf&#34;&gt;Fan, Andersen, Kaminsky i Mitzenmacher&lt;/a&gt;. Poszerza ona wspomniane filtry bloom&amp;rsquo;a o &lt;strong&gt;usuwanie&lt;/strong&gt; i &lt;strong&gt;zliczanie&lt;/strong&gt; dodanych elementów, utrzymując przy tym porównywalną złożoność obliczeniową. Minimalizuje ona zasoby przechowując jedynie &lt;strong&gt;odcisk&lt;/strong&gt; &lt;em&gt;(ang. fingerprint)&lt;/em&gt; wartości elementu w zbiorze. W rzeczywistości jest to pewnego rodzaju tablica haszująca, która problem kolizji rozwiązuje za pomocą &lt;a href=&#34;https://en.wikipedia.org/wiki/Cuckoo_hashing&#34;&gt;&lt;strong&gt;haszowania kukułczego&lt;/strong&gt;&lt;/a&gt; &lt;em&gt;(ang. cuckoo hashing)&lt;/em&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;cuckoo-hashing:9fc3faad544296f306615c66d2b26be0&#34;&gt;Cuckoo hashing&lt;/h2&gt;
-
-&lt;p&gt;Jak nietrudno się domyślić, nazwa filtra i haszowania wzięła się od &lt;strong&gt;kukułek&lt;/strong&gt;. Kukułki znane są ze składania jaj w obcych gniazdach. Gdy mała kukułka wykluje się, eliminuje ona przybrane rodzeństwo usuwając je z gniazda. Nazywamy to &lt;a href=&#34;https://pl.wikipedia.org/wiki/Paso%C5%BCyty_l%C4%99gowe&#34;&gt;pasożytnictwem lęgowym&lt;/a&gt;. Na podobnej zasadzie opiera się właśnie działanie haszowania/filtra kukułczego.&lt;/p&gt;
-
-&lt;p&gt;W przypadku haszowania każdy klucz jest haszowany przez &lt;strong&gt;dwie różne&lt;/strong&gt; funkcje haszujące, gdzie każdej przyporządkowujemy tablicę, do której będzie można dodawać elementy. Jeżeli miejsce pod zadanym indeksem w pierwszej tablicy jest puste, możemy tam umieścić zadany element. Jeżeli miejsce to jest zajęte, próbujemy dodać element do tablicy drugiej (haszując drugą funkcją). Gdy to miejsce również jest zajęte, &amp;ldquo;eksmitujemy&amp;rdquo; element tam obecny i umieszczamy w to miejsce naszą wartość.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://adriancolyer.files.wordpress.com/2016/10/cuckoo-1.png?w=600&#34; alt=&#34;cuckoo&#34; /&gt;&lt;/p&gt;
-
-&lt;h6 id=&#34;grafika-z-https-adriancolyer-files-wordpress-com:9fc3faad544296f306615c66d2b26be0&#34;&gt;&lt;em&gt;(grafika z &lt;a href=&#34;https://adriancolyer.files.wordpress.com&#34;&gt;https://adriancolyer.files.wordpress.com&lt;/a&gt;)&lt;/em&gt;&lt;/h6&gt;
-
-&lt;p&gt;Na chwilę obecną mamy jeden nigdzie nieprzypisany element (ten usunięty z drugiej tablicy w poprzedniej iteracji). Ponieważ istnieją dwie funkcje/tablice, to użyjemy tego faktu do wyliczenia nowego miejsca w tablicy przeciwnej (pierwszej) i tam spróbujemy umieścić element. Gdy nawet w tym przypadku napotkamy na kolizję, dokonamy eksmisji kolejnego elementu i powtórzymy ten proces aż do momentu znalezienia miejsca w którejś z tablic.&lt;/p&gt;
-
-&lt;h2 id=&#34;cuckoo-filter-zasada-działania:9fc3faad544296f306615c66d2b26be0&#34;&gt;Cuckoo filter - zasada działania&lt;/h2&gt;
-
-&lt;p&gt;Jak już zostało wspomniane, działanie samego filtra opiera się na powyższej strategii i przedstawia się następująco:
-Filtr przechowuje &amp;ldquo;odcisk&amp;rdquo; każdego dodanego elementu w jednym z wielu &amp;ldquo;gniazd&amp;rdquo; &lt;em&gt;(ang. bucket)&lt;/em&gt; (odcisk jest ciągiem znaków pochodzącym z wartości hasza). Każde gniazdo posiada swoją wielkość &lt;em&gt;(ang. capacity)&lt;/em&gt;, czyli ile fingerprintów jest w stanie pomieścić. Przyjęło się identyfikować filtr poprzez rozmiar odcisku oraz wielkość gniazda właśnie. Np. filtr (2,4) przechowuje odciski o długości 2 znaków w 4-elementowych koszach (gniazdach).
-&lt;img src=&#34;http://ksmigiel.com/images/cuckoo/filtr.png&#34; alt=&#34;filtr&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Ze wszystkich operacji jakie oferuje filtr (dodawanie, usuwanie, sprawdzanie), dodawanie jest najbardziej skomplikowane.
-Aby dodać element potrzebujemy dwóch indeksów gniazd na podstawie hasza elementu i jego odcisku.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;var hashedElement = Hash(element);
-var index1 = GetIndexFromHash(hashedElement);
-var fingerprint = GetFingerprint(hashedElement);
-
-// index2 -&amp;gt; index1 XOR index uzyskany z hasza odcisku
-var hashedFingerprint = Hash(fingerprint);
-var index2 = index1 ^ GetIndexFromHash(hashedFingerprint);
-var index2 = index2 % filterCapacity;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Próbujemy dodać element do gniazda spod indeksu 1-szego, a gdy ten jest pełny, to do 2-giego&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;if (filter.buckets[index1].Insert(fingerprint))
-{
-    filterSize++;
-    return;
-}
-
-if (filter.buckets[index2].Insert(fingerprint))
-{
-    filterSize++;
-    return;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;I podobnie jak w opisie wyżej dotyczącym haszowania kukułczego, będziemy próbować przetasowywać elementy w tablicach aż do skutku (ustalonej z góry liczby powtórzeń) lub całkowitego wyczerpania miejsca, gdy próba dodania pod dwa indeksy się nie udała.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://ksmigiel.com/images/cuckoo/insert.png&#34; alt=&#34;insert&#34; /&gt;&lt;/p&gt;
-
-&lt;h6 id=&#34;b2-próbujemy-dodać-do-bucket-1-ale-jest-tam-element-c1-który-zostaje-wyeksmitowany-do-bucket-0-ale-jest-też-dla-niego-wolne-miejsce-w-alternatywnym-bucket-2:9fc3faad544296f306615c66d2b26be0&#34;&gt;&lt;strong&gt;b2&lt;/strong&gt; próbujemy dodać do &lt;strong&gt;bucket[1]&lt;/strong&gt;, ale jest tam element &lt;strong&gt;c1&lt;/strong&gt;, który zostaje wyeksmitowany do &lt;strong&gt;bucket[0]&lt;/strong&gt;, ale jest też dla niego wolne miejsce w alternatywnym &lt;strong&gt;bucket[2]&lt;/strong&gt;.&lt;/h6&gt;
-
-&lt;h2 id=&#34;jeżeli-nie-widać-różnicy-to-po-co-przepłacać:9fc3faad544296f306615c66d2b26be0&#34;&gt;Jeżeli nie widać różnicy, to po co przepłacać?&lt;/h2&gt;
-
-&lt;p&gt;Faworyzowałbym użycie Cuckoo Filter, dopóki aplikacja nie dodaje nowych danych (w dużej ilości) do filtra w krótkich odstępach czasu. Ze względu na rekursywną naturę algorytmu dodającego nowe elementy, która objawia się w momencie przepełnienia filtra, wydajność w porównaniu do Bloom Filtra wypada kiepsko. Autor publikacji dobrze to podsumował:&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;[&amp;hellip;] for reasonably large sized sets, for the same false positive rate as a corresponding Bloom filter, cuckoo filters use less space than Bloom filters, are faster on lookups (but slower on insertions/to construct), and amazingly also allow deletions of keys (which Bloom filters cannot do)&lt;/p&gt;
-
-&lt;h6 id=&#34;michael-mitzenmacher-2014-5:9fc3faad544296f306615c66d2b26be0&#34;&gt;&lt;a href=&#34;http://mybiasedcoin.blogspot.com/2014/10/cuckoo-filters.html&#34;&gt;Michael Mitzenmacher (2014)&lt;/a&gt;&lt;/h6&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;em&gt;PS. Pracuję nad implementacją filtra pod .NET Core, więc sprawdzajcie mojego githuba :)&lt;/em&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&#34;http://ksmigiel.com/2016/06/bloom-filters/&#34;&gt;http://ksmigiel.com/2016/06/bloom-filters/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.cs.cmu.edu/~dga/papers/cuckoo-conext2014.pdf&#34;&gt;https://www.cs.cmu.edu/~dga/papers/cuckoo-conext2014.pdf&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Cuckoo_hashing&#34;&gt;https://en.wikipedia.org/wiki/Cuckoo_hashing&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://pl.wikipedia.org/wiki/Paso%C5%BCyty_l%C4%99gowe&#34;&gt;https://pl.wikipedia.org/wiki/Paso%C5%BCyty_l%C4%99gowe&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://mybiasedcoin.blogspot.com/2014/10/cuckoo-filters.html&#34;&gt;http://mybiasedcoin.blogspot.com/2014/10/cuckoo-filters.html&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
+      <guid>http://ksmigiel.com/2017/01/cuckoo-filters/</guid>
+      <description>Cuckoo Filter to probabilistyczna struktura danych - podobnie jak Bloom Filter. W poprzednim poście znajdziecie krótki opis czym taka struktura danych się charakteryzuje (fałszywie dodatki wynik zapytania: &amp;ldquo;czy element zawiera się w danym zbiorze&amp;rdquo;).
+O czym mowa? Filtr kukułczy jest relatywnie młodą strukturą danych opisaną w 2014 roku przez Fan, Andersen, Kaminsky i Mitzenmacher. Poszerza ona wspomniane filtry bloom&amp;rsquo;a o usuwanie i zliczanie dodanych elementów, utrzymując przy tym porównywalną złożoność obliczeniową.</description>
     </item>
     
     <item>
       <title>Filtry Blooma</title>
-      <link>http://ksmigiel.com/2016/06/bloom-filters</link>
+      <link>http://ksmigiel.com/2016/06/bloom-filters/</link>
       <pubDate>Sat, 11 Jun 2016 11:59:09 +0100</pubDate>
       
-      <guid>http://ksmigiel.com/2016/06/bloom-filters</guid>
-      <description>
-
-&lt;p&gt;Dzisiaj będzie trochę bardziej nisko poziomowo (nie mylić z niższym poziomem posta). Postaram się w przystepny sposób przybliżyć wam czym jest Filtr Blooma i jak można go zaimplementować w JavaScripcie.&lt;/p&gt;
-
-&lt;h2 id=&#34;filtra-teorie:15fbb8d9ed16407d5b96391271a178aa&#34;&gt;Filtra teorie&lt;/h2&gt;
-
-&lt;p&gt;Filtr Blooma to struktura danych pozwalająca w sposób szybki i pamięciowo optymalny odpowiedzieć na pytanie, czy dany element znajduje się w zbiorze. Niestety, ponieważ nie ma nic za darmo, za wydajność musimy zapłacić, a zapłatą będzie błąd w jaki struktura może nas wprowadzić. Nie użyłem &lt;strong&gt;probabilistyczna&lt;/strong&gt; bez powodu: filtr może stwierdzić jedynie, że elementu &lt;strong&gt;na pewno nie ma&lt;/strong&gt;, lub &lt;strong&gt;może jest&lt;/strong&gt; w zbiorze. Założenie to prowadzi do wniosków tzw. &lt;strong&gt;false-positive&lt;/strong&gt;, czyli że dany element nie istnieje w zadanym zbiorze, a jednak otrzymamy informację o jego prawdopodobnym istnieniu.&lt;/p&gt;
-
-&lt;h3 id=&#34;budowa-i-parametry-filtra:15fbb8d9ed16407d5b96391271a178aa&#34;&gt;Budowa i parametry filtra&lt;/h3&gt;
-
-&lt;p&gt;Filtr można opisać mniej więcej tak:&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Filtr Blooma to &lt;strong&gt;tablica&lt;/strong&gt; (wektor) &lt;em&gt;m&lt;/em&gt;-bitów, który ma &amp;ldquo;przewidywać&amp;rdquo; istnienie &lt;em&gt;n&lt;/em&gt; elementów. Elementy te zostały zakodowane &lt;em&gt;k&lt;/em&gt; funkcjami haszującymi.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Dobór tych parametrów wpływa na prawdopodobieństwo wystąpienia błędu (które chcemy minimalizować). &lt;a href=&#34;https://en.wikipedia.org/wiki/Bloom_filter&#34;&gt;Wikipedia&lt;/a&gt; bardzo ładnie przedstawia to od matematycznej strony. Najważniejsze są dwa wzory:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://wikimedia.org/api/rest_v1/media/math/render/svg/76ffa4de74f3857f41900292d0fc315170cec674&#34; alt=&#34;k&#34; /&gt;
-&lt;img src=&#34;https://wikimedia.org/api/rest_v1/media/math/render/svg/25b30f6928fac097a6e25aa7b7870a7722b7aea0&#34; alt=&#34;m&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;My do teorii aż tak wagi przywiązywać nie będziemy, ale trzeba pamiętać, że przy produkcyjnym użyciu takiej struktury bez wstępnej analizy się nie obejdzie.&lt;/p&gt;
-
-&lt;h3 id=&#34;działanie-filtra:15fbb8d9ed16407d5b96391271a178aa&#34;&gt;Działanie filtra&lt;/h3&gt;
-
-&lt;p&gt;Całość sprowadza się do testu, czy dany bit (lub &lt;em&gt;k&lt;/em&gt; bitów w przypadku &lt;em&gt;k &amp;gt; 1&lt;/em&gt;) dla zadanej wartości (np. &lt;em&gt;x&lt;/em&gt;) jest zapalonych w tablicy. Jeśli choć jeden nie jest - mamy pewność, że element jest nieobecny.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Bloom_filter.svg/649px-Bloom_filter.svg.png&#34; alt=&#34;bloom&#34; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;haszowanie:15fbb8d9ed16407d5b96391271a178aa&#34;&gt;Haszowanie&lt;/h3&gt;
-
-&lt;p&gt;Orłem z kryptografii nie jestem, ale wyczytałem, że użyte funkcje haszujące powinny być przede wszystkim &lt;strong&gt;niezależne&lt;/strong&gt; i o &lt;strong&gt;jednostajnym rozkładzie prawdopodobieństwa&lt;/strong&gt;, np. takie jak: &lt;a href=&#34;https://sites.google.com/site/murmurhash/&#34;&gt;murmur&lt;/a&gt; lub &lt;a href=&#34;https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function&#34;&gt;fnv&lt;/a&gt;. Zalecam dalszą lekturę w tym zakresie dla zainteresowanych szczegółami.&lt;/p&gt;
-
-&lt;h4 id=&#34;podwójne-haszowanie:15fbb8d9ed16407d5b96391271a178aa&#34;&gt;Podwójne haszowanie&lt;/h4&gt;
-
-&lt;p&gt;Jak i jakich funkcji używać do haszowania? Aby zapewnić prawdopodobieństwo błędu na podobnym poziomie, możemy skorzystać z &lt;a href=&#34;http://citeseer.ist.psu.edu/viewdoc/download;jsessionid=4060353E67A356EF9528D2C57C064F5A?doi=10.1.1.152.579&amp;amp;rep=rep1&amp;amp;type=pdf&#34;&gt;&lt;strong&gt;podwójnego haszowania&lt;/strong&gt;&lt;/a&gt;:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://en.wikipedia.org/api/rest_v1/media/math/render/svg/64111088b311219da1c0bc477bf1d97ee0c42b69&#34; alt=&#34;double hash&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Będziemy potrzebować wtedy jedynie dwóch funkcji haszujących &lt;em&gt;h&lt;sub&gt;1&lt;/sub&gt;&lt;/em&gt; i  &lt;em&gt;h&lt;sub&gt;2&lt;/sub&gt;&lt;/em&gt;, &lt;em&gt;i&lt;/em&gt; - numer funkcji (nasze k), &lt;em&gt;T&lt;/em&gt; (nasze m). (&lt;em&gt;Przepraszam za zamieszanie z parametrami, ale wzory są żywcem z Wikipedii&lt;/em&gt;).&lt;/p&gt;
-
-&lt;p&gt;Myślę, że powoli możemy przejść do kodu i próby zaimplementowania tego wszystkiego, co wyżej opisałem.&lt;/p&gt;
-
-&lt;h2 id=&#34;implementacja:15fbb8d9ed16407d5b96391271a178aa&#34;&gt;Implementacja&lt;/h2&gt;
-
-&lt;p&gt;Dla celów edukacyjnych przyjmijmy następujące parametry:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;k = 1    Jedna funkcja haszująca fnv-1
-m = 16   16-bitowa tablica
-n = 2    Dwa elementy
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;fnv-1:15fbb8d9ed16407d5b96391271a178aa&#34;&gt;fnv-1&lt;/h3&gt;
-
-&lt;p&gt;Wybrałem tę, bo jest relatywnie prosta w implementacji:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;// Operacje na bitach w JS są 32-bitowe
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators
-//
-// Stałe dla 32-bitów
-// http://www.isthe.com/chongo/tech/comp/fnv/index.html#FNV-param
-const FNV_OFFSET = 0x811c9dc5;
-const FNV_PRIME = 0x01000193;
-
-function fnv1(string) {
-  let bytes = stringToBytes(string);
-  let hash = FNV_OFFSET;
-
-  for (let byte of bytes) {
-    hash = hash * FNV_PRIME;
-    hash = hash ^ byte;
-  }
-
-  return Math.abs(hash);
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;stringtobytes:15fbb8d9ed16407d5b96391271a178aa&#34;&gt;stringToBytes&lt;/h3&gt;
-
-&lt;p&gt;Powyższa funkcja potrzebuje tablicy bajtów z ciągu znaków. JS nie posiada takiej ładnej funkcji jak chociażby C# &lt;code&gt;byte[] bytes = encoding.GetBytes(AnyString)&lt;/code&gt;, dlatego musimy napisać coś podobnego. Dla ułatwienia przyjmijmy, że ciąg znaków kodowany jest w ASCII (basic English).&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;function stringToBytes(string) {
-  let bytes = [];
-
-  for (let char of string) {
-    bytes.push(char.charCodeAt(0));
-  }
-  
-  return bytes;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;bloomfilter:15fbb8d9ed16407d5b96391271a178aa&#34;&gt;BloomFilter&lt;/h3&gt;
-
-&lt;p&gt;Jak zauważyliście używam składni ES6, o co by iść z duchem czasu. Filtr będzie przyjmował w konstruktorze liczbę bitów oraz funkcje haszujące, których chcemy użyć.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;class BloomFilter {
-  constructor (m, k) {
-    this.bits = m;
-    this.hashFunctions = k;
-    this.filter = new Int32Array(m);
-  }
-
-  add (value) {
-    for (let hash of this.hashFunctions) {
-      let hashIndex = hash(value) % this.bits;
-      this.filter[hashIndex] = 1;
-    }
-  }
-
-  check (value) {
-    for (let hash of this.hashFunctions) {
-      let hashIndex = hash(value) % this.bits;
-      if (this.filter[hashIndex] == 0)
-        return false;
-    }
-    return true;
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;testujemy:15fbb8d9ed16407d5b96391271a178aa&#34;&gt;Testujemy!&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;var bloomFilter = new BloomFilter(16, [ fnv1 ]);
-
-bloomFilter.add(&#39;testujemy!&#39;);
-bloomFilter.add(&#39;filtr&#39;);
-
-bloomFilter.check(&#39;testujemy!&#39;);
-// true
-bloomFilter.check(&#39;filtr&#39;);
-// true
-bloomFilter.check(&#39;nie ma&#39;)
-// false
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Prawdopodobieństwo błędu dla przyjętych parametrów wynosi:
-&lt;img src=&#34;https://www4c.wolframalpha.com/Calculate/MSP/MSP772420gih62f6ech2f05000010ahiefh16dba6cd?MSPStoreType=image/gif&amp;amp;s=59&#34; alt=&#34;bloom&#34; /&gt;
-&lt;em&gt;p ~= 0.12&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;ale przy 10-ciu elementach wzrasta do &lt;em&gt;p ~= 0.46&lt;/em&gt;, dlatego dobór odpowiednich parametrów jest bardzo ważny.&lt;/p&gt;
-
-&lt;h2 id=&#34;produkcyjne-użycia:15fbb8d9ed16407d5b96391271a178aa&#34;&gt;Produkcyjne użycia&lt;/h2&gt;
-
-&lt;p&gt;Z Filtrów Blooma korzystają m.in:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://cassandra.apache.org/&#34;&gt;Cassandra&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://hadoop.apache.org/&#34;&gt;Hadoop&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://cloud.google.com/bigtable/&#34;&gt;Google BigTable&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.akamai.com/&#34;&gt;Akamai&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Bloom_filter&#34;&gt;https://en.wikipedia.org/wiki/Bloom_filter&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://sites.google.com/site/murmurhash/&#34;&gt;https://sites.google.com/site/murmurhash/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function&#34;&gt;https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.isthe.com/chongo/tech/comp/fnv/index.html#FNV-param&#34;&gt;http://www.isthe.com/chongo/tech/comp/fnv/index.html#FNV-param&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://citeseer.ist.psu.edu/viewdoc/download;jsessionid=4060353E67A356EF9528D2C57C064F5A?doi=10.1.1.152.579&amp;amp;rep=rep1&amp;amp;type=pdf&#34;&gt;http://citeseer.ist.psu.edu/viewdoc/download;jsessionid=4060353E67A356EF9528D2C57C064F5A?doi=10.1.1.152.579&amp;amp;rep=rep1&amp;amp;type=pdf&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
+      <guid>http://ksmigiel.com/2016/06/bloom-filters/</guid>
+      <description>Dzisiaj będzie trochę bardziej nisko poziomowo (nie mylić z niższym poziomem posta). Postaram się w przystepny sposób przybliżyć wam czym jest Filtr Blooma i jak można go zaimplementować w JavaScripcie.
+Filtra teorie Filtr Blooma to struktura danych pozwalająca w sposób szybki i pamięciowo optymalny odpowiedzieć na pytanie, czy dany element znajduje się w zbiorze. Niestety, ponieważ nie ma nic za darmo, za wydajność musimy zapłacić, a zapłatą będzie błąd w jaki struktura może nas wprowadzić.</description>
     </item>
     
     <item>
       <title>Kontekst i &#39;this&#39; w JavaScripcie</title>
-      <link>http://ksmigiel.com/2016/03/js-this</link>
+      <link>http://ksmigiel.com/2016/03/js-this/</link>
       <pubDate>Wed, 30 Mar 2016 21:59:09 +0100</pubDate>
       
-      <guid>http://ksmigiel.com/2016/03/js-this</guid>
-      <description>
-
-&lt;p&gt;Słówko &lt;code&gt;this&lt;/code&gt;, mimo podobieństwa do C# czy Javy, w JavaScripcie działa trochę inaczej niż nam się może wydawać. Kontekst na jaki wskazuje &lt;em&gt;this&lt;/em&gt; może być dowolnie zmieniany, a jego nieumiejętne użycie spowodowuje wystąpienie masy błędów w naszej aplikacji. Ustrzec przed nimi można się jedynie rozumiejąc do czego owe &lt;em&gt;this&lt;/em&gt; służy i jak się z nim obchodzić. Zapraszam do lektury :)&lt;/p&gt;
-
-&lt;h2 id=&#34;implicit-binding:aa9d6570c3e5b1909358f37548b7ef3a&#34;&gt;Implicit binding&lt;/h2&gt;
-
-&lt;p&gt;Mamy tutaj do czynienia z kontekstem zwykłych obiektów. Złota zasada w identyfikacji kontekstu to:&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;this&lt;/strong&gt; to obiekt, który jest po lewej stronie kropki.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;W myśl powyższej zasady możemy stwierdzić, że kontekstem funkcji &lt;code&gt;meow()&lt;/code&gt; będzie obiekt &lt;code&gt;cat&lt;/code&gt; i tak też się dzieje.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;var cat = {
-  name: &#39;Filemon&#39;,
-  meow: function () {
-    console.log(this.name);
-  }
-}
-
-cat.meow();
-// Filemon
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Podobnie sprawa ma się w przypadku zagdnieżdżonych obiektów i ich funkcji. Najbliższy obiekt po lewej stronie (z reguły, ale o tym zaraz) jest kontekstem, w jakim zostaje wywołana dana funkcja:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;var cat = {
-  name: &#39;Filemon&#39;,
-  brother: {
-    name: &#39;Mruczek&#39;,
-    meow: function () {
-      console.log(this.name)
-    }
-  },
-  meow: function () {
-    console.log(this.name);
-  }
-}
-
-cat.meow();
-// Filemon
-
-cat.brother.meow();
-// Mruczek
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Trzeba być bardzo ostrożnym jeśli chodzi o referencje do obiektów czy funkcji, gdyż takie przypisanie również powoduje zmianę kontekstu. Jest nim nadal &lt;em&gt;cat (Filemon)&lt;/em&gt;, a nie jakby można było sądzić &lt;em&gt;brother (Mruczek)&lt;/em&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;cat.meow = cat.brother.meow;
-cat.meow();
-// Filemon
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Istnieją jednak sposoby na całkowie przejęcie kontroli nad tym co ma być w danej chwili &amp;ldquo;bazą&amp;rdquo;.&lt;/p&gt;
-
-&lt;h2 id=&#34;explicit-binding:aa9d6570c3e5b1909358f37548b7ef3a&#34;&gt;Explicit binding&lt;/h2&gt;
-
-&lt;p&gt;Oprócz operowania obiektami i zasadą &amp;ldquo;kropki&amp;rdquo; istnieją inne metody (pewne 3 funkcje), które pozwalają na zmianę kontekstu wywołania dowolnej funkcji.&lt;/p&gt;
-
-&lt;h3 id=&#34;call:aa9d6570c3e5b1909358f37548b7ef3a&#34;&gt;call()&lt;/h3&gt;
-
-&lt;p&gt;Pozwala na wywołanie funkcji z konkretnym kontekstem przekazanym jako argument.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;var meow = function () {
-  console.log(&#39;I am a cat &#39; + this.name);
-};
-
-var filemon = {
-  name: &#39;Filemon&#39;
-};
-
-var mruczek = {
-  name: &#39;Mruczek&#39;
-};
-
-meow.call(filemon);
-// I am a cat Filemon
-
-meow.call(mruczek);
-// I am a cat Mruczek
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;bind:aa9d6570c3e5b1909358f37548b7ef3a&#34;&gt;bind()&lt;/h3&gt;
-
-&lt;p&gt;Jest to bardzo podobna funkcja do &lt;code&gt;call()&lt;/code&gt; z tą różnicą, że pozwala na &amp;ldquo;przechowanie&amp;rdquo; funkcji z nowym kontekstem w postaci zmiennej, aby móc ją na przykład przekazać dalej jako parametr funkcji.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;var meow = function () {
-  console.log(&#39;I am a cat &#39; + this.name);
-};
-
-var filemon = {
-  name: &#39;Filemon&#39;
-};
-
-var mruczek = {
-  name: &#39;Mruczek&#39;
-};
-
-var filemonMeow = meow.bind(filemon);
-filemonMeow();
-// I am a cat Filemon
-
-var mruczekMeow = meow.bind(mruczek);
-mruczekMeow()
-// I am a cat Mruczek
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;apply:aa9d6570c3e5b1909358f37548b7ef3a&#34;&gt;apply()&lt;/h3&gt;
-
-&lt;p&gt;To taki helper składający tablicę w argumenty funkcji, który również jako parametr przyjmuje nowy obiekt, a ten stanie się &lt;em&gt;this&lt;/em&gt; w tej właśnie funkcji.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;var myCats = function (cat1, cat2) {
-  console.log(&#39;I am &#39; + this.name + &#39; and my cats are: &#39; + cat1 + &#39; and &#39; + cat2);
-};
-
-var me = {
-  name: &#39;Krzysztof&#39;
-};
-
-var cats = [&#39;Filemon&#39;, &#39;Mruczek&#39;];
-
-myCats.apply(me, cats);
-// I am Krzysztof and my cats are: Filemon and Mruczek
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;new-binding:aa9d6570c3e5b1909358f37548b7ef3a&#34;&gt;New binding&lt;/h2&gt;
-
-&lt;p&gt;Dochodzimy w końcu do momentu, z którym większość będzie najbardziej zaznajomiona, czyli konstruktory i keyword &lt;code&gt;new&lt;/code&gt;. Sytuacja jest tu o tyle prosta, że to &lt;em&gt;new&lt;/em&gt; nadaje kontekst całego obiektu podczas jego tworzenia.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;function Cat(name, color) {
-  this.name = name;
-  this.color = color;
-  this.sayHello = function () {
-    console.log(&#39;Hi, I am &#39; + name + &#39; colored &#39; + color);
-  };
-}
-
-var filemon = new Cat(&#39;Filemon&#39;, &#39;black&#39;);
-filemon.sayHello();
-// Hi, I am Filemon colored black
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Zwróćcie uwagę na &lt;strong&gt;brak&lt;/strong&gt; &lt;em&gt;this&lt;/em&gt; w wywołaniu funkcji &lt;code&gt;sayHello()&lt;/code&gt;. W każdym wypadku jego użycie jest opcjonalne. Domyślnie interpreter zawsze będzie wywoływał funkcję w kontekście rozwiązanym zgodnie z zasadami, które tu dzisiaj opisałem. Dla czytelności jednak lepiej jest użyć kontekstu, aby czarno na biało było widać co z czego jest wywoływane.
-Spójrzcie na przykład bardziej zawiły, gdzie gdyby nie osobna referencja do obiektu macierzystego, odwołanie się do jego własności byłoby niemożliwe.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;function Cat(name, color) {
-  var self = this;
-  
-  self.name = name;
-  self.color = color;
-  self.sayHello = function () {
-    console.log(&#39;Hi, I am &#39; + self.name + &#39; colored &#39; + self.color);
-  };
-  
-  self.brother = {
-    name: &#39;Mruczek&#39;,
-    sayHello: function () {
-      console.log(&#39;Hi, I am &#39; + this.name + &#39; and my brother is &#39; + self.name);
-    }
-  };
-}
-
-var filemon = new Cat(&#39;Filemon&#39;, &#39;black&#39;);
-filemon.sayHello();
-// Hi, I am Filemon colored black
-
-filemon.brother.sayHello()
-// Hi, I am Mruczek and my brother is Filemon
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;window-binding:aa9d6570c3e5b1909358f37548b7ef3a&#34;&gt;window binding&lt;/h3&gt;
-
-&lt;p&gt;Wyżej napisałem o tym, że pominięcie &lt;em&gt;this&lt;/em&gt; spowoduje automatyczne &amp;ldquo;dopięcie&amp;rdquo; odpowiedniego kontekstu. Jednak gdy funkcja wywołana jest globalnie, to (przynajmniej w przeglądarkach) jej kontekstem będzie obiekt &lt;code&gt;window&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;function openWindow() {
-  console.log(this);
-};
-
-openWindow();
-// Window {external: Object, chrome: Object, document: ...}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Jednak jeśli popełnimy pewien błąd, którego konsekwencje zostały opatrzone stosownym błędem w konsoli w ECMAScript 5 (&amp;lsquo;strict&amp;rsquo; mode, w ECMAScript 3 &lt;em&gt;this&lt;/em&gt; wskazywał na &lt;em&gt;window&lt;/em&gt;, stąd to całe zamieszanie), polegający na wywołaniu konstruktora funkcji bez użycia &lt;em&gt;new&lt;/em&gt;, to otrzymamy błąd.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;function someConstructor() {
-  this.a = &#39;foo&#39;;
-  this.b = &#39;bar&#39;;
-}
-
-var good = new someConstructor();
-var bad = someConstructor();
-// &amp;quot;TypeError: this is undefined&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;this-czy-nie-this-o-to-jest-pytanie:aa9d6570c3e5b1909358f37548b7ef3a&#34;&gt;this czy nie this - o to jest pytanie!&lt;/h2&gt;
-
-&lt;p&gt;Mam nadzieję, że szybki kurs z kontekstu w JS tutaj przedstawiony pomógł wam choć trochę nabrać pewności w używaniu &lt;em&gt;this&lt;/em&gt; z głową w swoich aplikacjach. Jeśli macie jakieś pytania czy uwagi z chęcią na nie odpowiem, w komentarzach czy mail/twitter.&lt;/p&gt;
-</description>
+      <guid>http://ksmigiel.com/2016/03/js-this/</guid>
+      <description>Słówko this, mimo podobieństwa do C# czy Javy, w JavaScripcie działa trochę inaczej niż nam się może wydawać. Kontekst na jaki wskazuje this może być dowolnie zmieniany, a jego nieumiejętne użycie spowodowuje wystąpienie masy błędów w naszej aplikacji. Ustrzec przed nimi można się jedynie rozumiejąc do czego owe this służy i jak się z nim obchodzić. Zapraszam do lektury :)
+Implicit binding Mamy tutaj do czynienia z kontekstem zwykłych obiektów.</description>
     </item>
     
     <item>
       <title>Jak naprawiłem rb-gateway</title>
-      <link>http://ksmigiel.com/2016/02/rb-gateway</link>
+      <link>http://ksmigiel.com/2016/02/rb-gateway/</link>
       <pubDate>Fri, 26 Feb 2016 21:59:09 +0100</pubDate>
       
-      <guid>http://ksmigiel.com/2016/02/rb-gateway</guid>
-      <description>
-
-&lt;p&gt;Zawsze zastanawiałem się jak to jest, że ci wszyscy programiści &lt;strong&gt;open source&lt;/strong&gt; znajdują czas na pisanie kodu po pracy. Kod open source kojarzył mi się jednoznacznie z czymś darmowym, charytatywnym. Było dla mnie dużym zaskoczeniem, gdy dowiedziałem się o programistach opłacanych m.in przez &lt;strong&gt;Red Hat&lt;/strong&gt; i uświadomiłem wtedy sobie, że otwartość kodu wcale nie sugeruje amatorskiego poziomu. Było to dawno temu, ale ten moment &lt;em&gt;&amp;ldquo;olśnienia&amp;rdquo;&lt;/em&gt; pamiętam do dziś.&lt;/p&gt;
-
-&lt;h2 id=&#34;open-source:bfcbe129b554ba1a8bf5f0da631bf673&#34;&gt;Open source&lt;/h2&gt;
-
-&lt;p&gt;Jeszcze zanim zacząłem pracować, idea przynależności do projektu programistycznego, takiego z prawdziwego zdarzenia, była czymś ekscytującym. Tworzenie narzędzia używanego przez tysiące osób, dojrzały codebase z testami, dobrymi praktykami i nienaganną architekturą - nic tylko kodzić. Jednak pomimo wielu prób nie udało mi się nigdy znaleźć jednego, konkretnego projektu, z którym mógłbym się utożsamiać jako &amp;ldquo;współtwórca&amp;rdquo;. Repozytoriów / projektów jest ile bądź i chyba ze względu na ich zróżnicowanie (język, poziom abstrakcji, community) wybór nie należy do łatwych.&lt;/p&gt;
-
-&lt;h3 id=&#34;kontrybucja:bfcbe129b554ba1a8bf5f0da631bf673&#34;&gt;Kontrybucja&lt;/h3&gt;
-
-&lt;p&gt;Do open source można też podejść z innej strony: zawężając zakres poszukiwań do projektów, z których obecnie korzystamy (lub korzystaliśmy). Daje nam to pewną przewagę, gdyż mamy pojęcie co dana biblioteka lub framework robi i jak jej używać. Oprócz tego często w bug-trackerach natrafić można na tzw. &lt;strong&gt;low hanging fruits&lt;/strong&gt;, czyli proste zadania dla każdego. Istnieje nawet &lt;a href=&#34;http://up-for-grabs.net/&#34;&gt;platforma&lt;/a&gt; będąca agregatorem takich właśnie tasków. Kto jest bardziej ambitny niech od razu łapie się za konkrety idąc za śladem &lt;a href=&#34;http://davidvgalbraith.com/how-i-fixed-node-js/&#34;&gt;tego pana&lt;/a&gt; - lenistwo po święcie dziękczynienia najlepszym motorem do pracy! To co jednak zmotywuje do &lt;em&gt;&amp;ldquo;zakontrybutowania&amp;rdquo;&lt;/em&gt; każdego, to możliwość naprawienia znalezionego błędu w używanej przez siebie bibliotece i o tym krótko dziś napiszę.&lt;/p&gt;
-
-&lt;h2 id=&#34;moja-cegiełka-w-rb-gateway:bfcbe129b554ba1a8bf5f0da631bf673&#34;&gt;Moja cegiełka w rb-gateway&lt;/h2&gt;
-
-&lt;p&gt;Wspieranie lokalnych repozytoriów w &lt;a href=&#34;http://reviewboard.org/&#34;&gt;ReviewBoardzie&lt;/a&gt; jest mocno ograniczone. Chcąc korzystać ze wszystkich jego funkcjonalności konieczne jest skorzystanie z narzędzia zwanego &lt;strong&gt;rb-gateway&lt;/strong&gt;.  &lt;a href=&#34;https://github.com/reviewboard/rb-gateway/&#34;&gt;rb-gateway&lt;/a&gt; jest to proxy między repozytorium gita, a ReviewBoardem - prosty serwer HTTP pełniący funkcję API, napisany w &lt;a href=&#34;https://tour.golang.org/welcome/1&#34;&gt;go&lt;/a&gt;. Nie znalazłem do niego żadnych binarek, co za tym idzie, musiałem skompilować go samodzielnie, jednocześnie ucząc się języka z którego nigdy wcześniej nie korzystałem. Jeśli myślicie, że parę poniższych komend zaczerpniętych z oficjalnej dokumentacji było wystarczające do uruchomienia &lt;em&gt;&amp;ldquo;tego czegoś&amp;rdquo;&lt;/em&gt;, to grubo się mylicie!&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ go get -d github.com/reviewboard/rb-gateway
-$ cd github.com/reviewboard/rb-gateway
-$ mv sample_config.json config.json
-$ go get
-$ go install
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Największą przeszkodą jaką napotkałem podczas próby zbudowania rb-gateway&amp;rsquo;a była jego zależność: &lt;code&gt;git2go&lt;/code&gt; i siedzący pod spodem &lt;code&gt;libgit&lt;/code&gt; wymagany w wersji &lt;strong&gt;0.22&lt;/strong&gt;, a w &lt;a href=&#34;https://fedoraproject.org/wiki/EPEL&#34;&gt;repozytorium CentOS&lt;/a&gt; ostatnia wersja to &lt;strong&gt;0.21&lt;/strong&gt;. Co więc musiałem zrobić? Zbudować libgit v0.22 ze źródeł. Na szczęście &lt;a href=&#34;https://github.com/libgit2/libgit2&#34;&gt;wszystko jest opisane&lt;/a&gt; i o dziwo nie napotkałem żadnych problemów. Potem przyszedł czas na konfigurację i testy, które bardzo szybko znalazły pewną nieprawidłowość w działaniu rb-gateway&amp;rsquo;a.&lt;/p&gt;
-
-&lt;h3 id=&#34;gdzie-są-diffy:bfcbe129b554ba1a8bf5f0da631bf673&#34;&gt;Gdzie są diffy!&lt;/h3&gt;
-
-&lt;p&gt;Po stworzeniu nowego &lt;em&gt;review requesta&lt;/em&gt; załączał się tylko jeden plik z diffa. W początkowej fazie myślałem, że wynika to z jakichś problemów funkcjonalnych biblioteki libgit, bo jakby nie było, to ciężko w 100% wierzyć w coś, co zostało zbudowane dosłownie przez przypadek (kompletnie się na tym nie znam). Po chwili poszukiwań natrafiłem na winowajcę - rb-gateway. To ta warstwa zwracała zły JSON, co wskazywało na problemy z przygotowywaniem / parsowaniem diffa. Specem od debugowania &lt;code&gt;go&lt;/code&gt; nie jestem, jednak idąc jak po sznurku znalazłem metodę &lt;code&gt;GetCommit(commitId string)&lt;/code&gt; w pliku &lt;code&gt;git_repository.go&lt;/code&gt;. Posiadała błędną implementację, w zły sposób korzystającą z C API libgita. Co jest śmieszne, testy jednostkowe przechodziły bez problemów, bo uwaga: testowały przypadek generowania diffa tylko z jednego pliku własnie!&lt;/p&gt;
-
-&lt;p&gt;Fix okazał się banalny (jak wszystko, co na początku jest niewyobrażalnie trudne, a po zrozumieniu staje się dziecinnie proste). Autor przez pomyłkę wywoływał metodę &lt;code&gt;Patch(0)&lt;/code&gt; zawsze otrzymując pierwszy element kolekcji, w tym wypadku pierwszy plik. Po zapętleniu kawałka kodu wszystko wróciło do normy.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;var buffer bytes.Buffer
-
-if deltas &amp;gt; 0 {
-    for i := 0; i &amp;lt; deltas; i++ {
-        patch, err := gitDiff.Patch(i)
-        if err != nil {
-            return nil, err
-        }
-
-        patchString, err := patch.String()
-        if err != nil {
-            return nil, err
-        }
-
-        buffer.WriteString(patchString)
-
-        patch.Free()
-    }
-    diff = buffer.String()
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Dopisałem test, który sprawdzał przypadek, gdy commit zawierał więcej niż jeden plik i pokusiłem się o &lt;strong&gt;pull requesta&lt;/strong&gt;, który został bez problemu &lt;a href=&#34;https://reviews.reviewboard.org/r/7958/&#34;&gt;zaakceptowany&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;jestem-osobą-wnoszącą-wkład:bfcbe129b554ba1a8bf5f0da631bf673&#34;&gt;Jestem osobą wnoszącą wkład?&lt;/h2&gt;
-
-&lt;p&gt;Chyba tak (śmiesznie Google tłumaczy słowo  &lt;em&gt;constributor&lt;/em&gt;). Nie odczuwam, abym poprawiając ten kawałek kodu zbawił świat, ale świadomość, że udało się po prostu coś naprawić, zgłębić temat, nauczyć się podstaw języka go, zbudować low-level bibliotekę C, podnosząc jakość oprogramowania krążącego wokół nas i równocześnie pomagając przy tym innym - świadomość ta podnosi na duchu. Bez zawahania twierdzę, że było warto i chcę jeszcze więcej!&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&#34;http://up-for-grabs.net/&#34;&gt;http://up-for-grabs.net/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://davidvgalbraith.com/how-i-fixed-node-js/&#34;&gt;http://davidvgalbraith.com/how-i-fixed-node-js/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/reviewboard/rb-gateway/&#34;&gt;https://github.com/reviewboard/rb-gateway/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://reviewboard.org/&#34;&gt;http://reviewboard.org/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://tour.golang.org/welcome/1&#34;&gt;https://tour.golang.org/welcome/1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://fedoraproject.org/wiki/EPEL&#34;&gt;https://fedoraproject.org/wiki/EPEL&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/libgit2/libgit2&#34;&gt;https://github.com/libgit2/libgit2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://reviews.reviewboard.org/r/7958/&#34;&gt;https://reviews.reviewboard.org/r/7958/&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
+      <guid>http://ksmigiel.com/2016/02/rb-gateway/</guid>
+      <description>Zawsze zastanawiałem się jak to jest, że ci wszyscy programiści open source znajdują czas na pisanie kodu po pracy. Kod open source kojarzył mi się jednoznacznie z czymś darmowym, charytatywnym. Było dla mnie dużym zaskoczeniem, gdy dowiedziałem się o programistach opłacanych m.in przez Red Hat i uświadomiłem wtedy sobie, że otwartość kodu wcale nie sugeruje amatorskiego poziomu. Było to dawno temu, ale ten moment &amp;ldquo;olśnienia&amp;rdquo; pamiętam do dziś.
+Open source Jeszcze zanim zacząłem pracować, idea przynależności do projektu programistycznego, takiego z prawdziwego zdarzenia, była czymś ekscytującym.</description>
     </item>
     
     <item>
       <title>Czy Windows może zastąpić Linuxa?</title>
-      <link>http://ksmigiel.com/2016/01/powershell</link>
+      <link>http://ksmigiel.com/2016/01/powershell/</link>
       <pubDate>Thu, 28 Jan 2016 21:59:09 +0100</pubDate>
       
-      <guid>http://ksmigiel.com/2016/01/powershell</guid>
-      <description>
-
-&lt;p&gt;Lata temu przeżywałem okres fascynacji Linuxem. Pierwszą dystrybucją, którą zainstalowałem bodajże z 5 płyt CD był &lt;strong&gt;Mandrake Linux&lt;/strong&gt; (kontynuowany jako &lt;a href=&#34;https://pl.wikipedia.org/wiki/Mandriva_Linux&#34;&gt;Mandriva&lt;/a&gt; - obecnie nie jest już utrzymywana). Potem, o ile mnie pamięć nie myli, był Slackware i Slax (jego mniejszy kuzyn-portable).&lt;/p&gt;
-
-&lt;h2 id=&#34;linuxy-i-konsola:8c67b377fe66f9eab5dd926e008c6d14&#34;&gt;Linuxy i konsola&lt;/h2&gt;
-
-&lt;p&gt;Bardzo lubiłem dystrybucje &lt;a href=&#34;https://pl.wikipedia.org/wiki/Live_CD&#34;&gt;&lt;strong&gt;Live CD&lt;/strong&gt;&lt;/a&gt;. Wszystko zaczęło się, gdy popsułem bootloadera z instalacją Windows XP i przez kilka dni w domu nikt nie mógł używać komputera (no poza mną - linuksiarzem). Mieliśmy wtedy tylko jeden komputer (jakiś AMD Duron 800 Mhz), więc rodzina szybko wywarła na mnie wpływ i posprzątałem po sobie formatując cały dysk twardy, razem ze swoją świętą instalacją Linuxa. Nie chcąc w przyszłości psuć domownikom partycji z systemem operacyjnym, zacząłem szukać &amp;ldquo;bezpieczniejszych&amp;rdquo; alternatyw.&lt;/p&gt;
-
-&lt;p&gt;Plusem systemów Live CD było to, że nie wymagały instalacji. Całość ładowana była do pamięci RAM, tak więc zaraz po włożeniu płytki mieliśmy w pełni działającego Linuxa. Problemem było zapisywanie swojej pracy i stanu systemu, jednak wspomniany Slax potrafił robić &amp;ldquo;snapshoty&amp;rdquo; i poprzez definicję modułów startowych, jakie miały zostać załadowane przy następnym rozruchu, mogliśmy bez problemu wznowić poprzednią sesję.&lt;/p&gt;
-
-&lt;p&gt;Ale wiecie co? Ciągłe wkładanie i wyciąganie tej płyty w cale nie było takie wygodne. Poszedłem więc o krok dalej w tworzeniu swojego idealnego środowiska i złamałem wszelkie zasady ładując dystrybucję Live CD z dysku twardego do pamięci. Dla domowników cała operacja była transparentna, bo na dyskietce miałem bootloadera &lt;a href=&#34;http://lilo.alioth.debian.org/&#34;&gt;lilo&lt;/a&gt; ze Slax&amp;rsquo;em. Zatem udało mi się zamienić płytę na dyskietkę. Tak. Szczerze, nie wiem co mną wtedy kierowało, ale jak tego dokonałem znajdziecie w poście, który napisałem &lt;a href=&#34;http://sysios.blogspot.com/2006/02/linux-z-pyty.html&#34;&gt;&lt;strong&gt;10 lat&lt;/strong&gt; temu!&lt;/a&gt; W rzeczywistości wtedy zaczęła się moja przygoda z pisaniem (i na szczęście szybko się skończyła :D).&lt;/p&gt;
-
-&lt;h3 id=&#34;konsola:8c67b377fe66f9eab5dd926e008c6d14&#34;&gt;Konsola!&lt;/h3&gt;
-
-&lt;p&gt;Wszystkiemu winna była konsola. Wklepywanie komand w terminalu sprawiało mi tyle przyjemności, że po pewnym czasie w ogóle przestałem używać GUI (KDE, Gnome) i myszy. Koajrzycie &lt;a href=&#34;http://ekg.chmurka.net/&#34;&gt;EKG&lt;/a&gt; (&lt;strong&gt;E&lt;/strong&gt;ksperymentalny &lt;strong&gt;K&lt;/strong&gt;lient &lt;strong&gt;G&lt;/strong&gt;adu-Gadu)? To był dopiero hardkor. Poza surfowaniem po necie wszystko robiłem z poziomu terminala:, IRC, bash, python, vim i to poczucie &amp;ldquo;hakowania&amp;rdquo; było uzależniające.&lt;/p&gt;
-
-&lt;h3 id=&#34;zawodowy-windows:8c67b377fe66f9eab5dd926e008c6d14&#34;&gt;Zawodowy Windows!&lt;/h3&gt;
-
-&lt;p&gt;Po okresie &amp;ldquo;trybu tekstowego&amp;rdquo; wróciłem do normalności i Windowsa, na którym był większy wybór narzędzi do obróbki audio i edycji nut (jak wiecie zajmuje się tym w tak zwanym &amp;ldquo;międzyczasie&amp;rdquo;). Na początku przełączałem się między systemami, w zależności od tego co w danej chwili było mi potrzebne. Z czasem jednak godziny spędzane na Windowsie zaczęły przeważać i swoje &amp;ldquo;hakersko&amp;rdquo;-programistyczne nawyki zacząłem też tam przenosić. Poznałem platformę .NET, C#, VB. Na studiach wszystkie projekty pisałem w C# i w tym kierunku poprowadziłem swoją karierę. Związałem się zawodowo z Windowsem i chcąć nie chcąc musiałem zacząć szukać narzędzi, które wypełniłyby lukę po terminalu z Linuxa.&lt;/p&gt;
-
-&lt;h2 id=&#34;posh-zastępca-basha:8c67b377fe66f9eab5dd926e008c6d14&#34;&gt;posh - zastępca basha&lt;/h2&gt;
-
-&lt;p&gt;posh (&lt;strong&gt;P&lt;/strong&gt;ower&lt;strong&gt;Sh&lt;/strong&gt;ell) okazał się kapitalnym zamiennikiem. Nie dość, że mogłem ponownie klepać sobie komendy z terminala (nawet nazywające się tak samo, ale o tym zaraz), to świetnie sprawdził się jako pomoc w automatycji zadań, a jego integracja z .NET dostarczała ogromne możliwości eksperymentowania z punktu widzenia programisty. Serio, jeśli jeszcze nie korzystałeś z PowerShella w inny sposób, niż jak z &amp;ldquo;linii komend&amp;rdquo; i zamiennika &lt;code&gt;cmd.exe&lt;/code&gt;, koniecznie poświęc mu trochę czasu. Taka znajomość zaprocentuje. Mam nadzieję, że bardzo szybki przegląd ciekawostek posh&amp;rsquo;a zachęci Cię do poznania tej &amp;ldquo;linuxowej części windowsa&amp;rdquo; :)&lt;/p&gt;
-
-&lt;h3 id=&#34;cmdlet-i-alias:8c67b377fe66f9eab5dd926e008c6d14&#34;&gt;cmdlet i alias&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;cmdlet&lt;/strong&gt; jest jakby .NET&amp;rsquo;owym obudowaniem zwykłego polecenia. Powrzechnie jest przyjęte nazywać je zgodnie ze schematem &lt;em&gt;Czasownik-Rzeczownik&lt;/em&gt;, np. &lt;code&gt;Get-Location&lt;/code&gt;. Wspominałem wyżej o takich samych nazwach komend, odpowiednikach Linuxowych: w rzeczywistości są to &lt;strong&gt;aliasy&lt;/strong&gt; do innych cmdletów.&lt;/p&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;alias&lt;/th&gt;
-&lt;th&gt;cmdlet&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;pwd&lt;/td&gt;
-&lt;td&gt;Get-Location&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;ls&lt;/td&gt;
-&lt;td&gt;Get-ChildItem&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;cd&lt;/td&gt;
-&lt;td&gt;Set-Location&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;ps&lt;/td&gt;
-&lt;td&gt;Get-Process&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;mv&lt;/td&gt;
-&lt;td&gt;Move-Item&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;cp&lt;/td&gt;
-&lt;td&gt;Copy-Item&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;man&lt;/td&gt;
-&lt;td&gt;help&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;rm&lt;/td&gt;
-&lt;td&gt;Remove-Item&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;cat&lt;/td&gt;
-&lt;td&gt;Get-Content&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;grep&lt;/td&gt;
-&lt;td&gt;Select-String&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;kill&lt;/td&gt;
-&lt;td&gt;Stop-Process&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&amp;nbsp;&lt;/td&gt;
-&lt;td&gt;&amp;nbsp;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;Dla niezaznajomionych z terminologią basha jego odpowiedniki w posh&amp;rsquo;u z pewnością okażą się bardziej intuicyjne i łatwiejsze w przyswojeniu.
-Do identyfkowania aliasów i cmdletów służy &lt;code&gt;Get-Alias&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-powershell&#34;&gt;PS&amp;gt; Get-Alias cd
-
-CommandType     Name
------------     ----
-Alias           cd -&amp;gt; Set-Location
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Oraz w przeciwnym kierunku, dostępne aliasy dla cmdleta:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-powershell&#34;&gt;PS&amp;gt; Get-Alias -Definition Get-Location
-
-CommandType     Name
------------     ----
-Alias           gl -&amp;gt; Get-Location
-Alias           pwd -&amp;gt; Get-Location
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Zwróćię uwagę na &lt;code&gt;-Definition&lt;/code&gt;. Praktycznie każdy cmdlet akceptuje jeden lub więcej opcjonalnych parametrów, które po poleceniu poprzedzamy średnikiem (&lt;em&gt;-NazwaParametru Wartość&lt;/em&gt;). &lt;code&gt;Get-Help&lt;/code&gt; i MSDN będą niezastąpionymi źródłami wiedzy na ten temat. Możemy jednak szybko przeskanować interesujący nas cmdlet/obiekt.&lt;/p&gt;
-
-&lt;h3 id=&#34;psobjet:8c67b377fe66f9eab5dd926e008c6d14&#34;&gt;&amp;lt;psobjet&amp;gt;&lt;/h3&gt;
-
-&lt;p&gt;Wiedząc już, że polecenia są opakowane w obiekty, możemy zaglądnąc do &amp;ldquo;bebchów&amp;rdquo; każdego z nich.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-powershell&#34;&gt;PS&amp;gt; Get-Alias | Get-Member
-
-   TypeName: System.Management.Automation.AliasInfo
-
-Name                MemberType     Definition
-----                ----------     ----------
-Equals              Method         bool Equals(System.Object obj)
-GetHashCode         Method         int GetHashCode()
-GetType             Method         type GetType()
-ToString            Method         string ToString()
-Definition          Property       string Definition {get;}
-[...]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Jak widzicie mamy tutaj wgląd w strukturę całego obiektu, jego metody, właściwości. Przydaje się to szczególnie wtedy, gdy chcemy szybko rzucić okiem na dany cmdlet bez zagłębiania się w dokumentację, która z resztą jest całkiem opasła.&lt;/p&gt;
-
-&lt;h3 id=&#34;operator-pipy:8c67b377fe66f9eab5dd926e008c6d14&#34;&gt;Operator pipy&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;&amp;rdquo;|&amp;rdquo;&lt;/strong&gt;, czyli tzw. &lt;em&gt;pipeline operator&lt;/em&gt; pozwala na przekazywanie wyniku danego wywołania do kolejnego bez potrzeby rozdzielania go na osobne deklaracje etc. Bardzo popularna technika stosowana m.in w językach funkcyjnych (&amp;ldquo;|&amp;gt;&amp;rdquo; z F#). Powyżej przekazaliśmy &lt;code&gt;&amp;lt;psobjet&amp;gt; Get-Alias&lt;/code&gt; do &lt;code&gt;Get-Member&lt;/code&gt;, który (jak zaglądniecie do środka) przyjmuje paramter &lt;code&gt;[-InputObject &amp;lt;psobject&amp;gt;]&lt;/code&gt;. W ten sposób wiemy, że możemy korzystać z pipeline&amp;rsquo;a. Zwróćie też uwagę na &lt;code&gt;TypeName: System.Management.Automation.AliasInfo&lt;/code&gt; - jak widać nie kłamałem z tym .NET&amp;rsquo;em w środku posha :)&lt;/p&gt;
-
-&lt;h3 id=&#34;filtrowanie-i-formatowanie:8c67b377fe66f9eab5dd926e008c6d14&#34;&gt;Filtrowanie i formatowanie&lt;/h3&gt;
-
-&lt;p&gt;W pudełku z PS&amp;rsquo;em znajdziemy zestaw narzędzi umożliwiających w przystępny sposób formatowanie wyniku końcowego naszego polecenia/skryptu. Powiedzmy, że chcę listę pierwszych 10-ciu procesów i wynik ten dostać w postaci JSON. Brzmi skomplikowanie? Jak najbardziej! Tylko szkoda, że rozwiązanie jest trywialne:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-powershell&#34;&gt;PS&amp;gt; ps | select Name, Id -First 10 | ConvertTo-Json
-
-[
-    {
-        &amp;quot;Name&amp;quot;:  &amp;quot;ApplicationFrameHost&amp;quot;,
-        &amp;quot;Id&amp;quot;:  4244
-    },
-    {
-        &amp;quot;Name&amp;quot;:  &amp;quot;AudioDevMon&amp;quot;,
-        &amp;quot;Id&amp;quot;:  2124
-    },
-[...]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Albo tylko procesy Chrome?&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-powershell&#34;&gt;PS&amp;gt; ps | where ProcessName -eq chrome
-
-Handles  NPM(K)    PM(K)      WS(K) VM(M)   CPU(s)     Id  SI ProcessName
--------  ------    -----      ----- -----   ------     --  -- -----------
-    287      26    55452      83712   315     3,16   2804   1 chrome
-   1661      56   109428     144816   461   438,73   4232   1 chrome
-[...]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Z przyzwyczajenia używam możliwie najnowszej składni (PowerShell 5.0). W starszych wersjach wyglądałoby to nieco inaczej:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-powershell&#34;&gt;Get-Process | Where-Object { $_.ProcessName -eq &amp;quot;chrome&amp;quot; }
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Jako ciekawostę polecam sprawdzić co robi &lt;code&gt;Out-GridView&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;użycie-net:8c67b377fe66f9eab5dd926e008c6d14&#34;&gt;Użycie .NET&lt;/h3&gt;
-
-&lt;p&gt;Do metod &lt;code&gt;&amp;lt;psobject&amp;gt;&lt;/code&gt; możemy dobrać się na dwa sposoby:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-powershell&#34;&gt;# Bezpośrednio
-(Get-Alias).GetType()
-
-# Poprzez przypisanie
-$alias = Get-Alias
-$alias.GetType()
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Tworzenie obiektów .NET też trudne nie jest:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-powershell&#34;&gt;$random = New-Object -TypeName System.Random
-$random.Next()
-# 1168874665 - serio przepisałem to z terminala i zapewniam losowość :D
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;przydatne-skróty:8c67b377fe66f9eab5dd926e008c6d14&#34;&gt;Przydatne skróty&lt;/h3&gt;
-
-&lt;p&gt;Na koniec jeszcze o paru wspomagaczach umilających pracę z poshem:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;code&gt;ctrl + space&lt;/code&gt; przy operowaniu z obiektami .NET działa jako autocompleter.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;tab&lt;/code&gt; podpowiada parametry i property cmdletów.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;f7 lub ↑/↓&lt;/code&gt; historia poleceń (niestety ładny bufor z f7 został usunięty w win10).&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.computerperformance.co.uk/powershell/powershell3_ise.htm&#34;&gt;PowerShell ISE&lt;/a&gt; - mały edytor z kolorowaniem składni i wbudowaną dokumentacją. Dostarczany w zestawie z poshem.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;pushd/popd&lt;/code&gt; jako zamiennik &lt;code&gt;cd&lt;/code&gt;. Pozwala wrócić do poprzedniej lokacji. Można sobie oaliasować np. &lt;code&gt;cd/dc&lt;/code&gt;.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&#34;windows-zlinuksiał:8c67b377fe66f9eab5dd926e008c6d14&#34;&gt;Windows &amp;ldquo;zlinuksiał&amp;rdquo;?&lt;/h2&gt;
-
-&lt;p&gt;To pytanie zadane jest raczej w celu humorystycznym, choć Windowsowi w ostatnim czasie przybyło wiele cech, które mogłbyby pomóc w znalezieniu na nie odpowiedzi. Menedżery pakietów &lt;a href=&#34;https://chocolatey.org/&#34;&gt;Chocolatey&lt;/a&gt; i &lt;a href=&#34;http://www.hanselman.com/blog/AptGetForWindowsOneGetAndChocolateyOnWindows10.aspx&#34;&gt;OneGet&lt;/a&gt; (dostarczany w Win10) będące odpowiednikiem &lt;code&gt;apt-get&lt;/code&gt; i wiele repozytoriów open-source do złudzenia przypominają ekosystem Linuxa. Dla mnie bomba! Bo czuję się jak ryba w wodzie.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&#34;https://pl.wikipedia.org/wiki/Mandriva_Linux&#34;&gt;https://pl.wikipedia.org/wiki/Mandriva_Linux&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://pl.wikipedia.org/wiki/Live_CD&#34;&gt;https://pl.wikipedia.org/wiki/Live_CD&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://sysios.blogspot.com/2006/02/linux-z-pyty.html&#34;&gt;http://sysios.blogspot.com/2006/02/linux-z-pyty.html&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://lilo.alioth.debian.org/&#34;&gt;http://lilo.alioth.debian.org/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://ekg.chmurka.net/&#34;&gt;http://ekg.chmurka.net/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.computerperformance.co.uk/powershell/powershell3_ise.htm&#34;&gt;http://www.computerperformance.co.uk/powershell/powershell3_ise.htm&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chocolatey.org/&#34;&gt;https://chocolatey.org/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.hanselman.com/blog/AptGetForWindowsOneGetAndChocolateyOnWindows10.aspx&#34;&gt;http://www.hanselman.com/blog/AptGetForWindowsOneGetAndChocolateyOnWindows10.aspx&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
+      <guid>http://ksmigiel.com/2016/01/powershell/</guid>
+      <description>Lata temu przeżywałem okres fascynacji Linuxem. Pierwszą dystrybucją, którą zainstalowałem bodajże z 5 płyt CD był Mandrake Linux (kontynuowany jako Mandriva - obecnie nie jest już utrzymywana). Potem, o ile mnie pamięć nie myli, był Slackware i Slax (jego mniejszy kuzyn-portable).
+Linuxy i konsola Bardzo lubiłem dystrybucje Live CD. Wszystko zaczęło się, gdy popsułem bootloadera z instalacją Windows XP i przez kilka dni w domu nikt nie mógł używać komputera (no poza mną - linuksiarzem).</description>
     </item>
     
     <item>
       <title>Rok blogowania...</title>
-      <link>http://ksmigiel.com/2016/01/rocznica</link>
+      <link>http://ksmigiel.com/2016/01/rocznica/</link>
       <pubDate>Wed, 20 Jan 2016 20:03:40 +0100</pubDate>
       
-      <guid>http://ksmigiel.com/2016/01/rocznica</guid>
-      <description>&lt;p&gt;Cóż, czas tak szybko i nieubłaganie płynie, że nawet przegapiłem &amp;ldquo;oficjalną&amp;rdquo; rocznicę bloga, która miała miejsce 2 dni temu (18.01.2016) - wtedy też powstał &lt;a href=&#34;http://ksmigiel.com/2015/01/pierwszy-post/&#34;&gt;pierwszy post&lt;/a&gt;. Początek kariery pisarza był pierwszym przejawem przełamania się i wyjścia ze swojej strefy komfortu, aby zacząć działać w szeroko pojętym &amp;ldquo;community&amp;rdquo;.&lt;/p&gt;
-
-&lt;p&gt;Przez ten rok zdążyłem zmienić pracę, pojeździć po paru konferencjach, pobywać na lokalnych meetup&amp;rsquo;ach, devtalkować no i oczywiście naskrobać parę postów. Gdy zaczynałem tę całą przygodę planowałem pisać dużo częściej, ale oczywiście zawsze znalazły się jakieś przeszkadzacze dnia codziennego, które skutecznie odciągały mnie od tworzenia wpisów. A jak pojawiał się czas, to brakowało motywacji: &amp;ldquo;a, bo nikt tego nie czyta&amp;rdquo;, &amp;ldquo;przecież ten temat był już wałkowany 1000x razy&amp;rdquo; etc. Dopiero jak człowiek usiądzie z laptopem i dobrą muzyką to przypomina sobie, że pisanie to niezła frajda i robi to głównie dla siebie. Taki blog-log własnych poczynań w uczeniu się czegoś nowego, źródło know-how problemów rozwiązywanych po raz n-ty, bo przecież to zapamiętam, prawda?&lt;/p&gt;
-
-&lt;p&gt;W planach nadal kolejka tematów do poruszenia, od tych małych po całkiem spore zagadnienia. Mógłbym tu naobiecywać czego to w tym roku nie napiszę, ale celowo nie będę. Postanowiłem zmienić trochę strategię pisania, sugerując się radami od innych kolegów-blogerów, aby pisać krótszymi sesjami. Poprzednie posty powstawały raczej w jeden lub czasem kilka dni, w każdym po przynajniej 1h. Taki sposób pracy praktycznie nie pozwalał na tworzenie czegokolwiek częściej, tym bardziej, że nierzadko tematy były dla mnie całkowicie nowe, więc należy doliczyć jeszcze czas na naukę i research. Obecnie plan jest prosty: pisać codziennie ale trochę. Niech to będzie nawet 15 min przed snem, byleby utrzymać systematyczność. Sam jestem bardzo ciekawy jak sprawdzi się taka forma pisania. Przyzwyczajony jestem do dłuższych sesji i &amp;ldquo;flow&amp;rdquo; głównie dlatego, że lubię szybko widzieć rezultaty swojej pracy. Przy nowym podejściu rezultaty będzie można oceniać dopiero po jakimś okresie czasu, gdy posta/postów będzie przybywać w sposób inkrementacyjny.&lt;/p&gt;
-
-&lt;p&gt;Przy takiej okazji jaką jest rocznica nie mógłbym zapomnieć o statystykach. Na co dzień nie przywiązuję do nich dużej wagi, choć wiadomo, dobrze wiedzieć czy w ogóle ktoś tu przychodzi. W rozliczeniu rocznym przedstawia się to następująco:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Blog odwiedziło &lt;strong&gt;3295&lt;/strong&gt; osób.&lt;/li&gt;
-&lt;li&gt;Najpopularniejsze posty to &lt;a href=&#34;http://ksmigiel.com/2015/01/map-reduce/&#34;&gt;MapReduce - wstęp&lt;/a&gt; (&lt;strong&gt;1309&lt;/strong&gt;) oraz &lt;a href=&#34;http://ksmigiel.com/2015/02/hadoop-streaming/&#34;&gt;Hadoop Streaming w F#&lt;/a&gt; (&lt;strong&gt;720&lt;/strong&gt;).&lt;/li&gt;
-&lt;li&gt;Łącznie z tym powstało &lt;strong&gt;11&lt;/strong&gt; postów w &lt;strong&gt;16&lt;/strong&gt; różnych tagach.&lt;/li&gt;
-&lt;li&gt;Nastukałem &lt;strong&gt;56112&lt;/strong&gt; znaków, które składają się na &lt;strong&gt;6839&lt;/strong&gt; słów.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;W sumie nie spodziewałem się takiej ilości odwiedzin i jestem mega zadowolony!&lt;/p&gt;
-
-&lt;p&gt;Tak więc swoje najważniejsze zadanie blog spełnił w 100% - zmotywował mnie do poznania i nauczenia się zagadnień, za które prawdopodobnie nigdy bym się &amp;ldquo;sam z siebie&amp;rdquo; nie zabrał. To jest, przynajmniej dla mnie, ta cecha, która napędza cały ten motor i sprawia, że pomimo wielu przeciwności nie przestaje mi się chcieć!&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&#34;http://ksmigiel.com/2015/01/pierwszy-post/&#34;&gt;http://ksmigiel.com/2015/01/pierwszy-post/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://ksmigiel.com/2015/01/map-reduce/&#34;&gt;http://ksmigiel.com/2015/01/map-reduce/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://ksmigiel.com/2015/02/hadoop-streaming/&#34;&gt;http://ksmigiel.com/2015/02/hadoop-streaming/&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
+      <guid>http://ksmigiel.com/2016/01/rocznica/</guid>
+      <description>Cóż, czas tak szybko i nieubłaganie płynie, że nawet przegapiłem &amp;ldquo;oficjalną&amp;rdquo; rocznicę bloga, która miała miejsce 2 dni temu (18.01.2016) - wtedy też powstał pierwszy post. Początek kariery pisarza był pierwszym przejawem przełamania się i wyjścia ze swojej strefy komfortu, aby zacząć działać w szeroko pojętym &amp;ldquo;community&amp;rdquo;.
+Przez ten rok zdążyłem zmienić pracę, pojeździć po paru konferencjach, pobywać na lokalnych meetup&amp;rsquo;ach, devtalkować no i oczywiście naskrobać parę postów. Gdy zaczynałem tę całą przygodę planowałem pisać dużo częściej, ale oczywiście zawsze znalazły się jakieś przeszkadzacze dnia codziennego, które skutecznie odciągały mnie od tworzenia wpisów.</description>
     </item>
     
     <item>
       <title>U-SQL i Azure Data Lake</title>
-      <link>http://ksmigiel.com/2015/12/u-sql</link>
+      <link>http://ksmigiel.com/2015/12/u-sql/</link>
       <pubDate>Sun, 20 Dec 2015 20:26:38 +0100</pubDate>
       
-      <guid>http://ksmigiel.com/2015/12/u-sql</guid>
-      <description>
-
-&lt;p&gt;Nie skłamię twierdząc, że &lt;strong&gt;Big Data&lt;/strong&gt; jest obok &lt;strong&gt;IoT&lt;/strong&gt;, &lt;strong&gt;machine learningu&lt;/strong&gt; czy &lt;strong&gt;drukowania 3D&lt;/strong&gt; w top 5 jeśli chodzi o modne pojęcia i zagadnienia wyznaczające trendy w świecie IT, tworzące nowe gałęzie w tej dziedzinie. Ponieważ Microsoft w ostatnim czasie realizuje politykę bycia &amp;ldquo;na topie&amp;rdquo; (publiczne repozytoria na GitHub&amp;rsquo;ie, .NET na Linuxie - DNX i Kestrel etc.) nie mogło ich też zabraknąć w tak gorącym temacie jakim jest obecnie Big Data. Efektem popularyzacji Hadoopa i jego przyległości było w tym wypadku otworzenie platformy &lt;a href=&#34;https://azure.microsoft.com/pl-pl/services/hdinsight/&#34;&gt;HDInsight&lt;/a&gt; na chmurze Azure. Za pomocą rozbudowanego interfejsu webowego z łatwością możemy tworzyć klastry Hadoop&amp;rsquo;a, a z poziomu Visual Studio używając SDK projektować &lt;a href=&#34;https://azure.microsoft.com/pl-pl/documentation/articles/hdinsight-storm-develop-csharp-visual-studio-topology/&#34;&gt;topologie Storm&amp;rsquo;a&lt;/a&gt; do przetwarzania strumieniowego i wdrażać je prosto do Azure. Dokumentacja zawiera naprawdę sporo informacji na różnym poziomie zaawansowania, a Azure oferuje 30 dni triala, więc nic tylko zakładać konto i eksperymentować.&lt;/p&gt;
-
-&lt;h2 id=&#34;azure-data-lake:0f75fabf8504a87dff62df1f8eafb8e8&#34;&gt;Azure Data Lake&lt;/h2&gt;
-
-&lt;p&gt;Opisany wyżej poziom abstrakcji okazał się niewystarczający. O ile programiści z konfiguracją klastrów i pisaniem zadań MapReduce poradzą sobie bez problemu, to analitycy danych pracujący na co dzień z SQL&amp;rsquo;em i Excelem już nie koniecznie. Chcąc ułatwić osobom &amp;ldquo;mniej technicznym&amp;rdquo; dostęp do technologii, pod koniec września tego roku Microsoft zapowiedział uruchomienie nowego serwisu: &lt;a href=&#34;http://blogs.technet.com/b/dataplatforminsider/archive/2015/09/28/microsoft-expands-azure-data-lake-to-unleash-big-data-productivity.aspx&#34;&gt;&lt;strong&gt;Azure Data Lake&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
-
-&lt;div style=&#34;text-align: center&#34;&gt;
-  &lt;img src=&#34;http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-60-54/928Pic1.png&#34; /&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Jest to serwis, który osiągnięcie konkretnych celów biznesowych stawia nad konfigurację rozproszonej architektury. Pozwala skupić się na logice aplikacji, zamiast na skomplikowanym systemie zależności potrzebnym do jej poprawnego działania. Microsoft inwestując w tego typu technologie Big Data / analizy danych pragranie ułatwić pracę z danymi każdego typu, wielkości i szybkości (czyli tzw. 3xV: &lt;a href=&#34;http://blog.sqlauthority.com/2013/10/02/big-data-what-is-big-data-3-vs-of-big-data-volume-velocity-and-variety-day-2-of-21/&#34;&gt;Volume, Velocity, Variety&lt;/a&gt;) używając do tego dowolnych narzędzi, języków czy frameworków.&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;&amp;ldquo;Our goal is to make big data technology simpler and more accessible to the greatest number of people possible. This includes developers, data scientists, analysts, application developers, and also businesspeople and mainstream IT managers.&amp;rdquo;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Każdy kto próbował samodzielnie uruchomić Hadoopa wraz z całą infrastrukturą wie jak bardzo jest to czasochłonne. Rozwiązanie &amp;ldquo;code-based&amp;rdquo; daje ogromne możliwości, wymaga jednak sporej inwestycji czasu, aby je opanować. Programista często musi zadbać o poprawną synchronizację i współbieżność samodzielnie. Natomiast SQL i języki SQL-podobne, takie jak &lt;a href=&#34;https://hive.apache.org/&#34;&gt;Hive&lt;/a&gt; są relatywnie łatwe, ale brak w nich właśnie tej elastyczności jaką cechuje poprzednie rozwiązanie, jednakże problemy ze skalowalnością, optymalizacją i współbieżnością nie są już tutaj odpowiedzialnością developera.&lt;/p&gt;
-
-&lt;h2 id=&#34;u-sql:0f75fabf8504a87dff62df1f8eafb8e8&#34;&gt;U-SQL&lt;/h2&gt;
-
-&lt;p&gt;I tak o to Microsoft tworzy całkowicie nowy język do analizy danych &lt;strong&gt;U-SQL&lt;/strong&gt;, będący hybrydą dwóch paradygmatów: deklaratywnego i proceduralnego. Teraz z poziomu kodu przypominającego SQL (w rzeczywistości wzorowany na T-SQL i ANSI SQL) możemy korzystać z dobrodziejstw C#, co pozwala na używanie typów jak i wyrażeń lambda (LINQ) m.in w zapytaniu &lt;em&gt;SELECT&lt;/em&gt;. Brzmi niesamowicie, nieprawdaż? Co więcej nic nie stoi na przeszkodzie, aby podpiąć pod zapytanie referencję do biblioteki i użyć zewnętrznego kodu. Daje to przeogromne możliwości w budowaniu rozwiązań analitycznych zarówno dla programistów jak i analityków.
-Ponieważ specyfikacja języka nie jest jeszcze w pełni gotowa, a Azure Data Lake jest (jak sam to określa) w &amp;ldquo;wersji zapoznawczej&amp;rdquo;, przedstawię tylko podstawową składnię i smaczki, co by nabrać apetytu na następne posty :)&lt;/p&gt;
-
-&lt;h3 id=&#34;extractory-i-outputtery:0f75fabf8504a87dff62df1f8eafb8e8&#34;&gt;Extractory i Outputtery&lt;/h3&gt;
-
-&lt;p&gt;Azure Data Lake składa się z dwóch serwisów: ADL &lt;strong&gt;Analytics&lt;/strong&gt; i ADL &lt;strong&gt;Store&lt;/strong&gt;. Ten pierwszy został w skrócie opisany wyżej, a drugi to repozytorium danych, które przechowuje dane w różnej postaci (nawet w czasie rzeczywistym, chociażby z urządzeń IoT). Jest ono kompatybilne z systemem plików &lt;strong&gt;HFDS&lt;/strong&gt; przez co Hadoop i dystrybucje bazujące na nim bez przeszkód mogą uzyskać dostęp do danych w celu przetwarzania i analizy. Komunikacja między nimi odbywa się właśnie za pomocą &lt;strong&gt;Extractorów&lt;/strong&gt; i &lt;strong&gt;Outputterów&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;@searchlog =
-    EXTRACT UserId          int,
-            Start           DateTime,
-            Region          string,
-            Query           string,
-            Duration        int?,
-            Urls            string,
-            ClickedUrls     string
-    FROM &amp;quot;/Samples/Data/SearchLog.tsv&amp;quot;
-    USING Extractors.Tsv();
-
-OUTPUT @searchlog   
-    TO &amp;quot;/output/SearchLog-first-usql.csv&amp;quot;
-USING Outputters.Csv();
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;W ten sposób importujemy plik SearchLog.tsv (tab separated value) do pamięci i od tego momentu korzystamy ze zmiennej jak ze zwykłej, tymczasowej tabeli. Po zakończeniu analiz eksportujemy plik z powrotem do ADL Store, tym razem w formacie .csv (comma separated value). &lt;code&gt;Tsv()&lt;/code&gt; i &lt;code&gt;Csv()&lt;/code&gt; są w standardzie U-SQL, a przy pomocy SDK możemy napisać klasy do obsługi innych typów danych. Na &lt;a href=&#34;https://github.com/MicrosoftBigData/usql/&#34;&gt;GitHub&amp;rsquo;ie&lt;/a&gt; U-SQL można znaleźć przykładową implementację dla typów &lt;strong&gt;XML&lt;/strong&gt; i &lt;strong&gt;JSON&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;wyrażenia-lambda-linq-i-typy:0f75fabf8504a87dff62df1f8eafb8e8&#34;&gt;Wyrażenia lambda, LINQ i typy&lt;/h3&gt;
-
-&lt;p&gt;Ponieważ typy w U-SQL&amp;rsquo;u są typami z C#, możemy ich używać dokładnie tak samo - wszystkie metody na wyciągnięcie ręki! Dzieje się tak, ponieważ standardowy skrypt U-SQL ma referencję do &lt;code&gt;System&lt;/code&gt; i &lt;code&gt;System.Linq&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;--@tweets =
---    EXTRACT
---    ...
-    
-@refs = SELECT new SQL.ARRAY&amp;lt;string&amp;gt;(
-            tweet.Split(&#39; &#39;)
-                 .Where(x =&amp;gt; x.StartsWith(&amp;quot;@&amp;quot;))) AS refs
-        FROM @tweets;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Kod wygląda jakby ktoś do SQL&amp;rsquo;a wkleił C#&amp;lsquo;a, a co najważniejsze: działa i to własnie jest U-SQL! :). &lt;code&gt;SQL.ARRAY&amp;lt;T&amp;gt;&lt;/code&gt; jest typem wbudowanym (w rzeczywistości typem C#) zachowującym się jak tabela SQL (możemy &lt;em&gt;@refs&lt;/em&gt; używać w innych zapytaniach, łączyć z tabelami itp.), a ponieważ &lt;code&gt;Where()&lt;/code&gt; zwraca &lt;code&gt;IEnumerable&amp;lt;T&amp;gt;&lt;/code&gt;, w kolejnych zapytaniach nadal możemy filtrować kolekcję za pomocą predykatów.&lt;/p&gt;
-
-&lt;p&gt;W pewwym momencie będziemy musieli nasze typy-hybrydy zmaterializować (coś na kształt &lt;code&gt;ToList()&lt;/code&gt;) i użyjemy do tego &lt;code&gt;CROSS APPLY EXPLODE&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;@t = SELECT Refs.r.Substring(1) AS r,
-            &amp;quot;mentioned&amp;quot; AS category
-     FROM @refs CROSS APPLY EXPLODE(refs) AS Refs(r);
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Tak przetworzone dane bez problemu zapisujemy w wybranym formacie do ADL Store (patrz wyżej).&lt;/p&gt;
-
-&lt;p&gt;Więcej przykładów znajdziecie na podanym GitHubie Microsoftu (linki na samym dole). Przykłady użyć SDK i Azure Data Lake Tools for Visual Studio opiszę w następnym poście.&lt;/p&gt;
-
-&lt;h2 id=&#34;czyli-dla-każdego:0f75fabf8504a87dff62df1f8eafb8e8&#34;&gt;Czyli dla każdego?&lt;/h2&gt;
-
-&lt;p&gt;Chyba tak. Teraz przetwarzanie danych w chmurze stało się jeszcze łatwiejsze. Niski próg wejścia i znajoma składnia z pewnościa przyciągnie do platformy wielu użytkowników skoncentrowanych na osiągnięciu celu biznesowego. Tego typu podejście nie jest szczepionką na wszystko i z pewnością bardziej &amp;ldquo;customowe&amp;rdquo; rozwiązania nie stracą na znaczeniu.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&#34;https://azure.microsoft.com/pl-pl/services/hdinsight/&#34;&gt;https://azure.microsoft.com/pl-pl/services/hdinsight/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://azure.microsoft.com/pl-pl/documentation/articles/hdinsight-storm-develop-csharp-visual-studio-topology/&#34;&gt;https://azure.microsoft.com/pl-pl/documentation/articles/hdinsight-storm-develop-csharp-visual-studio-topology/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://blogs.technet.com/b/dataplatforminsider/archive/2015/09/28/microsoft-expands-azure-data-lake-to-unleash-big-data-productivity.aspx&#34;&gt;http://blogs.technet.com/b/dataplatforminsider/archive/2015/09/28/microsoft-expands-azure-data-lake-to-unleash-big-data-productivity.aspx&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://blog.sqlauthority.com/2013/10/02/big-data-what-is-big-data-3-vs-of-big-data-volume-velocity-and-variety-day-2-of-21/&#34;&gt;http://blog.sqlauthority.com/2013/10/02/big-data-what-is-big-data-3-vs-of-big-data-volume-velocity-and-variety-day-2-of-21/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://hive.apache.org/&#34;&gt;https://hive.apache.org/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/MicrosoftBigData/usql/&#34;&gt;https://github.com/MicrosoftBigData/usql/&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
+      <guid>http://ksmigiel.com/2015/12/u-sql/</guid>
+      <description>Nie skłamię twierdząc, że Big Data jest obok IoT, machine learningu czy drukowania 3D w top 5 jeśli chodzi o modne pojęcia i zagadnienia wyznaczające trendy w świecie IT, tworzące nowe gałęzie w tej dziedzinie. Ponieważ Microsoft w ostatnim czasie realizuje politykę bycia &amp;ldquo;na topie&amp;rdquo; (publiczne repozytoria na GitHub&amp;rsquo;ie, .NET na Linuxie - DNX i Kestrel etc.) nie mogło ich też zabraknąć w tak gorącym temacie jakim jest obecnie Big Data.</description>
     </item>
     
     <item>
       <title>Kulisy DevTalka cz. 2</title>
-      <link>http://ksmigiel.com/2015/11/devtalk-cz2</link>
+      <link>http://ksmigiel.com/2015/11/devtalk-cz2/</link>
       <pubDate>Wed, 18 Nov 2015 17:26:38 +0100</pubDate>
       
-      <guid>http://ksmigiel.com/2015/11/devtalk-cz2</guid>
-      <description>
-
-&lt;p&gt;Dzisiaj przedstawię proces powstawania odcinka DevTalk&amp;rsquo;a od strony audio-technicznej. Nie zabraknie obrazków i orientalnych pojęć, więc każdy znajdzie coś dla siebie - nudy nie bedzię :)&lt;/p&gt;
-
-&lt;h2 id=&#34;przygotowanie-projektu:ee57e4abed1f49f2ac13a466738529d0&#34;&gt;Przygotowanie projektu&lt;/h2&gt;
-
-&lt;p&gt;Pierwsze co robię przed przystąpieniem do jakiejkolwiek pracy nad nowym odcinkiem DevTalk&amp;rsquo;a jest przygotowanie projektu:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;opisuję ścieżki (&lt;em&gt;ang. tracks&lt;/em&gt;) i koloruję je, żebym wiedział co jest czym.&lt;/li&gt;
-&lt;li&gt;synchronizuję - rozkładam je odpowiednio w czasie, odtwarzając przy tym naturalny przebieg rozmowy (rozmowa prowadzona przez Skype, jednakże ścieżki są zgrywane osobno). Do tego dochodzi umieszczenie takich elementów jak &lt;strong&gt;intro&lt;/strong&gt;, &lt;strong&gt;outro&lt;/strong&gt; i &lt;strong&gt;jingle&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://ksmigiel.com/images/devtalk/01.jpg&#34;&gt;&lt;img src=&#34;http://ksmigiel.com/images/devtalk/01.jpg&#34; alt=&#34;01&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;normalizacja:ee57e4abed1f49f2ac13a466738529d0&#34;&gt;Normalizacja&lt;/h2&gt;
-
-&lt;p&gt;Teraz następuje bardzo ważny krok nazywany &lt;strong&gt;normalizacją&lt;/strong&gt;. Jego wynik będzie wypływał na produkcję przez cały okres pracy, aż po render, dlatego warto poświęcić temu elementowi więcej uwagi.&lt;/p&gt;
-
-&lt;p&gt;Normalizacja polega na &amp;ldquo;unormalnianiu&amp;rdquo; nagrania w zakresie jego głośności i dynamiki, w odniesieniu do reszty materiału dźwiękowego. Na chwilę obecną nasz projekt składa się z czterech plików i ścieżek, gdzie skala problemu nie jest duża. W przypadku projektów muzycznych, w których skład wchodzą 32+ ścieżki jest to już jednak znaczący problem.&lt;/p&gt;
-
-&lt;p&gt;Tak więc naszym celem jest ustandaryzowanie materiału, który dostaliśmy z zewnątrz. Dokonać tego możemy m.in stosując:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://doughnutmag.com/tutorials/music-production/daw-automation/&#34;&gt;automatyzację&lt;/a&gt; i obwiednie (&lt;em&gt;ang. envelopes&lt;/em&gt;)&lt;/li&gt;
-&lt;li&gt;kompresję sygnału audio&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;automatyzacja:ee57e4abed1f49f2ac13a466738529d0&#34;&gt;Automatyzacja&lt;/h3&gt;
-
-&lt;p&gt;Polega na zmianie w czasie pewnych parametrów sygnału (głośność, panorama lub inny dowolny parametr mapowany z &lt;a href=&#34;https://en.wikipedia.org/wiki/Virtual_Studio_Technology&#34;&gt;efektu VST&lt;/a&gt;).
-Krzywą można dowolnie modelować, co pozwala na precyzyjne manipulowanie wspomnianymi parametrami w przeciwieństwie do kompresji, która działa &amp;ldquo;automatycznie&amp;rdquo;.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://ksmigiel.com/images/devtalk/02.jpg&#34;&gt;&lt;img src=&#34;http://ksmigiel.com/images/devtalk/02.jpg&#34; alt=&#34;02&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;kompresja:ee57e4abed1f49f2ac13a466738529d0&#34;&gt;Kompresja&lt;/h3&gt;
-
-&lt;p&gt;Kompresor automatycznie zmniejsza dynamikę fragmentu, którego głośność przekracza ustaloną z góry granicę. Najprostszy kompresor będzie charakteryzował się kilkoma parametrami:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;próg (&lt;em&gt;ang. treshold&lt;/em&gt;) - czyli poziom, poniżej którego sygnał pozostanie bez zmian, a powyżej zostanie przekształcony w zadany przez nas sposób&lt;/li&gt;
-&lt;li&gt;współczynnik kompresji (&lt;em&gt;ang. ratio&lt;/em&gt;) - określa stosunek pomiędzy sygnałem bazowym a wtórnym&lt;/li&gt;
-&lt;li&gt;atak (&lt;em&gt;ang. attack&lt;/em&gt;) - podawany w milisekundach czas, po którym kompresor powinien się &amp;ldquo;załączyć&amp;rdquo;&lt;/li&gt;
-&lt;li&gt;uwolnienie (&lt;em&gt;ang. release&lt;/em&gt;) - podwawany w milisekundach czas, po którym kompresor przestaje działać&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://pic002.cnblogs.com/images/2012/381603/2012030610395272.jpg&#34; alt=&#34;compressor&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Zatem przy użyciu kompresora możemy elementy &amp;ldquo;wystające&amp;rdquo;, głośniejsze niż reszta, automatycznie zredukować do wspólnego poziomu. Dziać się to może w czasie rzeczywistym, kiedy efekt zostanie wpięty do ścieżki, lub możemy wyrenderować nowy plik z nałożonymi już efektami.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://ksmigiel.com/images/devtalk/04.jpg&#34;&gt;&lt;img src=&#34;http://ksmigiel.com/images/devtalk/04.jpg&#34; alt=&#34;04&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;punkt-odniesienia:ee57e4abed1f49f2ac13a466738529d0&#34;&gt;Punkt odniesienia&lt;/h3&gt;
-
-&lt;p&gt;Podczas normalizacji należy monitorować sygnał i sprawdzać, czy poziomy rzeczywiście są już wyrównane i czy nie pojawia się gdzieś tzw. &amp;ldquo;przester&amp;rdquo; (czyli przekroczenie magicznej granicy 0dB). Osobiście dbam o to, aby sygnał z każdej ścieżki osobno oscylował w granicach -12dB RMS (jest to jednostka uśredniona) oraz aby &amp;ldquo;peak&amp;rdquo;, czyli najgłośniejszy element, nie przekraczał -6dB.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://ksmigiel.com/images/devtalk/03.jpg&#34;&gt;&lt;img src=&#34;http://ksmigiel.com/images/devtalk/03.jpg&#34; alt=&#34;03&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Ciekawych dlaczego 0dB w świecie cyfrowym jest sygnałem maksymalnym zapraszam do poczytania wytłumaczenia na &lt;a href=&#34;http://sound.stackexchange.com/questions/25529/what-is-0-db-in-digital-audio&#34;&gt;stackexchange&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;edycja:ee57e4abed1f49f2ac13a466738529d0&#34;&gt;Edycja&lt;/h2&gt;
-
-&lt;p&gt;Następnym krokiem będzie edycja sygnału audio. Mając przygotowany w poprzednich krokach materiał możemy przystąpić do jego edycji. W moim przypadku proces ten wygląda najczęściej w ten sposób:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;odszumienie nagrań (dobrze żeby zrobic to przed kompresją) - używając wtyczki &lt;strong&gt;ReaFir (FFT EQ + Dynamic Processor)&lt;/strong&gt; wystarczy pobrać próbkę szumu z sygnału&lt;/li&gt;
-&lt;li&gt;equalizacja - za pomocą korektora graficznego zbędne pasma wycinam (high-pass filter), niektóre podbijam, aby końcowo uzyskać spójne i naturalne brzmienie całego mixu (jak i każdej ścieżek z osobna)&lt;/li&gt;
-&lt;li&gt;cięcie - usuwanie drobnych pomyłek, przerw, oddechów, mlasknięć itp. itd., czyli pozbywanie się wszystkiego czego nie powinno być w ostatecznej wersji odcinka&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;mastering:ee57e4abed1f49f2ac13a466738529d0&#34;&gt;Mastering&lt;/h2&gt;
-
-&lt;p&gt;Na ten moment odcinek jest już prawie gotowy. Jeśli mix potrzebuje jakichkolwiek zmian, to powinny się one odbywać jedynie w ujęciu globalnym, tj. na ścieżce głównej. Zazwyczaj jest to drobna korekcja EQ, lekka kompresja, raczej nic znaczącego, a jednak :) Ostatnim elementem tego audio-łańcuchu jest &lt;strong&gt;limiter&lt;/strong&gt;, który nasz mix wyrówna do ustalonego poziomu bliskiemu ~0dB, aby brzmiał tak samo głośno jak inne audio, podcasty, spotifaje itd. Potem zostaje render do wybranego przez nas formatu i gotowy produkt można publikować i czekać na lajki.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://ksmigiel.com/images/devtalk/05.jpg&#34;&gt;&lt;img src=&#34;http://ksmigiel.com/images/devtalk/05.jpg&#34; alt=&#34;05&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&#34;http://doughnutmag.com/tutorials/music-production/daw-automation/&#34;&gt;http://doughnutmag.com/tutorials/music-production/daw-automation/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Virtual_Studio_Technology&#34;&gt;https://en.wikipedia.org/wiki/Virtual_Studio_Technology&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://sound.stackexchange.com/questions/25529/what-is-0-db-in-digital-audio&#34;&gt;http://sound.stackexchange.com/questions/25529/what-is-0-db-in-digital-audio&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
+      <guid>http://ksmigiel.com/2015/11/devtalk-cz2/</guid>
+      <description>Dzisiaj przedstawię proces powstawania odcinka DevTalk&amp;rsquo;a od strony audio-technicznej. Nie zabraknie obrazków i orientalnych pojęć, więc każdy znajdzie coś dla siebie - nudy nie bedzię :)
+Przygotowanie projektu Pierwsze co robię przed przystąpieniem do jakiejkolwiek pracy nad nowym odcinkiem DevTalk&amp;rsquo;a jest przygotowanie projektu:
+ opisuję ścieżki (ang. tracks) i koloruję je, żebym wiedział co jest czym. synchronizuję - rozkładam je odpowiednio w czasie, odtwarzając przy tym naturalny przebieg rozmowy (rozmowa prowadzona przez Skype, jednakże ścieżki są zgrywane osobno).</description>
     </item>
     
     <item>
       <title>Kulisy DevTalka cz. 1</title>
-      <link>http://ksmigiel.com/2015/09/devtalk-cz1</link>
+      <link>http://ksmigiel.com/2015/09/devtalk-cz1/</link>
       <pubDate>Fri, 25 Sep 2015 17:26:38 +0200</pubDate>
       
-      <guid>http://ksmigiel.com/2015/09/devtalk-cz1</guid>
-      <description>
-
-&lt;p&gt;Tak jak obiecywałem w poprzednim poście - nadszedł moment na podsumowanie ubiegłego roku podcastowego. Z perspektywy czasu żałuję, że nie prowadziłem szczegółowych statystyk (chociażby takich jak sumaryczny czas spędzony w edytorze audio), ale postaram się to jakoś poglądowo wyestymować :).&lt;/p&gt;
-
-&lt;p&gt;W części pierwszej opiszę sprzęt z jakiego korzystałem z krótkim opisem co to jest (szczególnie dla czytelników niezaznajomionych z branżą pro-audio).
-W części drugiej postaram się krótko, lecz treściwie przedstawić proces produkcji odcinka podcasta (załadowanie ścieżek, wyrównanie poziomów głośności i normalizacja, efekty - (odszumianie, equalizacja, kompresja), edycja, mastering i render).&lt;/p&gt;
-
-&lt;h2 id=&#34;hardware:dce4ce542c9f7a851fd046a02392be71&#34;&gt;Hardware&lt;/h2&gt;
-
-&lt;p&gt;Zdążyłem się już pochwalić nowym sprzętem, a drugi raz pochwalić się nie zaszkodzi. Jest to typowy sprzęt przeznaczony do &lt;em&gt;home-recordingu&lt;/em&gt;, co wcale nie musi kojarzyć się z amatorszczyzną. Ze względu na dobre parametry techniczne i stosunkowo dobry stosunek jakości przetworników cyfrowych do ceny, wprawne ucho wyprodukuje płytę CD, udźwiękowienie filmu w żaden sposób nie odbiegające od branżowych standardów (profesjonalnych nagrań).&lt;/p&gt;
-
-&lt;h3 id=&#34;odsłuch:dce4ce542c9f7a851fd046a02392be71&#34;&gt;Odsłuch&lt;/h3&gt;
-
-&lt;p&gt;Za odsłuch służą mi monitory bliskiego pola: &lt;strong&gt;M-Audio BX5 D2&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://zapp1.staticworld.net/reviews/graphics/products/uploaded/maudio_bx5_d2s_speaker_system_1147635_g1.jpg&#34; alt=&#34;M-Audio BX5 D2&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Są to monitory aktywne i nie potrzebują osobnego wzmacniacza. Studyjne monitory odsłuchowe wyróżnia spośród innego sprzętu audio charakterystyka częstotliwościowa, która w tym wypadku powinna być jak najbardziej liniowa. Pozwala ona na odsłuch w brzmieniu jak najbardziej zbliżonym do rzeczywistego (źródła dźwięku), tj. bez żadnego podbicia basu, wycięcia środka czy &amp;ldquo;wysokich&amp;rdquo; górek. Dzięki temu tak przygotowany materiał - na &amp;ldquo;surowych&amp;rdquo; głośnikach - powinien zabrzmieć dobrze w dowolnym zestawie Hi-Fi czy iPod&amp;rsquo;ie. Oczywiście nie jest to jedyny warunek jaki trzeba spełnić aby nasz materiał był &amp;ldquo;pro&amp;rdquo;, ale o tym za chwilę.&lt;/p&gt;
-
-&lt;h3 id=&#34;interfejs:dce4ce542c9f7a851fd046a02392be71&#34;&gt;Interfejs&lt;/h3&gt;
-
-&lt;p&gt;Na upratego monitory można podłączyć do komputera bez interfejsu (skręcając kable od biedy), ale to właśnie on odgrywa kluczową rolę jeśli chodzi o jakość dźwięku. Porządny przetwornik C/A (cyfrowo-analogowy) pozwala odtwarzać oraz nagrywać muzykę zapisaną w wysokiej &lt;a href=&#34;https://en.wikipedia.org/wiki/Audio_bit_depth&#34;&gt;rozdzielczości&lt;/a&gt; (np. 24-bit), czyli technicznie zawierającą więcej informacji (bitów) przesłanych/odebranych na sekundę. Jest to nic innego jak próba reprezentacji sygnału analogowego w formie cyfrowej. Przekształcenie to nazywamy &lt;a href=&#34;http://livesound.pl/tutoriale/kursy/4011-technika-cyfrowa-przetwarzanie-analogowo-cyfrowe-kwantowanie&#34;&gt;&lt;strong&gt;kwantyzacją&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://documentation.apple.com/en/finalcutpro/usermanual/Art/L01/L0108_BitGraph.png&#34; alt=&#34;quantization&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Wracając do tematu: do pracy używam interfejsu audio USB: &lt;strong&gt;M-Audio M-Track MKII&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://www.muzykaitechnologia.pl/website/var/tmp/image-thumbnails/30101/thumb__auto_793e482fec1c54dd5c5708c057c0e7cc/m-track-mkii--3.jpeg&#34; alt=&#34;m-audio m-track mk2&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Dołączone sterowniki &lt;a href=&#34;https://en.wikipedia.org/wiki/Audio_Stream_Input/Output&#34;&gt;ASIO&lt;/a&gt; umożliwiają uzyskanie niskiej latencji (bliskiej zeru), dzięki czemu opóźnienia między sprzętem &amp;lt;-&amp;gt; oprogramowaniem są prawie całkowicie wyeliminowane.
-Intefrejs ten posiada też wysokiej jakości wejścia mikrofonowe i instrumentalne. Daje to nieograniczone możliwości związane z nagrywaniem sygnału dźwiękowego, który potem ma zostać sklejony w całość (w przeciwieństwie do nagrywania na tzw. &lt;em&gt;&amp;ldquo;setkę&amp;rdquo;&lt;/em&gt;, gdzie każdy muzyk zajmuje osobny kanał i cała kapela nagrywa na żywca). Za często z tej możliwości nie korzystam, ponieważ wszystkie potrzebne ścieżki do odcinka czekają na mnie na GDrive. Jak w końcu umebluję pokój po przeprowadzce na to małe studyjko, to może coś nagram i się podzielę :)&lt;/p&gt;
-
-&lt;h2 id=&#34;software:dce4ce542c9f7a851fd046a02392be71&#34;&gt;Software&lt;/h2&gt;
-
-&lt;p&gt;Obecnie na rynku jest masa edytorów audio. Od prostych i darmowych (&lt;a href=&#34;http://audacityteam.org/&#34;&gt;Audacity&lt;/a&gt;) po bardzo zaawansowane kombajny takie jak: &lt;a href=&#34;http://www.avid.com/US/products/family/pro-tools/&#34;&gt;Pro Tools&lt;/a&gt;, &lt;a href=&#34;http://www.steinberg.net/en/home.html&#34;&gt;Cubase&lt;/a&gt; czy &lt;a href=&#34;https://www.ableton.com/&#34;&gt;Ableton&lt;/a&gt;, które określane są mianem &lt;strong&gt;DAW&lt;/strong&gt; (&lt;em&gt;ang. Digital Audio Workstation&lt;/em&gt;). Z którego narzędzia korzysta producent, to kwestia budżetu, przyzwyczajenia oraz &amp;ldquo;religijności&amp;rdquo; (tak, fan-boy&amp;rsquo;ie każdej technologii są wszędzie!). Ja po paru próbach (udanych bądź mniej) ostatecznie wybrałem swoje ulubione narzędzie pracy, którym jest &lt;a href=&#34;http://www.reaper.fm/&#34;&gt;&lt;strong&gt;Reaper&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;reaper:dce4ce542c9f7a851fd046a02392be71&#34;&gt;Reaper&lt;/h3&gt;
-
-&lt;div style=&#34;text-align: center&#34;&gt;
-&lt;img src=&#34;https://lh3.googleusercontent.com/-mtompVfMRoU/VNgzXSQUQDI/AAAAAAAAQvo/KD7l2ZHJFqM/s256-no/Cockos%2BREAPER.png&#34; /&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Relatywnie tani z potężnymi możliwościami edytor niesamowicie przypadł mi do gustu. Praktycznie podczas każdej edycji odcinka podcasta uczę się czegoś nowego, wymyślam coraz to nowe makra, które automatyzują moją pracę i póki co nie zamieniłbym się na żaden inny edytor :). W następnym poście napiszę o nim więcej.&lt;/p&gt;
-
-&lt;h2 id=&#34;óho:dce4ce542c9f7a851fd046a02392be71&#34;&gt;Óho&lt;/h2&gt;
-
-&lt;p&gt;Najważniejszym elementem jakiegokolwiek studia jest &lt;strong&gt;ucho&lt;/strong&gt; (a nawet dwa). Bez zmysłu muzycznego (i oczywiście sprawnego ucha), nawet z pomocą najlepszego sprzętu i najdroższego programu nie będziemy w stanie dorównać poziomowi profesjonalnym nagrań. W tym wypadku jak w każdej innej branży, a szczególnie naszej - programistycznej - tylko ciężka praca i ciągła praktyka przyniesie wymierne efekty, bo narzędzia to tylko narzędzia.
-A ja ciąglę praktykuję i mam nadzieję, że z przyjemnością słucha wam się każdego odcinka &lt;a href=&#34;http://www.devtalk.pl&#34;&gt;DevTalk&amp;rsquo;a&lt;/a&gt; :)&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Audio_bit_depth&#34;&gt;https://en.wikipedia.org/wiki/Audio_bit_depth&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://livesound.pl/tutoriale/kursy/4011-technika-cyfrowa-przetwarzanie-analogowo-cyfrowe-kwantowanie&#34;&gt;http://livesound.pl/tutoriale/kursy/4011-technika-cyfrowa-przetwarzanie-analogowo-cyfrowe-kwantowanie&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Audio_Stream_Input/Output&#34;&gt;https://en.wikipedia.org/wiki/Audio_Stream_Input/Output&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.reaper.fm/&#34;&gt;http://www.reaper.fm/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.devtalk.pl&#34;&gt;http://www.devtalk.pl&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
+      <guid>http://ksmigiel.com/2015/09/devtalk-cz1/</guid>
+      <description>Tak jak obiecywałem w poprzednim poście - nadszedł moment na podsumowanie ubiegłego roku podcastowego. Z perspektywy czasu żałuję, że nie prowadziłem szczegółowych statystyk (chociażby takich jak sumaryczny czas spędzony w edytorze audio), ale postaram się to jakoś poglądowo wyestymować :).
+W części pierwszej opiszę sprzęt z jakiego korzystałem z krótkim opisem co to jest (szczególnie dla czytelników niezaznajomionych z branżą pro-audio). W części drugiej postaram się krótko, lecz treściwie przedstawić proces produkcji odcinka podcasta (załadowanie ścieżek, wyrównanie poziomów głośności i normalizacja, efekty - (odszumianie, equalizacja, kompresja), edycja, mastering i render).</description>
     </item>
     
     <item>
       <title>Koniec odpoczynku</title>
-      <link>http://ksmigiel.com/2015/09/koniec-odpoczynku</link>
+      <link>http://ksmigiel.com/2015/09/koniec-odpoczynku/</link>
       <pubDate>Wed, 09 Sep 2015 10:26:38 +0200</pubDate>
       
-      <guid>http://ksmigiel.com/2015/09/koniec-odpoczynku</guid>
-      <description>
-
-&lt;p&gt;&amp;ldquo;Oficjalne&amp;rdquo; wakacje skończyły się już grubo ponad tydzień temu, a ja ciągle zwlekałem z napisaniem kolejnego posta. Od ostatniego wpisu minęło parę miesięcy i choć nawet nie wiem kiedy ten czas zleciał, to wcale nie znaczy, że nic się w tym okresie nie wydarzyło. Zanim jednak przejdę do konkretów: &lt;strong&gt;Maćkowi Aniserowiczowi&lt;/strong&gt; należą się szczere podziękowania, bo jego ostatni &lt;a href=&#34;http://www.maciejaniserowicz.com/2015/09/01/nowe-rozdanie/&#34;&gt;post&lt;/a&gt; skutecznie zmotywował mnie do &amp;ldquo;pobudki&amp;rdquo;.&lt;/p&gt;
-
-&lt;h2 id=&#34;nowa-praca:ef053069fa817c8ab0522a33ed84ec60&#34;&gt;Nowa praca&lt;/h2&gt;
-
-&lt;p&gt;Jak to w karierze programisty bywa, zmiana pracodawcy nie jest niczym zaskakującym. Ta &amp;ldquo;prostota&amp;rdquo; widziana z zewnątrz w rzeczywistości jest trochę bardziej skomplikowana. Nowe środowisko, ludzie, projekt, szefostwo - wystarczająco, aby się trochę postresować. W moim przypadku nawet nie zdążyłem. Trafiłem do świetnego zespołu w kapitalnej &lt;a href=&#34;http://www.mediusflow.com/en&#34;&gt;firmie&lt;/a&gt;, która zrobiła wszystko, aby adaptacja przebiegła bezproblemowo. Jestem bardzo zadowolony z tego ruchu.&lt;/p&gt;
-
-&lt;h2 id=&#34;nowy-sprzęt:ef053069fa817c8ab0522a33ed84ec60&#34;&gt;Nowy sprzęt&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://devtalk.pl/&#34;&gt;DevTalk&lt;/a&gt; przerósł moje oczekiwania. Gdy zaczynałem współpracę z Maćkiem nie wiedziałem, że ta inicjatywa tak dobrze przyjmie się w środowisku programistycznym. Dla mnie jest to też kompromis pomiędzy pasją programowania a muzyką, która towarzyszy mi praktycznie przez całe życie. Czas spędzony przy edycji każdego z odcinków to kapitalna inwestycja w rozwój (mój skill z edycji audio wzrósł 100x, a niektóre fragmenty z nagrania mógłbym recytować - nie raz słuchałem po kilka, kilkanaście razy, żeby brzmiało jak miód na uszy).&lt;/p&gt;
-
-&lt;p&gt;Teraz będzie brzmieć jeszcze lepiej! Moje domowe studyjko zostało wyposażone w nowy sprzęt: profesjonalne monitory odsłuchowe i interfejs audio. W następnym poście zrobię &amp;ldquo;making of&amp;rdquo; pierwszego sezonu, więc będziecie mieli możliwość podpatrzenia w jaki sposób i przy użyciu jakiego sprzętu pracuję :)&lt;/p&gt;
-
-&lt;h2 id=&#34;nowe-wyzwania:ef053069fa817c8ab0522a33ed84ec60&#34;&gt;Nowe wyzwania?&lt;/h2&gt;
-
-&lt;p&gt;W głowie masa pomysłów na posty, pet-projecty. Chciałbym też poudzielać się w projektach open-source. Oby mi tylko na wszystko starczyło czasu. :)&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.maciejaniserowicz.com/2015/09/01/nowe-rozdanie/&#34;&gt;http://www.maciejaniserowicz.com/2015/09/01/nowe-rozdanie/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.mediusflow.com/en&#34;&gt;http://www.mediusflow.com/en&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://devtalk.pl/&#34;&gt;http://devtalk.pl/&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
+      <guid>http://ksmigiel.com/2015/09/koniec-odpoczynku/</guid>
+      <description>&amp;ldquo;Oficjalne&amp;rdquo; wakacje skończyły się już grubo ponad tydzień temu, a ja ciągle zwlekałem z napisaniem kolejnego posta. Od ostatniego wpisu minęło parę miesięcy i choć nawet nie wiem kiedy ten czas zleciał, to wcale nie znaczy, że nic się w tym okresie nie wydarzyło. Zanim jednak przejdę do konkretów: Maćkowi Aniserowiczowi należą się szczere podziękowania, bo jego ostatni post skutecznie zmotywował mnie do &amp;ldquo;pobudki&amp;rdquo;.
+Nowa praca Jak to w karierze programisty bywa, zmiana pracodawcy nie jest niczym zaskakującym.</description>
     </item>
     
     <item>
       <title>TypeScript i pliki definicji</title>
-      <link>http://ksmigiel.com/2015/05/jsblocks-dts</link>
+      <link>http://ksmigiel.com/2015/05/jsblocks-dts/</link>
       <pubDate>Sat, 23 May 2015 18:18:10 +0200</pubDate>
       
-      <guid>http://ksmigiel.com/2015/05/jsblocks-dts</guid>
-      <description>
-
-&lt;p&gt;Dzisiaj chciałem przybliżyć kwestię plików definicji do TypeScript. Jeśli zdarzyło wam się pracować z tym językiem, to na pewno wiecie o czym mówię. Jeśli natomiast nie macie pojęcia co to jest - zapraszam do lektury!&lt;/p&gt;
-
-&lt;h2 id=&#34;typescript-typowany-javascript:08ab5ad69c9b5eb0665d1a4bb3fb6240&#34;&gt;TypeScript - typowany JavaScript&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://www.typescriptlang.org/&#34;&gt;TypeScript&lt;/a&gt; to język kompilowany do JS&amp;rsquo;a prosto od Microsoftu. W wielkim skrócie pozwala na definiowanie typów dla zmiennych, co za tym idzie, deklarowanie klas i interfejsów. Chyba nie trzeba tłumaczyć jakim ułatwieniem staje się taka możliwość w pracy każdego programisty, dla którego środowisko &amp;ldquo;js&amp;rsquo;owe&amp;rdquo; nie jest codziennością, a przychodzi ze świata &amp;ldquo;mocno typowanego&amp;rdquo; (C#, Java, cpp).&lt;/p&gt;
-
-&lt;p&gt;Tworząc tego typu rozwiązanie Microsoft bardzo elegancko zachęca programistów C# do spróbowania swoich sił w tworzeniu aplikacji przy użyciu całego js-stack. Dzięki podobieństwom w składni i modelu OOP (w przeciwieństwie do klasycznego prototypowania w JavaScript) bardzo szybko można zacząć pisać pierwsze sensowne linie kodu, bez potrzeby spędzenia godzin na nauce składni etc. Oczywiście znajomość JS mile widziana, wręcz wskazana. Spójrzcie na różnice w TS &amp;lt;-&amp;gt; JS na przykładzie kompilacji z oficjalnej strony:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-typescript&#34;&gt;// test.ts
-class Greeter {
-    greeting: string;
-    constructor(message: string) {
-        this.greeting = message;
-    }
-    greet() {
-        return &amp;quot;Hello, &amp;quot; + this.greeting;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;// test.js
-var Greeter = (function () {
-    function Greeter(message) {
-        this.greeting = message;
-    }
-    Greeter.prototype.greet = function () {
-        return &amp;quot;Hello, &amp;quot; + this.greeting;
-    };
-    return Greeter;
-})();
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Powyższy kod jest chyba samowyjaśniającysię. Ta śmieszna funkcja w funkcji wywołana natychmiast to tzw. &lt;a href=&#34;http://en.wikipedia.org/wiki/Immediately-invoked_function_expression&#34;&gt;IIFE&lt;/a&gt;. Popularny wzorzec, must-known.&lt;/p&gt;
-
-&lt;p&gt;TypeScript jest na tyle dojrzały, że nawet Google wraz z jego &lt;a href=&#34;https://angular.io/&#34;&gt;Angular 2.0&lt;/a&gt; postanowili wprowadzić natywne wsparcie dla niego!&lt;/p&gt;
-
-&lt;h2 id=&#34;definitywnie-typowany:08ab5ad69c9b5eb0665d1a4bb3fb6240&#34;&gt;Definitywnie typowany!&lt;/h2&gt;
-
-&lt;p&gt;Zastanawiacie się zapewne w jaki sposób można użyć TypeScript&amp;rsquo;a z istniejącymi już bibliotekami takimi jak: angular, knockout, backbone itd. Otóż istnieje &lt;strong&gt;&lt;a href=&#34;https://github.com/borisyankov/DefinitelyTyped&#34;&gt;repozytorium&lt;/a&gt;&lt;/strong&gt; definicji do przeróżnych frameworków tworzone przez społeczność open source. Sam chcąc bliżej poznać TS postanowiłem udzielić się i puściłem pull requesta z definicjami do &lt;a href=&#34;http://jsblocks.com/&#34;&gt;blocks&lt;/a&gt;. &lt;strong&gt;blocks&lt;/strong&gt; to jeden z wielu frameworków &lt;em&gt;MV*&lt;/em&gt; (dzień bez nowego frameworka js to dzień stracony) jednak zainteresował mnie ze względu na swoją prostotę i połączenie knockout+backbone (observable i modele).&lt;/p&gt;
-
-&lt;h2 id=&#34;blocks-d-ts:08ab5ad69c9b5eb0665d1a4bb3fb6240&#34;&gt;blocks.d.ts&lt;/h2&gt;
-
-&lt;p&gt;Deklaracja typów do istniejącego już kodu odbywa się za pomocą &lt;a href=&#34;http://www.typescriptlang.org/Handbook#modules-working-with-other-javascript-libraries&#34;&gt;Ambient External Modules&lt;/a&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-typescript&#34;&gt;declare var blocks: BlocksStatic;
-
-declare module &amp;quot;blocks&amp;quot; {
-    export = blocks;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Deklarując moduł w cudzysłowie &amp;ldquo;nadpisujemy&amp;rdquo; oryginalny moduł zaimportowany w pliku z aplikacją:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-typescript&#34;&gt;/// &amp;lt;reference path=&amp;quot;blocks.d.ts&amp;quot; /&amp;gt;
-import blocks = require(&#39;blocks&#39;);
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Jest to całkiem dobra pozycja wyjściowa do otypowania dowolnej biblioteki. Przekonacie się, że całkiem pokaźna ilość bibliotek została już przetłumaczona na TS przeglądając wspomniane wyżej repozytorium.&lt;/p&gt;
-
-&lt;p&gt;TS automagicznie scala oryginalną bibliotekę z naszą definicją typów. Od teraz mamy piękny IntelliSense podpowiadający składnię, parametry funkcji i jej zwracaną wartość (patrz &lt;a href=&#34;http://usejsdoc.org/&#34;&gt;jsdoc&lt;/a&gt;) oraz sprawdzanie składni w locie - wszystko prawie jak w C#!&lt;/p&gt;
-
-&lt;p&gt;Na moim &lt;a href=&#34;https://github.com/ksmigiel/DefinitelyTyped/tree/master/blocks&#34;&gt;githubie&lt;/a&gt; znajdziecie źrodła całego pliku definicji. Dokumentacja pochodzi oczywiście z oficjalnej strony autora. Co jak co, ale ta aktywność związana z opisywaniem typów nauczyła mnie TypeScript&amp;rsquo;a i jego zawiłości szybciej i przyjemniej niż nie jedna książka :)&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.typescriptlang.org/&#34;&gt;http://www.typescriptlang.org/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://en.wikipedia.org/wiki/Immediately-invoked_function_expression&#34;&gt;http://en.wikipedia.org/wiki/Immediately-invoked_function_expression&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://angular.io/&#34;&gt;https://angular.io/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/borisyankov/DefinitelyTyped&#34;&gt;https://github.com/borisyankov/DefinitelyTyped&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://jsblocks.com/&#34;&gt;http://jsblocks.com/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.typescriptlang.org/Handbook#modules-working-with-other-javascript-libraries&#34;&gt;http://www.typescriptlang.org/Handbook#modules-working-with-other-javascript-libraries&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://usejsdoc.org/&#34;&gt;http://usejsdoc.org/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/ksmigiel/DefinitelyTyped/tree/master/blocks&#34;&gt;https://github.com/ksmigiel/DefinitelyTyped/tree/master/blocks&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
+      <guid>http://ksmigiel.com/2015/05/jsblocks-dts/</guid>
+      <description>Dzisiaj chciałem przybliżyć kwestię plików definicji do TypeScript. Jeśli zdarzyło wam się pracować z tym językiem, to na pewno wiecie o czym mówię. Jeśli natomiast nie macie pojęcia co to jest - zapraszam do lektury!
+TypeScript - typowany JavaScript TypeScript to język kompilowany do JS&amp;rsquo;a prosto od Microsoftu. W wielkim skrócie pozwala na definiowanie typów dla zmiennych, co za tym idzie, deklarowanie klas i interfejsów. Chyba nie trzeba tłumaczyć jakim ułatwieniem staje się taka możliwość w pracy każdego programisty, dla którego środowisko &amp;ldquo;js&amp;rsquo;owe&amp;rdquo; nie jest codziennością, a przychodzi ze świata &amp;ldquo;mocno typowanego&amp;rdquo; (C#, Java, cpp).</description>
     </item>
     
     <item>
       <title>Visual Studio Code</title>
-      <link>http://ksmigiel.com/2015/05/vs-code</link>
+      <link>http://ksmigiel.com/2015/05/vs-code/</link>
       <pubDate>Thu, 14 May 2015 16:38:00 +0100</pubDate>
       
-      <guid>http://ksmigiel.com/2015/05/vs-code</guid>
-      <description>
-
-&lt;p&gt;Microsoft na tegorocznej konferencji &lt;strong&gt;//build/&lt;/strong&gt; zaskoczył nas paroma nowinkami. Jeśli nie jesteście na bieżąco polecam zerknąć na &lt;a href=&#34;http://blogs.technet.com/b/uktechnet/archive/2015/04/30/announcements-from-build-2015.aspx&#34;&gt;podsumowanie&lt;/a&gt;. Każdy znajdzie coś dla siebie.&lt;/p&gt;
-
-&lt;h2 id=&#34;vs-code:6d2be7abc42720062e9271b30ee0bbbf&#34;&gt;VS Code&lt;/h2&gt;
-
-&lt;p&gt;Mnie osobiście najbardziej spodobał się edytor &lt;a href=&#34;http://code.visualstudio.com&#34;&gt;&lt;strong&gt;Visual Studio Code&lt;/strong&gt;&lt;/a&gt;, czyli taki Sublime Text w Microsoftowym wydaniu. W całości oparty na node.js i edytorze &lt;a href=&#34;https://atom.io/&#34;&gt;&lt;strong&gt;Atom&lt;/strong&gt;&lt;/a&gt; od GitHuba, a konkretnie na bibliotece &lt;a href=&#34;https://github.com/atom/electron&#34;&gt;&lt;strong&gt;Electron&lt;/strong&gt;&lt;/a&gt; umożliwiającej pisanie cross-platformowych desktopowych aplikacji w JS/HTML/CSS. Główne cechy wyróżniające Code na tle innych edytorów to m.in.:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;cross-platformowość (sprawdzałem i faktycznie tak jest! :) )&lt;/li&gt;
-&lt;li&gt;debugging aplikacji napisanych w node.js (ASP.NET 5 w przygotowaniu)&lt;/li&gt;
-&lt;li&gt;tasks - integracja z popularnymi narzędziami do automatyzacji buildów, testowania i deployowania (Make, Ant, Gulp, Jake, Rake, MSBuild)&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://schemastore.org/json/&#34;&gt;JSON schema&lt;/a&gt; - code-completion w plikach konfiguracyjnych JSON&lt;/li&gt;
-&lt;li&gt;wsparcie TypeScript (code-completion, &lt;em&gt;&amp;ldquo;go to definition&amp;rdquo;&lt;/em&gt; etc.)&lt;/li&gt;
-&lt;li&gt;fuzzy-search - przeszukiwanie plików projektu oraz ustawień edytora (&lt;em&gt;Ctrl+E&lt;/em&gt; i &lt;em&gt;Ctrl-Shift-P&lt;/em&gt;)&lt;/li&gt;
-&lt;li&gt;parsowanie i podgląd &lt;a href=&#34;http://daringfireball.net/projects/markdown/&#34;&gt;Markdown&lt;/a&gt; w locie - w ten sposób powstaje ten post :)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;W obecnej wersji brakuje mi klawiszologii VIM&amp;rsquo;a (jak się człowiek raz przyzwyczai to potem wszystkie inne skróty klawiszowe wydają się bezsensowne) oraz możliwości tworzenia własnych snippetów, co mam nadzieję zostanie dodane w nadchodzących wydaniach.&lt;/p&gt;
-
-&lt;p&gt;Polecam zapoznać się z tym edytorem. Pomimo wersji &lt;em&gt;Preview&lt;/em&gt; posiada masę fajnych funkcjonalności.&lt;/p&gt;
-
-&lt;h2 id=&#34;monaco:6d2be7abc42720062e9271b30ee0bbbf&#34;&gt;Monaco?&lt;/h2&gt;
-
-&lt;p&gt;Jeśli po ściągnięciu Code&amp;rsquo;a masz wrażenie graniczące z pewnością, że gdzieś już to widziałeś to masz całkowitą rację! Microsoft do jego budowy oprócz wspomnianego Atoma wykorzystał &lt;a href=&#34;http://blogs.msdn.com/b/monaco/archive/2014/06/26/how-to-access-visual-studio-online-monaco-from-the-new-azure-portal.aspx&#34;&gt;&lt;strong&gt;Visual Studio Monaco&lt;/strong&gt;&lt;/a&gt;, które jako rozszerzenie można doinstalować w panelu &lt;strong&gt;Azure&lt;/strong&gt; do dowolnej aplikacji na nim hostowanej. Monaco to webowy edytor w &lt;em&gt;&amp;ldquo;chmurze&amp;rdquo;&lt;/em&gt; zintegrowany z wierszem poleceń (dostęp do &lt;code&gt;node&lt;/code&gt; i &lt;code&gt;npm&lt;/code&gt;). Preinstalowany node.js pozwala na hostowanie aplikacji webowych przy użyciu &lt;a href=&#34;https://github.com/tjanczuk/iisnode&#34;&gt;iisnode&lt;/a&gt;. Może posłużyć jako pomoc podczas szybkiej edycji pliku na serwerze albo jako IDE w chmurze :)&lt;/p&gt;
-
-&lt;p&gt;Od jakiegoś czasu na blogu MSDN zaprzestano informować o jakichkolwiek newsach związanych z rozwojem Monaco. Jednak po konferencji &lt;strong&gt;//build/&lt;/strong&gt; nie mam wątpliwości, że Microsoft szykował się na premierę swojego nowego edytora i tak na prawdę tworzył dwa narzędzia równocześnie (pod spodem są te same bebechy: node.js i WebKit).&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;protip: naciśnij F12 w edytorze &lt;strong&gt;Code&lt;/strong&gt; i wszystko jasne!&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Jestem ciekawy czy w przyszłości te dwa projekty staną się jednym tworem.&lt;/p&gt;
-
-&lt;h2 id=&#34;changes-changes-everywhere:6d2be7abc42720062e9271b30ee0bbbf&#34;&gt;Changes, changes everywhere!&lt;/h2&gt;
-
-&lt;p&gt;Muszę przyznać, że lubię ten &amp;ldquo;nowy Microsoft&amp;rdquo;. Edge, ASP.NET vNext, DNX, Code czy rozwój PowerShella sprawiają, że Windows i jego cały ekosystem stają się bardziej &amp;ldquo;developer-friendly&amp;rdquo;. To chyba dobrze, że chcą przyciągnąc do platformy developerów - w końcu to oni ją tworzą.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&#34;http://blogs.technet.com/b/uktechnet/archive/2015/04/30/announcements-from-build-2015.aspx&#34;&gt;http://blogs.technet.com/b/uktechnet/archive/2015/04/30/announcements-from-build-2015.aspx&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://code.visualstudio.com&#34;&gt;http://code.visualstudio.com&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://atom.io/&#34;&gt;https://atom.io/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/atom/electron&#34;&gt;https://github.com/atom/electron&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://schemastore.org/json/&#34;&gt;http://schemastore.org/json/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://daringfireball.net/projects/markdown/&#34;&gt;http://daringfireball.net/projects/markdown/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://blogs.msdn.com/b/monaco/archive/2014/06/26/how-to-access-visual-studio-online-monaco-from-the-new-azure-portal.aspx&#34;&gt;http://blogs.msdn.com/b/monaco/archive/2014/06/26/how-to-access-visual-studio-online-monaco-from-the-new-azure-portal.aspx&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/tjanczuk/iisnode&#34;&gt;https://github.com/tjanczuk/iisnode&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
+      <guid>http://ksmigiel.com/2015/05/vs-code/</guid>
+      <description>Microsoft na tegorocznej konferencji //build/ zaskoczył nas paroma nowinkami. Jeśli nie jesteście na bieżąco polecam zerknąć na podsumowanie. Każdy znajdzie coś dla siebie.
+VS Code Mnie osobiście najbardziej spodobał się edytor Visual Studio Code, czyli taki Sublime Text w Microsoftowym wydaniu. W całości oparty na node.js i edytorze Atom od GitHuba, a konkretnie na bibliotece Electron umożliwiającej pisanie cross-platformowych desktopowych aplikacji w JS/HTML/CSS. Główne cechy wyróżniające Code na tle innych edytorów to m.</description>
     </item>
     
     <item>
       <title>&#34;R&#34;omeo i Julia</title>
-      <link>http://ksmigiel.com/2015/03/romeo-i-julia</link>
+      <link>http://ksmigiel.com/2015/03/romeo-i-julia/</link>
       <pubDate>Sat, 21 Mar 2015 21:38:00 +0100</pubDate>
       
-      <guid>http://ksmigiel.com/2015/03/romeo-i-julia</guid>
-      <description>
-
-&lt;p&gt;Każdy wie, że Excel to potężne narzędzie i odpowiednio użyte potrafi wspomóc niejeden proces. Wykorzystywany namiętnie w korporacjach do analizy danych i oglądania filmów (tak tak, pewien użytkownik reddita świetnie ominął wszelkie zabezpieczenia i wykorzystując klasyczne &lt;strong&gt;Windows API&lt;/strong&gt; - metodę &lt;code&gt;mciSendStringA&lt;/code&gt; w &lt;strong&gt;winmm.dll&lt;/strong&gt; - napisał player w VBA&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:184eed10b603a390c6ed60fbfa35091e:1&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:184eed10b603a390c6ed60fbfa35091e:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;!). Niestety większość arkuszy to prawdziwe potwory, które potrafią śnić się po nocach: przedziwne zagnieżdżone formuły, pstrokate kolorki. Nie da się tym w żaden sposób zarządzać. Niedebugowalne, nietestowalne i niekontrolowersjowalne. Oczywiście dopiero od pewnego stopnia.&lt;/p&gt;
-
-&lt;h2 id=&#34;r-na-r-atunek:184eed10b603a390c6ed60fbfa35091e&#34;&gt;R na R-atunek!&lt;/h2&gt;
-
-&lt;p&gt;Jeśli ktoś nie słyszał o pakiecie &lt;strong&gt;R&lt;/strong&gt;, to koniecznie musi zerknąć na to coś.&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:184eed10b603a390c6ed60fbfa35091e:2&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:184eed10b603a390c6ed60fbfa35091e:2&#34;&gt;2&lt;/a&gt;&lt;/sup&gt; R jest równocześnie językiem programowania i środowiskiem przeznaczonym do obliczeń statystycznych i wizualizacji. Istnieje bardzo duże prawdopodobieństwo, że jeśli potrzebujesz obliczyć jakąś skomplikowaną statystykę, przeprowadzić test na zbiorze danych, dopasować rozkład, wyestymować cokolwiek i ładnie to zaprezentować na wykresach, to jak egzotycznej metody byś nie wybrał ktoś na pewno stworzył taki pakiet i udostępnił go na stronach &lt;strong&gt;CRAN&lt;/strong&gt;&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:184eed10b603a390c6ed60fbfa35091e:3&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:184eed10b603a390c6ed60fbfa35091e:3&#34;&gt;3&lt;/a&gt;&lt;/sup&gt; - repozytorium pakietów R (co prawda strona nie zachęca i wygląda jakby czas stanął w miejscu od 1997 roku, ale to tylko złudzenie). Projekt jest bardzo aktywny i jest to jedno z najpopularniejszych narzędzi do analizy danych w tym momencie.&lt;/p&gt;
-
-&lt;p&gt;Pomimo imponującej bazy pakietów, R nie jest idealny. Składnia tego języka dla programisty jest po prostu dziwna i nieintuicyjna. Może dlatego, że został on stworzony z myślą o ułatwieniu pracy statystykom i analitykom. Jego wydajność również nie powala. Jednak świetnie sprawdza się jako narzędzie &amp;ldquo;analizy wstępnej&amp;rdquo;, a skomplikowane obliczenia lepiej wykonywać w innym środowisku (np. Pythonie).&lt;/p&gt;
-
-&lt;h2 id=&#34;i-julia:184eed10b603a390c6ed60fbfa35091e&#34;&gt;I ♥ Julia&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Julia&lt;/strong&gt;&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:184eed10b603a390c6ed60fbfa35091e:4&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:184eed10b603a390c6ed60fbfa35091e:4&#34;&gt;4&lt;/a&gt;&lt;/sup&gt; to powiew świeżości w świecie statystycznego R i szybkiego Pythona. Relatywnie młody język (pojawił się w 2012 roku), który chciałby je zastąpić w wszelkiej maści aplikacjach i obliczeniach naukowych. Można go opisać w skrócie:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;szybki&lt;/strong&gt; jak C/Fortran&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;elegancki&lt;/strong&gt; jak Python&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Community szybko zaczęło tworzyć nowe biblioteki i pomimo braku wersji finalnej (w momencie pisania 0.3.6) można próbować swoich sił w tworzeniu aplikacji lub rozwijaniu ekosystemu. Osobiście nie zalecałbym używania Julii na produkcji, bo do wersji 1.0 zapewne całkowicie się zmieni, ale do odważnych świat należy :) Julia nie jest projektem dojrzałym, aczkolwiek śledząc jego rozwój można twierdzić, że rokuje całkiem nieźle.
-Młoda, ładna, szybka i atrakcyjna - po prostu &lt;strong&gt;sexy&lt;/strong&gt;! Zresztą sami zobaczcie co potrafi:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://ksmigiel.com/images/julia.gif&#34; alt=&#34;gif&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Zainteresowanym polecam ciekawe IDE&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:184eed10b603a390c6ed60fbfa35091e:5&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:184eed10b603a390c6ed60fbfa35091e:5&#34;&gt;5&lt;/a&gt;&lt;/sup&gt;, którego ficzery widać powyżej.
-Możliwość wykonywania kodu w locie to mój faworyt! Fajnie byłoby móc nazwać siebie &lt;em&gt;Julia Programmer&lt;/em&gt;, więc jak nabardziej kibicuję Julii.&lt;/p&gt;
-
-&lt;h2 id=&#34;gdzie-ta-historia-miłosna:184eed10b603a390c6ed60fbfa35091e&#34;&gt;Gdzie ta historia miłosna?&lt;/h2&gt;
-
-&lt;p&gt;Nie ma. Jak na razie nasz &amp;ldquo;R&amp;rdquo;omeo i Julia żyją i mają się dobrze. Byleby tylko nie skończyło się jak u Szekspira&amp;hellip;&lt;/p&gt;
-&lt;div class=&#34;footnotes&#34;&gt;
-
-&lt;hr /&gt;
-
-&lt;ol&gt;
-&lt;li id=&#34;fn:184eed10b603a390c6ed60fbfa35091e:1&#34;&gt;&lt;a href=&#34;http://www.reddit.com/r/excel/comments/2jtd2f/worked_on_a_completely_locked_down_machine_time/&#34;&gt;http://www.reddit.com/r/excel/comments/2jtd2f/worked_on_a_completely_locked_down_machine_time/&lt;/a&gt;
- &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:184eed10b603a390c6ed60fbfa35091e:1&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li id=&#34;fn:184eed10b603a390c6ed60fbfa35091e:2&#34;&gt;&lt;a href=&#34;http://www.r-project.org/&#34;&gt;http://www.r-project.org/&lt;/a&gt;
- &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:184eed10b603a390c6ed60fbfa35091e:2&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li id=&#34;fn:184eed10b603a390c6ed60fbfa35091e:3&#34;&gt;&lt;a href=&#34;http://cran.r-project.org/mirrors.html&#34;&gt;http://cran.r-project.org/mirrors.html&lt;/a&gt;
- &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:184eed10b603a390c6ed60fbfa35091e:3&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li id=&#34;fn:184eed10b603a390c6ed60fbfa35091e:4&#34;&gt;&lt;a href=&#34;http://julialang.org/&#34;&gt;http://julialang.org/&lt;/a&gt;
- &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:184eed10b603a390c6ed60fbfa35091e:4&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li id=&#34;fn:184eed10b603a390c6ed60fbfa35091e:5&#34;&gt;&lt;a href=&#34;http://junolab.org/&#34;&gt;http://junolab.org/&lt;/a&gt;
- &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:184eed10b603a390c6ed60fbfa35091e:5&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-</description>
+      <guid>http://ksmigiel.com/2015/03/romeo-i-julia/</guid>
+      <description>Każdy wie, że Excel to potężne narzędzie i odpowiednio użyte potrafi wspomóc niejeden proces. Wykorzystywany namiętnie w korporacjach do analizy danych i oglądania filmów (tak tak, pewien użytkownik reddita świetnie ominął wszelkie zabezpieczenia i wykorzystując klasyczne Windows API - metodę mciSendStringA w winmm.dll - napisał player w VBA1!). Niestety większość arkuszy to prawdziwe potwory, które potrafią śnić się po nocach: przedziwne zagnieżdżone formuły, pstrokate kolorki. Nie da się tym w żaden sposób zarządzać.</description>
     </item>
     
     <item>
       <title>Hadoop Streaming w F#</title>
-      <link>http://ksmigiel.com/2015/02/hadoop-streaming</link>
+      <link>http://ksmigiel.com/2015/02/hadoop-streaming/</link>
       <pubDate>Tue, 17 Feb 2015 21:51:00 +0100</pubDate>
       
-      <guid>http://ksmigiel.com/2015/02/hadoop-streaming</guid>
-      <description>
-
-&lt;p&gt;Klasyczny Hadoop posiada zestaw klas Javowych, dzięki którym możemy napisać swoje pierwsze zadanie &lt;strong&gt;MapReduce&lt;/strong&gt;. Jak zaglądniecie do &lt;a href=&#34;http://hadoop.apache.org/docs/r1.2.1/mapred_tutorial.html&#34;&gt;dokumentacji&lt;/a&gt;, to przekonacie się, że nie jest to najwygodniejsze rozwiązanie, ale świetnie nadaje się jako materiał do nauki. Przy zastosowaniach produkcyjnych zdecydowanie lepiej zwrócić się w stronę narzędzi takich jak &lt;a href=&#34;https://hive.apache.org/&#34;&gt;Hive&lt;/a&gt;, &lt;a href=&#34;http://pig.apache.org/&#34;&gt;Pig&lt;/a&gt; czy &lt;a href=&#34;https://github.com/twitter/scalding&#34;&gt;Scalding&lt;/a&gt;. Za pomocą specyficznej dla każdego składni można tworzyć zaawansowane analizy bez potrzeby pisania kodu low-level w Javie, np. &lt;strong&gt;HiveQL&lt;/strong&gt; jest językiem zbliżonym do SQL, a &lt;strong&gt;Pig Lating&lt;/strong&gt; ciekawym językiem proceduralnym. Oba są kompilowane do zadań MapReduce. W tym poście skupię się na czymś pośrodku, czyli &lt;strong&gt;Hadoop Streaming&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;streaming-api:7428b1f511329ebc1011ee8ee83894f8&#34;&gt;Streaming API&lt;/h2&gt;
-
-&lt;p&gt;Hadoop Streaming jest częścią dystrybucji Hadoop. Pozwala na tworzenie zadań w dowolnym języku (nawet skryptowym). Warunek jaki trzeba spełnić, to utworzenie dwóch plików wykonywalnych (Mapper i Reducer), które wartości zczytują z &lt;strong&gt;stdin&lt;/strong&gt;, a przetworzone odpowiednio dane wypisują do konsoli (&lt;strong&gt;stdout&lt;/strong&gt;). Jak tytuł posta wskazuje zaimplementowałem je w F#. Dopiero raczkuję w świecie programowania funkcyjnego, dlatego z chęcią przyjmę komentarze odnośnie poprawności kodu. Za przykładowe zadanie MapReduce posłuży nam standardowy &lt;strong&gt;word count&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;h4 id=&#34;mapper-fs:7428b1f511329ebc1011ee8ee83894f8&#34;&gt;Mapper.fs&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-fsharp&#34;&gt;open System
-open System.IO
-
-module Mapper =
-
-  [&amp;lt;EntryPoint&amp;gt;]
-  let main argv = 
-    let chars =
-      [| &#39; &#39;; &#39;.&#39;; &#39;,&#39;; &#39;!&#39;; &#39;;&#39;; &#39;?&#39;; &#39;|&#39;; &#39;-&#39;; &#39;{&#39;; &#39;}&#39;; &#39;:&#39;; &#39;(&#39;; &#39;)&#39; |]
-
-    match argv.Length with
-    | 1 -&amp;gt; Console.SetIn(new StreamReader(argv.[0]))
-    | _ -&amp;gt; ()
-
-    let isWord w =
-      let n = ref 0
-      not (Int32.TryParse(w, n))
-
-    let output (word:string) =
-      Console.WriteLine(&amp;quot;{0}\t{1}&amp;quot;, word.Trim(), 1)
-
-    Seq.initInfinite (fun _ -&amp;gt; Console.ReadLine())
-    |&amp;gt; Seq.takeWhile (fun line -&amp;gt; line &amp;lt;&amp;gt; null)
-    |&amp;gt; Seq.iter (fun (line : string) -&amp;gt; 
-      line.ToLower().Split(chars, StringSplitOptions.RemoveEmptyEntries)
-      |&amp;gt; Seq.filter isWord
-      |&amp;gt; Seq.iter output )
-    0
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Zamiast posługiwać się pętlą przy odczytywaniu streamu z stdin wykorzystałem funkcję &lt;code&gt;Seq.initInfinite()&lt;/code&gt;, która wykonuje się aż do spełnienia warunku zdefiniowanego w &lt;code&gt;Seq.takeWhile()&lt;/code&gt;. Do konsoli wypisujemy parę &amp;ldquo;&lt;strong&gt;klucz&lt;/strong&gt; &lt;strong&gt;wartość&lt;/strong&gt;&amp;rdquo; oddzielone znakiem &lt;strong&gt;tabulacji&lt;/strong&gt;. Ponieważ interesuje nas zliczanie słów, jako wartość wychodzącą z Mappera podajemy &lt;strong&gt;1&lt;/strong&gt;, czyli&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;word    1
-count    1
-example    1
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;itd. Reducer otrzymuje posortowany już stream takich par i powinien zwracać dane w ten sam sposób, natomiast w miejsce wartości wstawiamy sumę dla danego słowa (klucza).&lt;/p&gt;
-
-&lt;h4 id=&#34;reducer-fs:7428b1f511329ebc1011ee8ee83894f8&#34;&gt;Reducer.fs&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-fsharp&#34;&gt;open System
-open System.IO
-
-module Reducer =
-
-  [&amp;lt;EntryPoint&amp;gt;]
-  let main argv = 
-    match argv.Length with
-    | 1 -&amp;gt; Console.SetIn(new StreamReader(argv.[0]))
-    | _ -&amp;gt; ()
-
-    let currentWord = ref String.Empty
-    let count = ref 0
-
-    Seq.initInfinite (fun _ -&amp;gt; Console.ReadLine())
-    |&amp;gt; Seq.takeWhile (fun line -&amp;gt; line &amp;lt;&amp;gt; null)
-    |&amp;gt; Seq.iter (fun line -&amp;gt;
-      let splitted = line.Split(&#39;\t&#39;)
-      let word = (splitted.[0])
-
-      match (word) with
-      | word when word = !currentWord -&amp;gt;
-        incr count
-      | _ -&amp;gt;
-        if !currentWord &amp;lt;&amp;gt; String.Empty then
-          Console.WriteLine(&amp;quot;{0}\t{1}&amp;quot;, !currentWord, !count)
-        count := 1
-        currentWord := word)
-    |&amp;gt; ignore
-    Console.WriteLine(&amp;quot;{0}\t{1}&amp;quot;, !currentWord, !count)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;hdp:7428b1f511329ebc1011ee8ee83894f8&#34;&gt;HDP&lt;/h2&gt;
-
-&lt;p&gt;Hortonworks Data Platform (HDP) to gotowa dystrybucja Hadoopa, która zawiera preinstalowane i skonfigurowane narzędzia takie jak &lt;strong&gt;Hadoop&lt;/strong&gt;, &lt;strong&gt;Hive&lt;/strong&gt;, &lt;strong&gt;Pig&lt;/strong&gt;, &lt;strong&gt;HBase&lt;/strong&gt;, &lt;strong&gt;Ambari&lt;/strong&gt;, &lt;strong&gt;Cascading&lt;/strong&gt;, &lt;strong&gt;Oozie&lt;/strong&gt; czy &lt;strong&gt;Zookeeper&lt;/strong&gt; &lt;a href=&#34;http://docs.hortonworks.com/HDPDocuments/HDP2/HDP-2.2.0/Getting_Started_v22/media/01-RawContent/Getting%20Started/Full%20View.png&#34;&gt;(architektura HDP)&lt;/a&gt;. Ogólnie polecam rozwiązania firmy &lt;a href=&#34;http://hortonworks.com/&#34;&gt;Hortonworks&lt;/a&gt; - naprawdę świetnej jakości tutoriale i narzędzia. Chcąc poeksperymentować mamy dwie opcje do wyboru &lt;a href=&#34;http://hortonworks.com/hdp/downloads/&#34;&gt;(downloads)&lt;/a&gt;:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;instalacja HDP&lt;/li&gt;
-&lt;li&gt;uruchomienie maszyny wirtualnej (sandbox)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Wypóbowałem obydwie, ale na potrzeby tego posta skorzystam z sandboxa. Działa na systemie &lt;strong&gt;CentOS&lt;/strong&gt;, także podstawowa wiedza z systemów &lt;strong&gt;Unix&lt;/strong&gt; bardzo się przyda.  Instalacja i konfiguracja HDP na Windowsie to temat nadający się na osobnego posta.&lt;/p&gt;
-
-&lt;h2 id=&#34;mono:7428b1f511329ebc1011ee8ee83894f8&#34;&gt;mono&lt;/h2&gt;
-
-&lt;p&gt;Musimy sami doinstalować &lt;code&gt;mono&lt;/code&gt; i kompilator &lt;code&gt;fsharpc&lt;/code&gt;, żeby binarki Hadoopa mogły wykonać z terminala skompilowane pliki .exe.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo yum install mono
-sudo yum install fsharp
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Teraz wystarczy skompilować nasze pliki:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;fsharpc Mapper.fs
-fsharpc Reducer.fs
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;i możemy zacząc prawdziwą zabawę :)&lt;/p&gt;
-
-&lt;h2 id=&#34;hello-world-dla-big-data-czyli-word-count:7428b1f511329ebc1011ee8ee83894f8&#34;&gt;Hello world dla Big Data, czyli word count&lt;/h2&gt;
-
-&lt;p&gt;Nie przez przypadek wybrałem zliczanie słów jako przykład. Jest to swoisty &amp;ldquo;Hello world!&amp;rdquo; w świecie przetwarzania danych. Zliczymy 10 najczęściej występujących słów (dłuższych niż 3 litery, aby pozbyć się &amp;ldquo;się&amp;rdquo; i &amp;ldquo;aby&amp;rdquo;) w powieści &lt;strong&gt;Krzyżacy&lt;/strong&gt; Henryka Sienkiewicza. Wszystkie pliki i skrypty znajdziecie na moim &lt;a href=&#34;https://github.com/ksmigiel/hadoop-streaming-fharp&#34;&gt;githubie&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Uruchomienie joba odbywa się za pomocą komendy:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;hadoop jar /usr/hdp/current/hadoop-mapreduce-client/hadoop-streaming.jar
-    -files mapper.sh, reducer.sh, Mapper.exe, Reducer.exe
-    -input /user/ksmigiel/krzyzacy.txt
-    -output /users/ksmigiel/output
-    -mapper mapper.sh
-    -reducer reducer.sh
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;mapper.sh&lt;/strong&gt; i &lt;strong&gt;reducer.sh&lt;/strong&gt; to skrypty, które wykonują polecenie &lt;code&gt;mono [exe]&lt;/code&gt;.
-Input i output to ścieżka na HDFS, dlatego trzeba skopiować plik za pomocą &lt;code&gt;hdfs dfs -copyFromLocal &amp;lt;src&amp;gt; &amp;lt;dest&amp;gt;&lt;/code&gt;.
-Jeśli będziecie chcieli użyć dowolnego pliku tekstowego, pamiętajcie o kodowaniu w UTF-8 i konwersji znaków nowej linii za pomocą &lt;code&gt;dos2unix&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;I jeszcze na zakończenie skrypcik &lt;strong&gt;Pig&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;words = load &#39;/user/ksmigiel/out/part-00000&#39; using PigStorage() as (word:chararray, count:int);
-words_long = filter words by size(word) &amp;gt; 3;
-words_ordered = order words_long by count desc;
-top10 = limit words_ordered 10;
-dump top10;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;div&gt;
-  &lt;a href=&#34;https://plot.ly/~ksmigiel/17/&#34; target=&#34;_blank&#34; title=&#34;Krzyżacy word count&#34; style=&#34;display: block; text-align: center;&#34;&gt;&lt;img src=&#34;https://plot.ly/~ksmigiel/17.png&#34; alt=&#34;Krzyżacy word count&#34; style=&#34;max-width: 100%;width: 564px;&#34;  width=&#34;564&#34; onerror=&#34;this.onerror=null;this.src=&#39;https://plot.ly/404.png&#39;;&#34; /&gt;&lt;/a&gt;
-  &lt;script data-plotly=&#34;ksmigiel:17&#34; src=&#34;https://plot.ly/embed.js&#34; async&gt;&lt;/script&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&#34;podsumowanie:7428b1f511329ebc1011ee8ee83894f8&#34;&gt;Podsumowanie&lt;/h2&gt;
-
-&lt;p&gt;Stawianie pierwszych kroków z Hadoopem i jego przyległościami wymaga paru wolnych chwil. Jeśli nie macie doświadczenia z linuxowym terminalem, poruszanie się po sandboxie i jego obsługa mogą być kłopotliwe. Co prawda HDP udostępnia przyjemny interfejs webowy, z poziomu którego można uruchamiać zadania MapReduce napisanie w Pig lub HiveQL (jeszcze raz polecam tutoriale Hortonworks), ale chcąc poznać podstawy tej technologii dobrze jest zacząć od &amp;ldquo;niskiego poziomu&amp;rdquo;.&lt;/p&gt;
-</description>
+      <guid>http://ksmigiel.com/2015/02/hadoop-streaming/</guid>
+      <description>Klasyczny Hadoop posiada zestaw klas Javowych, dzięki którym możemy napisać swoje pierwsze zadanie MapReduce. Jak zaglądniecie do dokumentacji, to przekonacie się, że nie jest to najwygodniejsze rozwiązanie, ale świetnie nadaje się jako materiał do nauki. Przy zastosowaniach produkcyjnych zdecydowanie lepiej zwrócić się w stronę narzędzi takich jak Hive, Pig czy Scalding. Za pomocą specyficznej dla każdego składni można tworzyć zaawansowane analizy bez potrzeby pisania kodu low-level w Javie, np. HiveQL jest językiem zbliżonym do SQL, a Pig Lating ciekawym językiem proceduralnym.</description>
+    </item>
+    
+    <item>
+      <title>MapReduce - wstęp</title>
+      <link>http://ksmigiel.com/2015/01/map-reduce/</link>
+      <pubDate>Fri, 23 Jan 2015 18:16:13 +0100</pubDate>
+      
+      <guid>http://ksmigiel.com/2015/01/map-reduce/</guid>
+      <description>Zapewne słyszeliście o MapReduce, a jeśli nie, to teraz macie okazję poczytać. MapReduce jest frameworkiem służącym do przetwarzania dużych zbiorów danych w sposób zrównoleglony. Ostatnimi czasy stał się bardzo popularny dzięki platformom takim jak Hadoop (o nim w kolejnym poście) czy Spark. Wykorzystywany jest wszędzie tam, gdzie dane liczy się w terabajtach. Duże firmy produkują dużo danych, więc znajduje on zastosowanie np. w Google czy Spotify.
+Funkcyjnie Na początku chciałem wspomnieć o dwóch ważnych rzeczach: map() i reduce().</description>
+    </item>
+    
+    <item>
+      <title>Pierwszy post...</title>
+      <link>http://ksmigiel.com/2015/01/pierwszy-post/</link>
+      <pubDate>Sun, 18 Jan 2015 18:44:12 +0100</pubDate>
+      
+      <guid>http://ksmigiel.com/2015/01/pierwszy-post/</guid>
+      <description>Cześć! Pomysł na stworzenie bloga chodził mi już jakiś czas po głowie, ale jak to z pomysłami bywa, trochę czasu upłynęło zanim przeszedłem z fazy planingu do fazy implementacji. Nowy rok wydaje się być idealnym momentem na rozpoczęcie czegoś nowego w swoim życiu, więc korzystając z okazji zarejestrowałem domenę i zacząłem szukać hostingu / platformy blogowej, która by mi odpowiadała. Miałem kiedyś styczność z WordPressem, ale potrzebowałem alternatywy lekkiej, prostej i najlepiej minimalistycznej.</description>
+    </item>
+    
+    <item>
+      <title>O mnie</title>
+      <link>http://ksmigiel.com/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://ksmigiel.com/about/</guid>
+      <description>Zawodowo jestem programistą w Medius. Uwielbiam poznawać nowe technologie, dlatego ciągle poszerzam swój warsztat programistyczny o nowinki ze świata szeroko pojętego &amp;ldquo;dev&amp;rdquo;. Moje zainteresowania ciągną się od webdev po data science, i na tym blogu poruszanie się po tych dziedzinach będę opisywać :)
+Prywatnie natomiast grywam na skrzypcach w paru zespołach oraz bawię się edytorami audio (mixing, mastering, czyli wszystko co związane z przetwarzaniem dźwięku). Mam na swoim koncie zrealizowaną płytę zespołu Egos, której utwory były grane na antenie m.</description>
     </item>
     
   </channel>

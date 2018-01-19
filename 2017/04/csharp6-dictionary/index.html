@@ -7,14 +7,14 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:700,600,400" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-  <link href="http://ksmigiel.com//index.xml" rel="alternate" type="application/rss+xml" title="Krzysztof Śmigiel | Blog" />
-  <meta name="title" content="http://ksmigiel.com/">
-  <link rel="canonical" href="http://ksmigiel.com/">
+  <link href="http://ksmigiel.com/index.xml" rel="alternate" type="application/rss+xml" title="Krzysztof Śmigiel | Blog" />
+  <meta name="title" content="http://ksmigiel.com">
+  <link rel="canonical" href="http://ksmigiel.com">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/github.min.css">
   <script src="/js/highlight.js"></script>
   <meta property="og:title" content="Krzysztof Śmigiel | Blog"/>
-  <meta property="og:url" content="http://ksmigiel.com/"/>
-  <meta property="og:image" content="http://ksmigiel.com//images/"/>   
+  <meta property="og:url" content="http://ksmigiel.com"/>
+  <meta property="og:image" content="http://ksmigiel.com/images/"/>   
   <meta property="og:site_name" content="Krzysztof Śmigiel | Blog">
 </head>
 <body>
@@ -52,7 +52,7 @@
       <section>
         
 
-<h2 id="aktualizacja-17-06-2017:083bdf9bd1debcd24a12f782dbb060bc">AKTUALIZACJA 17.06.2017</h2>
+<h2 id="aktualizacja-17-06-2017">AKTUALIZACJA 17.06.2017</h2>
 
 <p>Jak się okazuje <em>&ldquo;it&rsquo;s not a bug, it&rsquo;s a feature!&rdquo;</em>. Dokładnie takie zachowanie, jak opisanie w poście, jest zawarte w <a href="https://github.com/dotnet/roslyn/issues/18475#issuecomment-309168670">specyfikacji języka</a>.</p>
 
@@ -67,15 +67,15 @@
 <p>Chciałem po krótce zaprezentować błąd (albo feature?) C# związany z dodanym w wersji 6 <strong>inicjalizatorem słownika</strong>. Jest to o tyle ciekawa kwestia, że nie ustrzeże nas przed tym błędem ani statyczna analiza kodu, ani kompilacja - dopiero
 <em>runtime</em> rzuci w nas wyjątkiem!.</p>
 
-<h2 id="dictionary-initializers:083bdf9bd1debcd24a12f782dbb060bc">Dictionary initializers</h2>
+<h2 id="dictionary-initializers">Dictionary initializers</h2>
 
 <p>Zapewne znana jest wam składnia pozwalająca na stworzenie słownika <code>Dictionary&lt;TKey, TValue&gt;</code> razem z wartościami:</p>
 
 <pre><code class="language-csharp">var dictionary = new Dictionary&lt;int, List&lt;int&gt;&gt;
 {
-	{ 0, new List&lt;int&gt; { 0, 1, 2 } },
-	{ 1, new List&lt;int&gt; { 1, 2, 3 } },
-	{ 2, new List&lt;int&gt; { 2, 3, 4 } }
+    { 0, new List&lt;int&gt; { 0, 1, 2 } },
+    { 1, new List&lt;int&gt; { 1, 2, 3 } },
+    { 2, new List&lt;int&gt; { 2, 3, 4 } }
 };
 </code></pre>
 
@@ -83,23 +83,23 @@
 
 <pre><code class="language-csharp">var dictionary = new Dictionary&lt;int, List&lt;int&gt;&gt;
 {
-	[0] = new List&lt;int&gt; { 0, 1, 2 },
-	[1] = new List&lt;int&gt; { 1, 2, 3 },
-	[2] = new List&lt;int&gt; { 2, 3, 4 }
+    [0] = new List&lt;int&gt; { 0, 1, 2 },
+    [1] = new List&lt;int&gt; { 1, 2, 3 },
+    [2] = new List&lt;int&gt; { 2, 3, 4 }
 };
 </code></pre>
 
 <p>Nie jest to oczywiście zmiana funkcjonalna, lecz conajwyżej poprawiająca czytelność kodu.</p>
 
-<h2 id="mały-błąd-ciekawe-odkrycie:083bdf9bd1debcd24a12f782dbb060bc">Mały błąd - ciekawe odkrycie</h2>
+<h2 id="mały-błąd-ciekawe-odkrycie">Mały błąd - ciekawe odkrycie</h2>
 
 <p>Jakiś czas temu pisząc kod chciałem na szybko użyć dokładnie takiej samej struktury danych jak wyżej, jednak omyłkowo stworzyłem takiego potwora:</p>
 
 <pre><code class="language-csharp">var test = new Dictionary&lt;int, List&lt;int&gt;&gt;
 {
-	[0] = { 0, 1, 2 },
-	[1] = { 1, 2, 3 },
-	[2] = { 2, 3, 4 }
+    [0] = { 0, 1, 2 },
+    [1] = { 1, 2, 3 },
+    [2] = { 2, 3, 4 }
 };
 </code></pre>
 
@@ -115,12 +115,12 @@
 
 <p>Zaciekawiony tym co się dzieje pod maską postanowiłem spojrzeć na <strong>IL</strong>, który generują obydwa (poprawny i ten mniej poprawny) przykłady, aby dowiedzieć się do czego tak naprawdę został skompilowany ten błędny kod.</p>
 
-<h2 id="analiza-il-feels-like-a-hacker:083bdf9bd1debcd24a12f782dbb060bc">Analiza IL - feels like a hacker!</h2>
+<h2 id="analiza-il-feels-like-a-hacker">Analiza IL - feels like a hacker!</h2>
 
 <p>Rzadko mam okazję analizować <em>IL</em> czy <em>asm x86</em>, ale jak już się taka okazja nadarzy, to sama przyjemność patrzeć na te bebechy :)
 Weźmy na tapetę jako pierwszy poprawny przykład kodu (powycinałem z <em>IL&rsquo;a</em> niepotrzebne rzeczy, co by się wszystko mogło zmieścić w poście).</p>
 
-<h4 id="il-poprawny:083bdf9bd1debcd24a12f782dbb060bc">IL - poprawny</h4>
+<h4 id="il-poprawny">IL - poprawny</h4>
 
 <pre><code>var dictionary = new Dictionary&lt;int, List&lt;int&gt;&gt;
 {
@@ -160,7 +160,7 @@ IL_001b: stloc.0
 
 <p>Popatrzmy teraz na kod, który nas bardziej ciekawi:</p>
 
-<h4 id="il-mniej-poprawny:083bdf9bd1debcd24a12f782dbb060bc">IL - mniej poprawny</h4>
+<h4 id="il-mniej-poprawny">IL - mniej poprawny</h4>
 
 <pre><code>var dictionary = new Dictionary&lt;int, List&lt;int&gt;&gt;
 {
@@ -207,7 +207,7 @@ Console.WriteLine(test[0].Count);
 
 <p>Właśnie udało nam się pokracznie dodać element do istniejącej już listy :D.</p>
 
-<h2 id="co-dalej:083bdf9bd1debcd24a12f782dbb060bc">Co dalej?</h2>
+<h2 id="co-dalej">Co dalej?</h2>
 
 <p>Postanowiłem zgłosić błąd na GitHub&rsquo;ie Roslyn&rsquo;a (<a href="https://github.com/dotnet/roslyn/issues/18475">https://github.com/dotnet/roslyn/issues/18475</a>) i zaczekać na odpowiedź. Może się okazać, że jest to <em>feature</em>, nie <em>bug</em> i jestem bardzo ciekawy czy tego typu problem był już przerabiany wcześniej.</p>
 
@@ -218,7 +218,7 @@ Console.WriteLine(test[0].Count);
     <a class="twitter-share-button"
       href="https://twitter.com/share"
       data-via="k_smigiel"
-      data-url="http://ksmigiel.com/2017/04/csharp6-dictionary">
+      data-url="http://ksmigiel.com/2017/04/csharp6-dictionary/">
       Tweet
     </a> 
   </div>

@@ -7,14 +7,14 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:700,600,400" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-  <link href="http://ksmigiel.com//index.xml" rel="alternate" type="application/rss+xml" title="Krzysztof Śmigiel | Blog" />
-  <meta name="title" content="http://ksmigiel.com/">
-  <link rel="canonical" href="http://ksmigiel.com/">
+  <link href="http://ksmigiel.com/index.xml" rel="alternate" type="application/rss+xml" title="Krzysztof Śmigiel | Blog" />
+  <meta name="title" content="http://ksmigiel.com">
+  <link rel="canonical" href="http://ksmigiel.com">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/github.min.css">
   <script src="/js/highlight.js"></script>
   <meta property="og:title" content="Krzysztof Śmigiel | Blog"/>
-  <meta property="og:url" content="http://ksmigiel.com/"/>
-  <meta property="og:image" content="http://ksmigiel.com//images/"/>   
+  <meta property="og:url" content="http://ksmigiel.com"/>
+  <meta property="og:image" content="http://ksmigiel.com/images/"/>   
   <meta property="og:site_name" content="Krzysztof Śmigiel | Blog">
 </head>
 <body>
@@ -59,11 +59,11 @@
 <p>W części pierwszej opiszę sprzęt z jakiego korzystałem z krótkim opisem co to jest (szczególnie dla czytelników niezaznajomionych z branżą pro-audio).
 W części drugiej postaram się krótko, lecz treściwie przedstawić proces produkcji odcinka podcasta (załadowanie ścieżek, wyrównanie poziomów głośności i normalizacja, efekty - (odszumianie, equalizacja, kompresja), edycja, mastering i render).</p>
 
-<h2 id="hardware:dce4ce542c9f7a851fd046a02392be71">Hardware</h2>
+<h2 id="hardware">Hardware</h2>
 
 <p>Zdążyłem się już pochwalić nowym sprzętem, a drugi raz pochwalić się nie zaszkodzi. Jest to typowy sprzęt przeznaczony do <em>home-recordingu</em>, co wcale nie musi kojarzyć się z amatorszczyzną. Ze względu na dobre parametry techniczne i stosunkowo dobry stosunek jakości przetworników cyfrowych do ceny, wprawne ucho wyprodukuje płytę CD, udźwiękowienie filmu w żaden sposób nie odbiegające od branżowych standardów (profesjonalnych nagrań).</p>
 
-<h3 id="odsłuch:dce4ce542c9f7a851fd046a02392be71">Odsłuch</h3>
+<h3 id="odsłuch">Odsłuch</h3>
 
 <p>Za odsłuch służą mi monitory bliskiego pola: <strong>M-Audio BX5 D2</strong>.</p>
 
@@ -71,7 +71,7 @@ W części drugiej postaram się krótko, lecz treściwie przedstawić proces pr
 
 <p>Są to monitory aktywne i nie potrzebują osobnego wzmacniacza. Studyjne monitory odsłuchowe wyróżnia spośród innego sprzętu audio charakterystyka częstotliwościowa, która w tym wypadku powinna być jak najbardziej liniowa. Pozwala ona na odsłuch w brzmieniu jak najbardziej zbliżonym do rzeczywistego (źródła dźwięku), tj. bez żadnego podbicia basu, wycięcia środka czy &ldquo;wysokich&rdquo; górek. Dzięki temu tak przygotowany materiał - na &ldquo;surowych&rdquo; głośnikach - powinien zabrzmieć dobrze w dowolnym zestawie Hi-Fi czy iPod&rsquo;ie. Oczywiście nie jest to jedyny warunek jaki trzeba spełnić aby nasz materiał był &ldquo;pro&rdquo;, ale o tym za chwilę.</p>
 
-<h3 id="interfejs:dce4ce542c9f7a851fd046a02392be71">Interfejs</h3>
+<h3 id="interfejs">Interfejs</h3>
 
 <p>Na upratego monitory można podłączyć do komputera bez interfejsu (skręcając kable od biedy), ale to właśnie on odgrywa kluczową rolę jeśli chodzi o jakość dźwięku. Porządny przetwornik C/A (cyfrowo-analogowy) pozwala odtwarzać oraz nagrywać muzykę zapisaną w wysokiej <a href="https://en.wikipedia.org/wiki/Audio_bit_depth">rozdzielczości</a> (np. 24-bit), czyli technicznie zawierającą więcej informacji (bitów) przesłanych/odebranych na sekundę. Jest to nic innego jak próba reprezentacji sygnału analogowego w formie cyfrowej. Przekształcenie to nazywamy <a href="http://livesound.pl/tutoriale/kursy/4011-technika-cyfrowa-przetwarzanie-analogowo-cyfrowe-kwantowanie"><strong>kwantyzacją</strong></a>.</p>
 
@@ -84,11 +84,11 @@ W części drugiej postaram się krótko, lecz treściwie przedstawić proces pr
 <p>Dołączone sterowniki <a href="https://en.wikipedia.org/wiki/Audio_Stream_Input/Output">ASIO</a> umożliwiają uzyskanie niskiej latencji (bliskiej zeru), dzięki czemu opóźnienia między sprzętem &lt;-&gt; oprogramowaniem są prawie całkowicie wyeliminowane.
 Intefrejs ten posiada też wysokiej jakości wejścia mikrofonowe i instrumentalne. Daje to nieograniczone możliwości związane z nagrywaniem sygnału dźwiękowego, który potem ma zostać sklejony w całość (w przeciwieństwie do nagrywania na tzw. <em>&ldquo;setkę&rdquo;</em>, gdzie każdy muzyk zajmuje osobny kanał i cała kapela nagrywa na żywca). Za często z tej możliwości nie korzystam, ponieważ wszystkie potrzebne ścieżki do odcinka czekają na mnie na GDrive. Jak w końcu umebluję pokój po przeprowadzce na to małe studyjko, to może coś nagram i się podzielę :)</p>
 
-<h2 id="software:dce4ce542c9f7a851fd046a02392be71">Software</h2>
+<h2 id="software">Software</h2>
 
 <p>Obecnie na rynku jest masa edytorów audio. Od prostych i darmowych (<a href="http://audacityteam.org/">Audacity</a>) po bardzo zaawansowane kombajny takie jak: <a href="http://www.avid.com/US/products/family/pro-tools/">Pro Tools</a>, <a href="http://www.steinberg.net/en/home.html">Cubase</a> czy <a href="https://www.ableton.com/">Ableton</a>, które określane są mianem <strong>DAW</strong> (<em>ang. Digital Audio Workstation</em>). Z którego narzędzia korzysta producent, to kwestia budżetu, przyzwyczajenia oraz &ldquo;religijności&rdquo; (tak, fan-boy&rsquo;ie każdej technologii są wszędzie!). Ja po paru próbach (udanych bądź mniej) ostatecznie wybrałem swoje ulubione narzędzie pracy, którym jest <a href="http://www.reaper.fm/"><strong>Reaper</strong></a>.</p>
 
-<h3 id="reaper:dce4ce542c9f7a851fd046a02392be71">Reaper</h3>
+<h3 id="reaper">Reaper</h3>
 
 <div style="text-align: center">
 <img src="https://lh3.googleusercontent.com/-mtompVfMRoU/VNgzXSQUQDI/AAAAAAAAQvo/KD7l2ZHJFqM/s256-no/Cockos%2BREAPER.png" />
@@ -96,7 +96,7 @@ Intefrejs ten posiada też wysokiej jakości wejścia mikrofonowe i instrumental
 
 <p>Relatywnie tani z potężnymi możliwościami edytor niesamowicie przypadł mi do gustu. Praktycznie podczas każdej edycji odcinka podcasta uczę się czegoś nowego, wymyślam coraz to nowe makra, które automatyzują moją pracę i póki co nie zamieniłbym się na żaden inny edytor :). W następnym poście napiszę o nim więcej.</p>
 
-<h2 id="óho:dce4ce542c9f7a851fd046a02392be71">Óho</h2>
+<h2 id="óho">Óho</h2>
 
 <p>Najważniejszym elementem jakiegokolwiek studia jest <strong>ucho</strong> (a nawet dwa). Bez zmysłu muzycznego (i oczywiście sprawnego ucha), nawet z pomocą najlepszego sprzętu i najdroższego programu nie będziemy w stanie dorównać poziomowi profesjonalnym nagrań. W tym wypadku jak w każdej innej branży, a szczególnie naszej - programistycznej - tylko ciężka praca i ciągła praktyka przyniesie wymierne efekty, bo narzędzia to tylko narzędzia.
 A ja ciąglę praktykuję i mam nadzieję, że z przyjemnością słucha wam się każdego odcinka <a href="http://www.devtalk.pl">DevTalk&rsquo;a</a> :)</p>
@@ -116,7 +116,7 @@ A ja ciąglę praktykuję i mam nadzieję, że z przyjemnością słucha wam si�
     <a class="twitter-share-button"
       href="https://twitter.com/share"
       data-via="k_smigiel"
-      data-url="http://ksmigiel.com/2015/09/devtalk-cz1">
+      data-url="http://ksmigiel.com/2015/09/devtalk-cz1/">
       Tweet
     </a> 
   </div>

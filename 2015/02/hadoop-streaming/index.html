@@ -7,14 +7,14 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:700,600,400" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-  <link href="http://ksmigiel.com//index.xml" rel="alternate" type="application/rss+xml" title="Krzysztof Śmigiel | Blog" />
-  <meta name="title" content="http://ksmigiel.com/">
-  <link rel="canonical" href="http://ksmigiel.com/">
+  <link href="http://ksmigiel.com/index.xml" rel="alternate" type="application/rss+xml" title="Krzysztof Śmigiel | Blog" />
+  <meta name="title" content="http://ksmigiel.com">
+  <link rel="canonical" href="http://ksmigiel.com">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/github.min.css">
   <script src="/js/highlight.js"></script>
   <meta property="og:title" content="Krzysztof Śmigiel | Blog"/>
-  <meta property="og:url" content="http://ksmigiel.com/"/>
-  <meta property="og:image" content="http://ksmigiel.com//images/"/>   
+  <meta property="og:url" content="http://ksmigiel.com"/>
+  <meta property="og:image" content="http://ksmigiel.com/images/"/>   
   <meta property="og:site_name" content="Krzysztof Śmigiel | Blog">
 </head>
 <body>
@@ -56,11 +56,11 @@
 
 <p>Klasyczny Hadoop posiada zestaw klas Javowych, dzięki którym możemy napisać swoje pierwsze zadanie <strong>MapReduce</strong>. Jak zaglądniecie do <a href="http://hadoop.apache.org/docs/r1.2.1/mapred_tutorial.html">dokumentacji</a>, to przekonacie się, że nie jest to najwygodniejsze rozwiązanie, ale świetnie nadaje się jako materiał do nauki. Przy zastosowaniach produkcyjnych zdecydowanie lepiej zwrócić się w stronę narzędzi takich jak <a href="https://hive.apache.org/">Hive</a>, <a href="http://pig.apache.org/">Pig</a> czy <a href="https://github.com/twitter/scalding">Scalding</a>. Za pomocą specyficznej dla każdego składni można tworzyć zaawansowane analizy bez potrzeby pisania kodu low-level w Javie, np. <strong>HiveQL</strong> jest językiem zbliżonym do SQL, a <strong>Pig Lating</strong> ciekawym językiem proceduralnym. Oba są kompilowane do zadań MapReduce. W tym poście skupię się na czymś pośrodku, czyli <strong>Hadoop Streaming</strong>.</p>
 
-<h2 id="streaming-api:7428b1f511329ebc1011ee8ee83894f8">Streaming API</h2>
+<h2 id="streaming-api">Streaming API</h2>
 
 <p>Hadoop Streaming jest częścią dystrybucji Hadoop. Pozwala na tworzenie zadań w dowolnym języku (nawet skryptowym). Warunek jaki trzeba spełnić, to utworzenie dwóch plików wykonywalnych (Mapper i Reducer), które wartości zczytują z <strong>stdin</strong>, a przetworzone odpowiednio dane wypisują do konsoli (<strong>stdout</strong>). Jak tytuł posta wskazuje zaimplementowałem je w F#. Dopiero raczkuję w świecie programowania funkcyjnego, dlatego z chęcią przyjmę komentarze odnośnie poprawności kodu. Za przykładowe zadanie MapReduce posłuży nam standardowy <strong>word count</strong>.</p>
 
-<h4 id="mapper-fs:7428b1f511329ebc1011ee8ee83894f8">Mapper.fs</h4>
+<h4 id="mapper-fs">Mapper.fs</h4>
 
 <pre><code class="language-fsharp">open System
 open System.IO
@@ -101,7 +101,7 @@ example    1
 
 <p>itd. Reducer otrzymuje posortowany już stream takich par i powinien zwracać dane w ten sam sposób, natomiast w miejsce wartości wstawiamy sumę dla danego słowa (klucza).</p>
 
-<h4 id="reducer-fs:7428b1f511329ebc1011ee8ee83894f8">Reducer.fs</h4>
+<h4 id="reducer-fs">Reducer.fs</h4>
 
 <pre><code class="language-fsharp">open System
 open System.IO
@@ -135,7 +135,7 @@ module Reducer =
     Console.WriteLine(&quot;{0}\t{1}&quot;, !currentWord, !count)
 </code></pre>
 
-<h2 id="hdp:7428b1f511329ebc1011ee8ee83894f8">HDP</h2>
+<h2 id="hdp">HDP</h2>
 
 <p>Hortonworks Data Platform (HDP) to gotowa dystrybucja Hadoopa, która zawiera preinstalowane i skonfigurowane narzędzia takie jak <strong>Hadoop</strong>, <strong>Hive</strong>, <strong>Pig</strong>, <strong>HBase</strong>, <strong>Ambari</strong>, <strong>Cascading</strong>, <strong>Oozie</strong> czy <strong>Zookeeper</strong> <a href="http://docs.hortonworks.com/HDPDocuments/HDP2/HDP-2.2.0/Getting_Started_v22/media/01-RawContent/Getting%20Started/Full%20View.png">(architektura HDP)</a>. Ogólnie polecam rozwiązania firmy <a href="http://hortonworks.com/">Hortonworks</a> - naprawdę świetnej jakości tutoriale i narzędzia. Chcąc poeksperymentować mamy dwie opcje do wyboru <a href="http://hortonworks.com/hdp/downloads/">(downloads)</a>:</p>
 
@@ -146,7 +146,7 @@ module Reducer =
 
 <p>Wypóbowałem obydwie, ale na potrzeby tego posta skorzystam z sandboxa. Działa na systemie <strong>CentOS</strong>, także podstawowa wiedza z systemów <strong>Unix</strong> bardzo się przyda.  Instalacja i konfiguracja HDP na Windowsie to temat nadający się na osobnego posta.</p>
 
-<h2 id="mono:7428b1f511329ebc1011ee8ee83894f8">mono</h2>
+<h2 id="mono">mono</h2>
 
 <p>Musimy sami doinstalować <code>mono</code> i kompilator <code>fsharpc</code>, żeby binarki Hadoopa mogły wykonać z terminala skompilowane pliki .exe.</p>
 
@@ -162,7 +162,7 @@ fsharpc Reducer.fs
 
 <p>i możemy zacząc prawdziwą zabawę :)</p>
 
-<h2 id="hello-world-dla-big-data-czyli-word-count:7428b1f511329ebc1011ee8ee83894f8">Hello world dla Big Data, czyli word count</h2>
+<h2 id="hello-world-dla-big-data-czyli-word-count">Hello world dla Big Data, czyli word count</h2>
 
 <p>Nie przez przypadek wybrałem zliczanie słów jako przykład. Jest to swoisty &ldquo;Hello world!&rdquo; w świecie przetwarzania danych. Zliczymy 10 najczęściej występujących słów (dłuższych niż 3 litery, aby pozbyć się &ldquo;się&rdquo; i &ldquo;aby&rdquo;) w powieści <strong>Krzyżacy</strong> Henryka Sienkiewicza. Wszystkie pliki i skrypty znajdziecie na moim <a href="https://github.com/ksmigiel/hadoop-streaming-fharp">githubie</a>.</p>
 
@@ -194,7 +194,7 @@ dump top10;
   <script data-plotly="ksmigiel:17" src="https://plot.ly/embed.js" async></script>
 </div>
 
-<h2 id="podsumowanie:7428b1f511329ebc1011ee8ee83894f8">Podsumowanie</h2>
+<h2 id="podsumowanie">Podsumowanie</h2>
 
 <p>Stawianie pierwszych kroków z Hadoopem i jego przyległościami wymaga paru wolnych chwil. Jeśli nie macie doświadczenia z linuxowym terminalem, poruszanie się po sandboxie i jego obsługa mogą być kłopotliwe. Co prawda HDP udostępnia przyjemny interfejs webowy, z poziomu którego można uruchamiać zadania MapReduce napisanie w Pig lub HiveQL (jeszcze raz polecam tutoriale Hortonworks), ale chcąc poznać podstawy tej technologii dobrze jest zacząć od &ldquo;niskiego poziomu&rdquo;.</p>
 
@@ -203,7 +203,7 @@ dump top10;
     <a class="twitter-share-button"
       href="https://twitter.com/share"
       data-via="k_smigiel"
-      data-url="http://ksmigiel.com/2015/02/hadoop-streaming">
+      data-url="http://ksmigiel.com/2015/02/hadoop-streaming/">
       Tweet
     </a> 
   </div>

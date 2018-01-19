@@ -7,14 +7,14 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:700,600,400" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-  <link href="http://ksmigiel.com//index.xml" rel="alternate" type="application/rss+xml" title="Krzysztof Śmigiel | Blog" />
-  <meta name="title" content="http://ksmigiel.com/">
-  <link rel="canonical" href="http://ksmigiel.com/">
+  <link href="http://ksmigiel.com/index.xml" rel="alternate" type="application/rss+xml" title="Krzysztof Śmigiel | Blog" />
+  <meta name="title" content="http://ksmigiel.com">
+  <link rel="canonical" href="http://ksmigiel.com">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/github.min.css">
   <script src="/js/highlight.js"></script>
   <meta property="og:title" content="Krzysztof Śmigiel | Blog"/>
-  <meta property="og:url" content="http://ksmigiel.com/"/>
-  <meta property="og:image" content="http://ksmigiel.com//images/"/>   
+  <meta property="og:url" content="http://ksmigiel.com"/>
+  <meta property="og:image" content="http://ksmigiel.com/images/"/>   
   <meta property="og:site_name" content="Krzysztof Śmigiel | Blog">
 </head>
 <body>
@@ -54,11 +54,11 @@
 
 <p>Dzisiaj będzie trochę bardziej nisko poziomowo (nie mylić z niższym poziomem posta). Postaram się w przystepny sposób przybliżyć wam czym jest Filtr Blooma i jak można go zaimplementować w JavaScripcie.</p>
 
-<h2 id="filtra-teorie:15fbb8d9ed16407d5b96391271a178aa">Filtra teorie</h2>
+<h2 id="filtra-teorie">Filtra teorie</h2>
 
 <p>Filtr Blooma to struktura danych pozwalająca w sposób szybki i pamięciowo optymalny odpowiedzieć na pytanie, czy dany element znajduje się w zbiorze. Niestety, ponieważ nie ma nic za darmo, za wydajność musimy zapłacić, a zapłatą będzie błąd w jaki struktura może nas wprowadzić. Nie użyłem <strong>probabilistyczna</strong> bez powodu: filtr może stwierdzić jedynie, że elementu <strong>na pewno nie ma</strong>, lub <strong>może jest</strong> w zbiorze. Założenie to prowadzi do wniosków tzw. <strong>false-positive</strong>, czyli że dany element nie istnieje w zadanym zbiorze, a jednak otrzymamy informację o jego prawdopodobnym istnieniu.</p>
 
-<h3 id="budowa-i-parametry-filtra:15fbb8d9ed16407d5b96391271a178aa">Budowa i parametry filtra</h3>
+<h3 id="budowa-i-parametry-filtra">Budowa i parametry filtra</h3>
 
 <p>Filtr można opisać mniej więcej tak:</p>
 
@@ -73,17 +73,17 @@
 
 <p>My do teorii aż tak wagi przywiązywać nie będziemy, ale trzeba pamiętać, że przy produkcyjnym użyciu takiej struktury bez wstępnej analizy się nie obejdzie.</p>
 
-<h3 id="działanie-filtra:15fbb8d9ed16407d5b96391271a178aa">Działanie filtra</h3>
+<h3 id="działanie-filtra">Działanie filtra</h3>
 
 <p>Całość sprowadza się do testu, czy dany bit (lub <em>k</em> bitów w przypadku <em>k &gt; 1</em>) dla zadanej wartości (np. <em>x</em>) jest zapalonych w tablicy. Jeśli choć jeden nie jest - mamy pewność, że element jest nieobecny.</p>
 
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Bloom_filter.svg/649px-Bloom_filter.svg.png" alt="bloom" /></p>
 
-<h3 id="haszowanie:15fbb8d9ed16407d5b96391271a178aa">Haszowanie</h3>
+<h3 id="haszowanie">Haszowanie</h3>
 
 <p>Orłem z kryptografii nie jestem, ale wyczytałem, że użyte funkcje haszujące powinny być przede wszystkim <strong>niezależne</strong> i o <strong>jednostajnym rozkładzie prawdopodobieństwa</strong>, np. takie jak: <a href="https://sites.google.com/site/murmurhash/">murmur</a> lub <a href="https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function">fnv</a>. Zalecam dalszą lekturę w tym zakresie dla zainteresowanych szczegółami.</p>
 
-<h4 id="podwójne-haszowanie:15fbb8d9ed16407d5b96391271a178aa">Podwójne haszowanie</h4>
+<h4 id="podwójne-haszowanie">Podwójne haszowanie</h4>
 
 <p>Jak i jakich funkcji używać do haszowania? Aby zapewnić prawdopodobieństwo błędu na podobnym poziomie, możemy skorzystać z <a href="http://citeseer.ist.psu.edu/viewdoc/download;jsessionid=4060353E67A356EF9528D2C57C064F5A?doi=10.1.1.152.579&amp;rep=rep1&amp;type=pdf"><strong>podwójnego haszowania</strong></a>:</p>
 
@@ -93,7 +93,7 @@
 
 <p>Myślę, że powoli możemy przejść do kodu i próby zaimplementowania tego wszystkiego, co wyżej opisałem.</p>
 
-<h2 id="implementacja:15fbb8d9ed16407d5b96391271a178aa">Implementacja</h2>
+<h2 id="implementacja">Implementacja</h2>
 
 <p>Dla celów edukacyjnych przyjmijmy następujące parametry:</p>
 
@@ -102,7 +102,7 @@ m = 16   16-bitowa tablica
 n = 2    Dwa elementy
 </code></pre>
 
-<h3 id="fnv-1:15fbb8d9ed16407d5b96391271a178aa">fnv-1</h3>
+<h3 id="fnv-1">fnv-1</h3>
 
 <p>Wybrałem tę, bo jest relatywnie prosta w implementacji:</p>
 
@@ -127,7 +127,7 @@ function fnv1(string) {
 }
 </code></pre>
 
-<h3 id="stringtobytes:15fbb8d9ed16407d5b96391271a178aa">stringToBytes</h3>
+<h3 id="stringtobytes">stringToBytes</h3>
 
 <p>Powyższa funkcja potrzebuje tablicy bajtów z ciągu znaków. JS nie posiada takiej ładnej funkcji jak chociażby C# <code>byte[] bytes = encoding.GetBytes(AnyString)</code>, dlatego musimy napisać coś podobnego. Dla ułatwienia przyjmijmy, że ciąg znaków kodowany jest w ASCII (basic English).</p>
 
@@ -142,7 +142,7 @@ function fnv1(string) {
 }
 </code></pre>
 
-<h3 id="bloomfilter:15fbb8d9ed16407d5b96391271a178aa">BloomFilter</h3>
+<h3 id="bloomfilter">BloomFilter</h3>
 
 <p>Jak zauważyliście używam składni ES6, o co by iść z duchem czasu. Filtr będzie przyjmował w konstruktorze liczbę bitów oraz funkcje haszujące, których chcemy użyć.</p>
 
@@ -171,7 +171,7 @@ function fnv1(string) {
 }
 </code></pre>
 
-<h2 id="testujemy:15fbb8d9ed16407d5b96391271a178aa">Testujemy!</h2>
+<h2 id="testujemy">Testujemy!</h2>
 
 <pre><code class="language-js">var bloomFilter = new BloomFilter(16, [ fnv1 ]);
 
@@ -192,7 +192,7 @@ bloomFilter.check('nie ma')
 
 <p>ale przy 10-ciu elementach wzrasta do <em>p ~= 0.46</em>, dlatego dobór odpowiednich parametrów jest bardzo ważny.</p>
 
-<h2 id="produkcyjne-użycia:15fbb8d9ed16407d5b96391271a178aa">Produkcyjne użycia</h2>
+<h2 id="produkcyjne-użycia">Produkcyjne użycia</h2>
 
 <p>Z Filtrów Blooma korzystają m.in:</p>
 
@@ -218,7 +218,7 @@ bloomFilter.check('nie ma')
     <a class="twitter-share-button"
       href="https://twitter.com/share"
       data-via="k_smigiel"
-      data-url="http://ksmigiel.com/2016/06/bloom-filters">
+      data-url="http://ksmigiel.com/2016/06/bloom-filters/">
       Tweet
     </a> 
   </div>

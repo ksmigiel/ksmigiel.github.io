@@ -7,14 +7,14 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:700,600,400" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-  <link href="http://ksmigiel.com//index.xml" rel="alternate" type="application/rss+xml" title="Krzysztof Śmigiel | Blog" />
-  <meta name="title" content="http://ksmigiel.com/">
-  <link rel="canonical" href="http://ksmigiel.com/">
+  <link href="http://ksmigiel.com/index.xml" rel="alternate" type="application/rss+xml" title="Krzysztof Śmigiel | Blog" />
+  <meta name="title" content="http://ksmigiel.com">
+  <link rel="canonical" href="http://ksmigiel.com">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/github.min.css">
   <script src="/js/highlight.js"></script>
   <meta property="og:title" content="Krzysztof Śmigiel | Blog"/>
-  <meta property="og:url" content="http://ksmigiel.com/"/>
-  <meta property="og:image" content="http://ksmigiel.com//images/"/>   
+  <meta property="og:url" content="http://ksmigiel.com"/>
+  <meta property="og:image" content="http://ksmigiel.com/images/"/>   
   <meta property="og:site_name" content="Krzysztof Śmigiel | Blog">
 </head>
 <body>
@@ -54,11 +54,11 @@
 
 <p><strong>Cuckoo Filter</strong> to <strong>probabilistyczna struktura danych</strong> - podobnie jak <a href="http://ksmigiel.com/2016/06/bloom-filters/">Bloom Filter</a>. W poprzednim poście znajdziecie krótki opis czym taka struktura danych się charakteryzuje (fałszywie dodatki wynik zapytania: &ldquo;czy element zawiera się w danym zbiorze&rdquo;).</p>
 
-<h2 id="o-czym-mowa:9fc3faad544296f306615c66d2b26be0">O czym mowa?</h2>
+<h2 id="o-czym-mowa">O czym mowa?</h2>
 
 <p>Filtr kukułczy jest relatywnie młodą strukturą danych opisaną w 2014 roku przez <a href="https://www.cs.cmu.edu/~dga/papers/cuckoo-conext2014.pdf">Fan, Andersen, Kaminsky i Mitzenmacher</a>. Poszerza ona wspomniane filtry bloom&rsquo;a o <strong>usuwanie</strong> i <strong>zliczanie</strong> dodanych elementów, utrzymując przy tym porównywalną złożoność obliczeniową. Minimalizuje ona zasoby przechowując jedynie <strong>odcisk</strong> <em>(ang. fingerprint)</em> wartości elementu w zbiorze. W rzeczywistości jest to pewnego rodzaju tablica haszująca, która problem kolizji rozwiązuje za pomocą <a href="https://en.wikipedia.org/wiki/Cuckoo_hashing"><strong>haszowania kukułczego</strong></a> <em>(ang. cuckoo hashing)</em>.</p>
 
-<h2 id="cuckoo-hashing:9fc3faad544296f306615c66d2b26be0">Cuckoo hashing</h2>
+<h2 id="cuckoo-hashing">Cuckoo hashing</h2>
 
 <p>Jak nietrudno się domyślić, nazwa filtra i haszowania wzięła się od <strong>kukułek</strong>. Kukułki znane są ze składania jaj w obcych gniazdach. Gdy mała kukułka wykluje się, eliminuje ona przybrane rodzeństwo usuwając je z gniazda. Nazywamy to <a href="https://pl.wikipedia.org/wiki/Paso%C5%BCyty_l%C4%99gowe">pasożytnictwem lęgowym</a>. Na podobnej zasadzie opiera się właśnie działanie haszowania/filtra kukułczego.</p>
 
@@ -66,11 +66,11 @@
 
 <p><img src="https://adriancolyer.files.wordpress.com/2016/10/cuckoo-1.png?w=600" alt="cuckoo" /></p>
 
-<h6 id="grafika-z-https-adriancolyer-files-wordpress-com:9fc3faad544296f306615c66d2b26be0"><em>(grafika z <a href="https://adriancolyer.files.wordpress.com">https://adriancolyer.files.wordpress.com</a>)</em></h6>
+<h6 id="grafika-z-https-adriancolyer-files-wordpress-com"><em>(grafika z <a href="https://adriancolyer.files.wordpress.com">https://adriancolyer.files.wordpress.com</a>)</em></h6>
 
 <p>Na chwilę obecną mamy jeden nigdzie nieprzypisany element (ten usunięty z drugiej tablicy w poprzedniej iteracji). Ponieważ istnieją dwie funkcje/tablice, to użyjemy tego faktu do wyliczenia nowego miejsca w tablicy przeciwnej (pierwszej) i tam spróbujemy umieścić element. Gdy nawet w tym przypadku napotkamy na kolizję, dokonamy eksmisji kolejnego elementu i powtórzymy ten proces aż do momentu znalezienia miejsca w którejś z tablic.</p>
 
-<h2 id="cuckoo-filter-zasada-działania:9fc3faad544296f306615c66d2b26be0">Cuckoo filter - zasada działania</h2>
+<h2 id="cuckoo-filter-zasada-działania">Cuckoo filter - zasada działania</h2>
 
 <p>Jak już zostało wspomniane, działanie samego filtra opiera się na powyższej strategii i przedstawia się następująco:
 Filtr przechowuje &ldquo;odcisk&rdquo; każdego dodanego elementu w jednym z wielu &ldquo;gniazd&rdquo; <em>(ang. bucket)</em> (odcisk jest ciągiem znaków pochodzącym z wartości hasza). Każde gniazdo posiada swoją wielkość <em>(ang. capacity)</em>, czyli ile fingerprintów jest w stanie pomieścić. Przyjęło się identyfikować filtr poprzez rozmiar odcisku oraz wielkość gniazda właśnie. Np. filtr (2,4) przechowuje odciski o długości 2 znaków w 4-elementowych koszach (gniazdach).
@@ -108,16 +108,16 @@ if (filter.buckets[index2].Insert(fingerprint))
 
 <p><img src="/images/cuckoo/insert.png" alt="insert" /></p>
 
-<h6 id="b2-próbujemy-dodać-do-bucket-1-ale-jest-tam-element-c1-który-zostaje-wyeksmitowany-do-bucket-0-ale-jest-też-dla-niego-wolne-miejsce-w-alternatywnym-bucket-2:9fc3faad544296f306615c66d2b26be0"><strong>b2</strong> próbujemy dodać do <strong>bucket[1]</strong>, ale jest tam element <strong>c1</strong>, który zostaje wyeksmitowany do <strong>bucket[0]</strong>, ale jest też dla niego wolne miejsce w alternatywnym <strong>bucket[2]</strong>.</h6>
+<h6 id="b2-próbujemy-dodać-do-bucket-1-ale-jest-tam-element-c1-który-zostaje-wyeksmitowany-do-bucket-0-ale-jest-też-dla-niego-wolne-miejsce-w-alternatywnym-bucket-2"><strong>b2</strong> próbujemy dodać do <strong>bucket[1]</strong>, ale jest tam element <strong>c1</strong>, który zostaje wyeksmitowany do <strong>bucket[0]</strong>, ale jest też dla niego wolne miejsce w alternatywnym <strong>bucket[2]</strong>.</h6>
 
-<h2 id="jeżeli-nie-widać-różnicy-to-po-co-przepłacać:9fc3faad544296f306615c66d2b26be0">Jeżeli nie widać różnicy, to po co przepłacać?</h2>
+<h2 id="jeżeli-nie-widać-różnicy-to-po-co-przepłacać">Jeżeli nie widać różnicy, to po co przepłacać?</h2>
 
 <p>Faworyzowałbym użycie Cuckoo Filter, dopóki aplikacja nie dodaje nowych danych (w dużej ilości) do filtra w krótkich odstępach czasu. Ze względu na rekursywną naturę algorytmu dodającego nowe elementy, która objawia się w momencie przepełnienia filtra, wydajność w porównaniu do Bloom Filtra wypada kiepsko. Autor publikacji dobrze to podsumował:</p>
 
 <blockquote>
 <p>[&hellip;] for reasonably large sized sets, for the same false positive rate as a corresponding Bloom filter, cuckoo filters use less space than Bloom filters, are faster on lookups (but slower on insertions/to construct), and amazingly also allow deletions of keys (which Bloom filters cannot do)</p>
 
-<h6 id="michael-mitzenmacher-2014-5:9fc3faad544296f306615c66d2b26be0"><a href="http://mybiasedcoin.blogspot.com/2014/10/cuckoo-filters.html">Michael Mitzenmacher (2014)</a></h6>
+<h6 id="michael-mitzenmacher-2014-5"><a href="http://mybiasedcoin.blogspot.com/2014/10/cuckoo-filters.html">Michael Mitzenmacher (2014)</a></h6>
 </blockquote>
 
 <p><em>PS. Pracuję nad implementacją filtra pod .NET Core, więc sprawdzajcie mojego githuba :)</em></p>
@@ -137,7 +137,7 @@ if (filter.buckets[index2].Insert(fingerprint))
     <a class="twitter-share-button"
       href="https://twitter.com/share"
       data-via="k_smigiel"
-      data-url="http://ksmigiel.com/2017/01/cuckoo-filters">
+      data-url="http://ksmigiel.com/2017/01/cuckoo-filters/">
       Tweet
     </a> 
   </div>

@@ -7,14 +7,14 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:700,600,400" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-  <link href="http://ksmigiel.com//index.xml" rel="alternate" type="application/rss+xml" title="Krzysztof Śmigiel | Blog" />
-  <meta name="title" content="http://ksmigiel.com/">
-  <link rel="canonical" href="http://ksmigiel.com/">
+  <link href="http://ksmigiel.com/index.xml" rel="alternate" type="application/rss+xml" title="Krzysztof Śmigiel | Blog" />
+  <meta name="title" content="http://ksmigiel.com">
+  <link rel="canonical" href="http://ksmigiel.com">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/github.min.css">
   <script src="/js/highlight.js"></script>
   <meta property="og:title" content="Krzysztof Śmigiel | Blog"/>
-  <meta property="og:url" content="http://ksmigiel.com/"/>
-  <meta property="og:image" content="http://ksmigiel.com//images/"/>   
+  <meta property="og:url" content="http://ksmigiel.com"/>
+  <meta property="og:image" content="http://ksmigiel.com/images/"/>   
   <meta property="og:site_name" content="Krzysztof Śmigiel | Blog">
 </head>
 <body>
@@ -56,7 +56,7 @@
 
 <p>Dzisiaj przedstawię proces powstawania odcinka DevTalk&rsquo;a od strony audio-technicznej. Nie zabraknie obrazków i orientalnych pojęć, więc każdy znajdzie coś dla siebie - nudy nie bedzię :)</p>
 
-<h2 id="przygotowanie-projektu:ee57e4abed1f49f2ac13a466738529d0">Przygotowanie projektu</h2>
+<h2 id="przygotowanie-projektu">Przygotowanie projektu</h2>
 
 <p>Pierwsze co robię przed przystąpieniem do jakiejkolwiek pracy nad nowym odcinkiem DevTalk&rsquo;a jest przygotowanie projektu:</p>
 
@@ -67,7 +67,7 @@
 
 <p><a href="/images/devtalk/01.jpg"><img src="/images/devtalk/01.jpg" alt="01" /></a></p>
 
-<h2 id="normalizacja:ee57e4abed1f49f2ac13a466738529d0">Normalizacja</h2>
+<h2 id="normalizacja">Normalizacja</h2>
 
 <p>Teraz następuje bardzo ważny krok nazywany <strong>normalizacją</strong>. Jego wynik będzie wypływał na produkcję przez cały okres pracy, aż po render, dlatego warto poświęcić temu elementowi więcej uwagi.</p>
 
@@ -80,14 +80,14 @@
 <li>kompresję sygnału audio</li>
 </ul>
 
-<h3 id="automatyzacja:ee57e4abed1f49f2ac13a466738529d0">Automatyzacja</h3>
+<h3 id="automatyzacja">Automatyzacja</h3>
 
 <p>Polega na zmianie w czasie pewnych parametrów sygnału (głośność, panorama lub inny dowolny parametr mapowany z <a href="https://en.wikipedia.org/wiki/Virtual_Studio_Technology">efektu VST</a>).
 Krzywą można dowolnie modelować, co pozwala na precyzyjne manipulowanie wspomnianymi parametrami w przeciwieństwie do kompresji, która działa &ldquo;automatycznie&rdquo;.</p>
 
 <p><a href="/images/devtalk/02.jpg"><img src="/images/devtalk/02.jpg" alt="02" /></a></p>
 
-<h3 id="kompresja:ee57e4abed1f49f2ac13a466738529d0">Kompresja</h3>
+<h3 id="kompresja">Kompresja</h3>
 
 <p>Kompresor automatycznie zmniejsza dynamikę fragmentu, którego głośność przekracza ustaloną z góry granicę. Najprostszy kompresor będzie charakteryzował się kilkoma parametrami:</p>
 
@@ -104,7 +104,7 @@ Krzywą można dowolnie modelować, co pozwala na precyzyjne manipulowanie wspom
 
 <p><a href="/images/devtalk/04.jpg"><img src="/images/devtalk/04.jpg" alt="04" /></a></p>
 
-<h3 id="punkt-odniesienia:ee57e4abed1f49f2ac13a466738529d0">Punkt odniesienia</h3>
+<h3 id="punkt-odniesienia">Punkt odniesienia</h3>
 
 <p>Podczas normalizacji należy monitorować sygnał i sprawdzać, czy poziomy rzeczywiście są już wyrównane i czy nie pojawia się gdzieś tzw. &ldquo;przester&rdquo; (czyli przekroczenie magicznej granicy 0dB). Osobiście dbam o to, aby sygnał z każdej ścieżki osobno oscylował w granicach -12dB RMS (jest to jednostka uśredniona) oraz aby &ldquo;peak&rdquo;, czyli najgłośniejszy element, nie przekraczał -6dB.</p>
 
@@ -112,7 +112,7 @@ Krzywą można dowolnie modelować, co pozwala na precyzyjne manipulowanie wspom
 
 <p>Ciekawych dlaczego 0dB w świecie cyfrowym jest sygnałem maksymalnym zapraszam do poczytania wytłumaczenia na <a href="http://sound.stackexchange.com/questions/25529/what-is-0-db-in-digital-audio">stackexchange</a>.</p>
 
-<h2 id="edycja:ee57e4abed1f49f2ac13a466738529d0">Edycja</h2>
+<h2 id="edycja">Edycja</h2>
 
 <p>Następnym krokiem będzie edycja sygnału audio. Mając przygotowany w poprzednich krokach materiał możemy przystąpić do jego edycji. W moim przypadku proces ten wygląda najczęściej w ten sposób:</p>
 
@@ -122,7 +122,7 @@ Krzywą można dowolnie modelować, co pozwala na precyzyjne manipulowanie wspom
 <li>cięcie - usuwanie drobnych pomyłek, przerw, oddechów, mlasknięć itp. itd., czyli pozbywanie się wszystkiego czego nie powinno być w ostatecznej wersji odcinka</li>
 </ul>
 
-<h2 id="mastering:ee57e4abed1f49f2ac13a466738529d0">Mastering</h2>
+<h2 id="mastering">Mastering</h2>
 
 <p>Na ten moment odcinek jest już prawie gotowy. Jeśli mix potrzebuje jakichkolwiek zmian, to powinny się one odbywać jedynie w ujęciu globalnym, tj. na ścieżce głównej. Zazwyczaj jest to drobna korekcja EQ, lekka kompresja, raczej nic znaczącego, a jednak :) Ostatnim elementem tego audio-łańcuchu jest <strong>limiter</strong>, który nasz mix wyrówna do ustalonego poziomu bliskiemu ~0dB, aby brzmiał tak samo głośno jak inne audio, podcasty, spotifaje itd. Potem zostaje render do wybranego przez nas formatu i gotowy produkt można publikować i czekać na lajki.</p>
 
@@ -141,7 +141,7 @@ Krzywą można dowolnie modelować, co pozwala na precyzyjne manipulowanie wspom
     <a class="twitter-share-button"
       href="https://twitter.com/share"
       data-via="k_smigiel"
-      data-url="http://ksmigiel.com/2015/11/devtalk-cz2">
+      data-url="http://ksmigiel.com/2015/11/devtalk-cz2/">
       Tweet
     </a> 
   </div>

@@ -6,160 +6,17 @@
     <description>Recent content in Hadoop on </description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Tue, 17 Feb 2015 21:51:00 +0100</lastBuildDate>
-    <atom:link href="http://ksmigiel.com/tags/hadoop/index.xml" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="http://ksmigiel.com/tags/hadoop/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Hadoop Streaming w F#</title>
-      <link>http://ksmigiel.com/2015/02/hadoop-streaming</link>
+      <link>http://ksmigiel.com/2015/02/hadoop-streaming/</link>
       <pubDate>Tue, 17 Feb 2015 21:51:00 +0100</pubDate>
       
-      <guid>http://ksmigiel.com/2015/02/hadoop-streaming</guid>
-      <description>
-
-&lt;p&gt;Klasyczny Hadoop posiada zestaw klas Javowych, dzięki którym możemy napisać swoje pierwsze zadanie &lt;strong&gt;MapReduce&lt;/strong&gt;. Jak zaglądniecie do &lt;a href=&#34;http://hadoop.apache.org/docs/r1.2.1/mapred_tutorial.html&#34;&gt;dokumentacji&lt;/a&gt;, to przekonacie się, że nie jest to najwygodniejsze rozwiązanie, ale świetnie nadaje się jako materiał do nauki. Przy zastosowaniach produkcyjnych zdecydowanie lepiej zwrócić się w stronę narzędzi takich jak &lt;a href=&#34;https://hive.apache.org/&#34;&gt;Hive&lt;/a&gt;, &lt;a href=&#34;http://pig.apache.org/&#34;&gt;Pig&lt;/a&gt; czy &lt;a href=&#34;https://github.com/twitter/scalding&#34;&gt;Scalding&lt;/a&gt;. Za pomocą specyficznej dla każdego składni można tworzyć zaawansowane analizy bez potrzeby pisania kodu low-level w Javie, np. &lt;strong&gt;HiveQL&lt;/strong&gt; jest językiem zbliżonym do SQL, a &lt;strong&gt;Pig Lating&lt;/strong&gt; ciekawym językiem proceduralnym. Oba są kompilowane do zadań MapReduce. W tym poście skupię się na czymś pośrodku, czyli &lt;strong&gt;Hadoop Streaming&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;streaming-api:7428b1f511329ebc1011ee8ee83894f8&#34;&gt;Streaming API&lt;/h2&gt;
-
-&lt;p&gt;Hadoop Streaming jest częścią dystrybucji Hadoop. Pozwala na tworzenie zadań w dowolnym języku (nawet skryptowym). Warunek jaki trzeba spełnić, to utworzenie dwóch plików wykonywalnych (Mapper i Reducer), które wartości zczytują z &lt;strong&gt;stdin&lt;/strong&gt;, a przetworzone odpowiednio dane wypisują do konsoli (&lt;strong&gt;stdout&lt;/strong&gt;). Jak tytuł posta wskazuje zaimplementowałem je w F#. Dopiero raczkuję w świecie programowania funkcyjnego, dlatego z chęcią przyjmę komentarze odnośnie poprawności kodu. Za przykładowe zadanie MapReduce posłuży nam standardowy &lt;strong&gt;word count&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;h4 id=&#34;mapper-fs:7428b1f511329ebc1011ee8ee83894f8&#34;&gt;Mapper.fs&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-fsharp&#34;&gt;open System
-open System.IO
-
-module Mapper =
-
-  [&amp;lt;EntryPoint&amp;gt;]
-  let main argv = 
-    let chars =
-      [| &#39; &#39;; &#39;.&#39;; &#39;,&#39;; &#39;!&#39;; &#39;;&#39;; &#39;?&#39;; &#39;|&#39;; &#39;-&#39;; &#39;{&#39;; &#39;}&#39;; &#39;:&#39;; &#39;(&#39;; &#39;)&#39; |]
-
-    match argv.Length with
-    | 1 -&amp;gt; Console.SetIn(new StreamReader(argv.[0]))
-    | _ -&amp;gt; ()
-
-    let isWord w =
-      let n = ref 0
-      not (Int32.TryParse(w, n))
-
-    let output (word:string) =
-      Console.WriteLine(&amp;quot;{0}\t{1}&amp;quot;, word.Trim(), 1)
-
-    Seq.initInfinite (fun _ -&amp;gt; Console.ReadLine())
-    |&amp;gt; Seq.takeWhile (fun line -&amp;gt; line &amp;lt;&amp;gt; null)
-    |&amp;gt; Seq.iter (fun (line : string) -&amp;gt; 
-      line.ToLower().Split(chars, StringSplitOptions.RemoveEmptyEntries)
-      |&amp;gt; Seq.filter isWord
-      |&amp;gt; Seq.iter output )
-    0
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Zamiast posługiwać się pętlą przy odczytywaniu streamu z stdin wykorzystałem funkcję &lt;code&gt;Seq.initInfinite()&lt;/code&gt;, która wykonuje się aż do spełnienia warunku zdefiniowanego w &lt;code&gt;Seq.takeWhile()&lt;/code&gt;. Do konsoli wypisujemy parę &amp;ldquo;&lt;strong&gt;klucz&lt;/strong&gt; &lt;strong&gt;wartość&lt;/strong&gt;&amp;rdquo; oddzielone znakiem &lt;strong&gt;tabulacji&lt;/strong&gt;. Ponieważ interesuje nas zliczanie słów, jako wartość wychodzącą z Mappera podajemy &lt;strong&gt;1&lt;/strong&gt;, czyli&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;word    1
-count    1
-example    1
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;itd. Reducer otrzymuje posortowany już stream takich par i powinien zwracać dane w ten sam sposób, natomiast w miejsce wartości wstawiamy sumę dla danego słowa (klucza).&lt;/p&gt;
-
-&lt;h4 id=&#34;reducer-fs:7428b1f511329ebc1011ee8ee83894f8&#34;&gt;Reducer.fs&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-fsharp&#34;&gt;open System
-open System.IO
-
-module Reducer =
-
-  [&amp;lt;EntryPoint&amp;gt;]
-  let main argv = 
-    match argv.Length with
-    | 1 -&amp;gt; Console.SetIn(new StreamReader(argv.[0]))
-    | _ -&amp;gt; ()
-
-    let currentWord = ref String.Empty
-    let count = ref 0
-
-    Seq.initInfinite (fun _ -&amp;gt; Console.ReadLine())
-    |&amp;gt; Seq.takeWhile (fun line -&amp;gt; line &amp;lt;&amp;gt; null)
-    |&amp;gt; Seq.iter (fun line -&amp;gt;
-      let splitted = line.Split(&#39;\t&#39;)
-      let word = (splitted.[0])
-
-      match (word) with
-      | word when word = !currentWord -&amp;gt;
-        incr count
-      | _ -&amp;gt;
-        if !currentWord &amp;lt;&amp;gt; String.Empty then
-          Console.WriteLine(&amp;quot;{0}\t{1}&amp;quot;, !currentWord, !count)
-        count := 1
-        currentWord := word)
-    |&amp;gt; ignore
-    Console.WriteLine(&amp;quot;{0}\t{1}&amp;quot;, !currentWord, !count)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;hdp:7428b1f511329ebc1011ee8ee83894f8&#34;&gt;HDP&lt;/h2&gt;
-
-&lt;p&gt;Hortonworks Data Platform (HDP) to gotowa dystrybucja Hadoopa, która zawiera preinstalowane i skonfigurowane narzędzia takie jak &lt;strong&gt;Hadoop&lt;/strong&gt;, &lt;strong&gt;Hive&lt;/strong&gt;, &lt;strong&gt;Pig&lt;/strong&gt;, &lt;strong&gt;HBase&lt;/strong&gt;, &lt;strong&gt;Ambari&lt;/strong&gt;, &lt;strong&gt;Cascading&lt;/strong&gt;, &lt;strong&gt;Oozie&lt;/strong&gt; czy &lt;strong&gt;Zookeeper&lt;/strong&gt; &lt;a href=&#34;http://docs.hortonworks.com/HDPDocuments/HDP2/HDP-2.2.0/Getting_Started_v22/media/01-RawContent/Getting%20Started/Full%20View.png&#34;&gt;(architektura HDP)&lt;/a&gt;. Ogólnie polecam rozwiązania firmy &lt;a href=&#34;http://hortonworks.com/&#34;&gt;Hortonworks&lt;/a&gt; - naprawdę świetnej jakości tutoriale i narzędzia. Chcąc poeksperymentować mamy dwie opcje do wyboru &lt;a href=&#34;http://hortonworks.com/hdp/downloads/&#34;&gt;(downloads)&lt;/a&gt;:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;instalacja HDP&lt;/li&gt;
-&lt;li&gt;uruchomienie maszyny wirtualnej (sandbox)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Wypóbowałem obydwie, ale na potrzeby tego posta skorzystam z sandboxa. Działa na systemie &lt;strong&gt;CentOS&lt;/strong&gt;, także podstawowa wiedza z systemów &lt;strong&gt;Unix&lt;/strong&gt; bardzo się przyda.  Instalacja i konfiguracja HDP na Windowsie to temat nadający się na osobnego posta.&lt;/p&gt;
-
-&lt;h2 id=&#34;mono:7428b1f511329ebc1011ee8ee83894f8&#34;&gt;mono&lt;/h2&gt;
-
-&lt;p&gt;Musimy sami doinstalować &lt;code&gt;mono&lt;/code&gt; i kompilator &lt;code&gt;fsharpc&lt;/code&gt;, żeby binarki Hadoopa mogły wykonać z terminala skompilowane pliki .exe.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo yum install mono
-sudo yum install fsharp
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Teraz wystarczy skompilować nasze pliki:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;fsharpc Mapper.fs
-fsharpc Reducer.fs
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;i możemy zacząc prawdziwą zabawę :)&lt;/p&gt;
-
-&lt;h2 id=&#34;hello-world-dla-big-data-czyli-word-count:7428b1f511329ebc1011ee8ee83894f8&#34;&gt;Hello world dla Big Data, czyli word count&lt;/h2&gt;
-
-&lt;p&gt;Nie przez przypadek wybrałem zliczanie słów jako przykład. Jest to swoisty &amp;ldquo;Hello world!&amp;rdquo; w świecie przetwarzania danych. Zliczymy 10 najczęściej występujących słów (dłuższych niż 3 litery, aby pozbyć się &amp;ldquo;się&amp;rdquo; i &amp;ldquo;aby&amp;rdquo;) w powieści &lt;strong&gt;Krzyżacy&lt;/strong&gt; Henryka Sienkiewicza. Wszystkie pliki i skrypty znajdziecie na moim &lt;a href=&#34;https://github.com/ksmigiel/hadoop-streaming-fharp&#34;&gt;githubie&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Uruchomienie joba odbywa się za pomocą komendy:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;hadoop jar /usr/hdp/current/hadoop-mapreduce-client/hadoop-streaming.jar
-    -files mapper.sh, reducer.sh, Mapper.exe, Reducer.exe
-    -input /user/ksmigiel/krzyzacy.txt
-    -output /users/ksmigiel/output
-    -mapper mapper.sh
-    -reducer reducer.sh
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;mapper.sh&lt;/strong&gt; i &lt;strong&gt;reducer.sh&lt;/strong&gt; to skrypty, które wykonują polecenie &lt;code&gt;mono [exe]&lt;/code&gt;.
-Input i output to ścieżka na HDFS, dlatego trzeba skopiować plik za pomocą &lt;code&gt;hdfs dfs -copyFromLocal &amp;lt;src&amp;gt; &amp;lt;dest&amp;gt;&lt;/code&gt;.
-Jeśli będziecie chcieli użyć dowolnego pliku tekstowego, pamiętajcie o kodowaniu w UTF-8 i konwersji znaków nowej linii za pomocą &lt;code&gt;dos2unix&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;I jeszcze na zakończenie skrypcik &lt;strong&gt;Pig&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;words = load &#39;/user/ksmigiel/out/part-00000&#39; using PigStorage() as (word:chararray, count:int);
-words_long = filter words by size(word) &amp;gt; 3;
-words_ordered = order words_long by count desc;
-top10 = limit words_ordered 10;
-dump top10;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;div&gt;
-  &lt;a href=&#34;https://plot.ly/~ksmigiel/17/&#34; target=&#34;_blank&#34; title=&#34;Krzyżacy word count&#34; style=&#34;display: block; text-align: center;&#34;&gt;&lt;img src=&#34;https://plot.ly/~ksmigiel/17.png&#34; alt=&#34;Krzyżacy word count&#34; style=&#34;max-width: 100%;width: 564px;&#34;  width=&#34;564&#34; onerror=&#34;this.onerror=null;this.src=&#39;https://plot.ly/404.png&#39;;&#34; /&gt;&lt;/a&gt;
-  &lt;script data-plotly=&#34;ksmigiel:17&#34; src=&#34;https://plot.ly/embed.js&#34; async&gt;&lt;/script&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&#34;podsumowanie:7428b1f511329ebc1011ee8ee83894f8&#34;&gt;Podsumowanie&lt;/h2&gt;
-
-&lt;p&gt;Stawianie pierwszych kroków z Hadoopem i jego przyległościami wymaga paru wolnych chwil. Jeśli nie macie doświadczenia z linuxowym terminalem, poruszanie się po sandboxie i jego obsługa mogą być kłopotliwe. Co prawda HDP udostępnia przyjemny interfejs webowy, z poziomu którego można uruchamiać zadania MapReduce napisanie w Pig lub HiveQL (jeszcze raz polecam tutoriale Hortonworks), ale chcąc poznać podstawy tej technologii dobrze jest zacząć od &amp;ldquo;niskiego poziomu&amp;rdquo;.&lt;/p&gt;
-</description>
+      <guid>http://ksmigiel.com/2015/02/hadoop-streaming/</guid>
+      <description>Klasyczny Hadoop posiada zestaw klas Javowych, dzięki którym możemy napisać swoje pierwsze zadanie MapReduce. Jak zaglądniecie do dokumentacji, to przekonacie się, że nie jest to najwygodniejsze rozwiązanie, ale świetnie nadaje się jako materiał do nauki. Przy zastosowaniach produkcyjnych zdecydowanie lepiej zwrócić się w stronę narzędzi takich jak Hive, Pig czy Scalding. Za pomocą specyficznej dla każdego składni można tworzyć zaawansowane analizy bez potrzeby pisania kodu low-level w Javie, np. HiveQL jest językiem zbliżonym do SQL, a Pig Lating ciekawym językiem proceduralnym.</description>
     </item>
     
   </channel>

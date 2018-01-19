@@ -6,151 +6,28 @@
     <description>Recent content in Typescript on </description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Sat, 23 May 2015 18:18:10 +0200</lastBuildDate>
-    <atom:link href="http://ksmigiel.com/tags/typescript/index.xml" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="http://ksmigiel.com/tags/typescript/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>TypeScript i pliki definicji</title>
-      <link>http://ksmigiel.com/2015/05/jsblocks-dts</link>
+      <link>http://ksmigiel.com/2015/05/jsblocks-dts/</link>
       <pubDate>Sat, 23 May 2015 18:18:10 +0200</pubDate>
       
-      <guid>http://ksmigiel.com/2015/05/jsblocks-dts</guid>
-      <description>
-
-&lt;p&gt;Dzisiaj chciałem przybliżyć kwestię plików definicji do TypeScript. Jeśli zdarzyło wam się pracować z tym językiem, to na pewno wiecie o czym mówię. Jeśli natomiast nie macie pojęcia co to jest - zapraszam do lektury!&lt;/p&gt;
-
-&lt;h2 id=&#34;typescript-typowany-javascript:08ab5ad69c9b5eb0665d1a4bb3fb6240&#34;&gt;TypeScript - typowany JavaScript&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://www.typescriptlang.org/&#34;&gt;TypeScript&lt;/a&gt; to język kompilowany do JS&amp;rsquo;a prosto od Microsoftu. W wielkim skrócie pozwala na definiowanie typów dla zmiennych, co za tym idzie, deklarowanie klas i interfejsów. Chyba nie trzeba tłumaczyć jakim ułatwieniem staje się taka możliwość w pracy każdego programisty, dla którego środowisko &amp;ldquo;js&amp;rsquo;owe&amp;rdquo; nie jest codziennością, a przychodzi ze świata &amp;ldquo;mocno typowanego&amp;rdquo; (C#, Java, cpp).&lt;/p&gt;
-
-&lt;p&gt;Tworząc tego typu rozwiązanie Microsoft bardzo elegancko zachęca programistów C# do spróbowania swoich sił w tworzeniu aplikacji przy użyciu całego js-stack. Dzięki podobieństwom w składni i modelu OOP (w przeciwieństwie do klasycznego prototypowania w JavaScript) bardzo szybko można zacząć pisać pierwsze sensowne linie kodu, bez potrzeby spędzenia godzin na nauce składni etc. Oczywiście znajomość JS mile widziana, wręcz wskazana. Spójrzcie na różnice w TS &amp;lt;-&amp;gt; JS na przykładzie kompilacji z oficjalnej strony:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-typescript&#34;&gt;// test.ts
-class Greeter {
-    greeting: string;
-    constructor(message: string) {
-        this.greeting = message;
-    }
-    greet() {
-        return &amp;quot;Hello, &amp;quot; + this.greeting;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;// test.js
-var Greeter = (function () {
-    function Greeter(message) {
-        this.greeting = message;
-    }
-    Greeter.prototype.greet = function () {
-        return &amp;quot;Hello, &amp;quot; + this.greeting;
-    };
-    return Greeter;
-})();
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Powyższy kod jest chyba samowyjaśniającysię. Ta śmieszna funkcja w funkcji wywołana natychmiast to tzw. &lt;a href=&#34;http://en.wikipedia.org/wiki/Immediately-invoked_function_expression&#34;&gt;IIFE&lt;/a&gt;. Popularny wzorzec, must-known.&lt;/p&gt;
-
-&lt;p&gt;TypeScript jest na tyle dojrzały, że nawet Google wraz z jego &lt;a href=&#34;https://angular.io/&#34;&gt;Angular 2.0&lt;/a&gt; postanowili wprowadzić natywne wsparcie dla niego!&lt;/p&gt;
-
-&lt;h2 id=&#34;definitywnie-typowany:08ab5ad69c9b5eb0665d1a4bb3fb6240&#34;&gt;Definitywnie typowany!&lt;/h2&gt;
-
-&lt;p&gt;Zastanawiacie się zapewne w jaki sposób można użyć TypeScript&amp;rsquo;a z istniejącymi już bibliotekami takimi jak: angular, knockout, backbone itd. Otóż istnieje &lt;strong&gt;&lt;a href=&#34;https://github.com/borisyankov/DefinitelyTyped&#34;&gt;repozytorium&lt;/a&gt;&lt;/strong&gt; definicji do przeróżnych frameworków tworzone przez społeczność open source. Sam chcąc bliżej poznać TS postanowiłem udzielić się i puściłem pull requesta z definicjami do &lt;a href=&#34;http://jsblocks.com/&#34;&gt;blocks&lt;/a&gt;. &lt;strong&gt;blocks&lt;/strong&gt; to jeden z wielu frameworków &lt;em&gt;MV*&lt;/em&gt; (dzień bez nowego frameworka js to dzień stracony) jednak zainteresował mnie ze względu na swoją prostotę i połączenie knockout+backbone (observable i modele).&lt;/p&gt;
-
-&lt;h2 id=&#34;blocks-d-ts:08ab5ad69c9b5eb0665d1a4bb3fb6240&#34;&gt;blocks.d.ts&lt;/h2&gt;
-
-&lt;p&gt;Deklaracja typów do istniejącego już kodu odbywa się za pomocą &lt;a href=&#34;http://www.typescriptlang.org/Handbook#modules-working-with-other-javascript-libraries&#34;&gt;Ambient External Modules&lt;/a&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-typescript&#34;&gt;declare var blocks: BlocksStatic;
-
-declare module &amp;quot;blocks&amp;quot; {
-    export = blocks;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Deklarując moduł w cudzysłowie &amp;ldquo;nadpisujemy&amp;rdquo; oryginalny moduł zaimportowany w pliku z aplikacją:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-typescript&#34;&gt;/// &amp;lt;reference path=&amp;quot;blocks.d.ts&amp;quot; /&amp;gt;
-import blocks = require(&#39;blocks&#39;);
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Jest to całkiem dobra pozycja wyjściowa do otypowania dowolnej biblioteki. Przekonacie się, że całkiem pokaźna ilość bibliotek została już przetłumaczona na TS przeglądając wspomniane wyżej repozytorium.&lt;/p&gt;
-
-&lt;p&gt;TS automagicznie scala oryginalną bibliotekę z naszą definicją typów. Od teraz mamy piękny IntelliSense podpowiadający składnię, parametry funkcji i jej zwracaną wartość (patrz &lt;a href=&#34;http://usejsdoc.org/&#34;&gt;jsdoc&lt;/a&gt;) oraz sprawdzanie składni w locie - wszystko prawie jak w C#!&lt;/p&gt;
-
-&lt;p&gt;Na moim &lt;a href=&#34;https://github.com/ksmigiel/DefinitelyTyped/tree/master/blocks&#34;&gt;githubie&lt;/a&gt; znajdziecie źrodła całego pliku definicji. Dokumentacja pochodzi oczywiście z oficjalnej strony autora. Co jak co, ale ta aktywność związana z opisywaniem typów nauczyła mnie TypeScript&amp;rsquo;a i jego zawiłości szybciej i przyjemniej niż nie jedna książka :)&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.typescriptlang.org/&#34;&gt;http://www.typescriptlang.org/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://en.wikipedia.org/wiki/Immediately-invoked_function_expression&#34;&gt;http://en.wikipedia.org/wiki/Immediately-invoked_function_expression&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://angular.io/&#34;&gt;https://angular.io/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/borisyankov/DefinitelyTyped&#34;&gt;https://github.com/borisyankov/DefinitelyTyped&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://jsblocks.com/&#34;&gt;http://jsblocks.com/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.typescriptlang.org/Handbook#modules-working-with-other-javascript-libraries&#34;&gt;http://www.typescriptlang.org/Handbook#modules-working-with-other-javascript-libraries&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://usejsdoc.org/&#34;&gt;http://usejsdoc.org/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/ksmigiel/DefinitelyTyped/tree/master/blocks&#34;&gt;https://github.com/ksmigiel/DefinitelyTyped/tree/master/blocks&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
+      <guid>http://ksmigiel.com/2015/05/jsblocks-dts/</guid>
+      <description>Dzisiaj chciałem przybliżyć kwestię plików definicji do TypeScript. Jeśli zdarzyło wam się pracować z tym językiem, to na pewno wiecie o czym mówię. Jeśli natomiast nie macie pojęcia co to jest - zapraszam do lektury!
+TypeScript - typowany JavaScript TypeScript to język kompilowany do JS&amp;rsquo;a prosto od Microsoftu. W wielkim skrócie pozwala na definiowanie typów dla zmiennych, co za tym idzie, deklarowanie klas i interfejsów. Chyba nie trzeba tłumaczyć jakim ułatwieniem staje się taka możliwość w pracy każdego programisty, dla którego środowisko &amp;ldquo;js&amp;rsquo;owe&amp;rdquo; nie jest codziennością, a przychodzi ze świata &amp;ldquo;mocno typowanego&amp;rdquo; (C#, Java, cpp).</description>
     </item>
     
     <item>
       <title>Visual Studio Code</title>
-      <link>http://ksmigiel.com/2015/05/vs-code</link>
+      <link>http://ksmigiel.com/2015/05/vs-code/</link>
       <pubDate>Thu, 14 May 2015 16:38:00 +0100</pubDate>
       
-      <guid>http://ksmigiel.com/2015/05/vs-code</guid>
-      <description>
-
-&lt;p&gt;Microsoft na tegorocznej konferencji &lt;strong&gt;//build/&lt;/strong&gt; zaskoczył nas paroma nowinkami. Jeśli nie jesteście na bieżąco polecam zerknąć na &lt;a href=&#34;http://blogs.technet.com/b/uktechnet/archive/2015/04/30/announcements-from-build-2015.aspx&#34;&gt;podsumowanie&lt;/a&gt;. Każdy znajdzie coś dla siebie.&lt;/p&gt;
-
-&lt;h2 id=&#34;vs-code:6d2be7abc42720062e9271b30ee0bbbf&#34;&gt;VS Code&lt;/h2&gt;
-
-&lt;p&gt;Mnie osobiście najbardziej spodobał się edytor &lt;a href=&#34;http://code.visualstudio.com&#34;&gt;&lt;strong&gt;Visual Studio Code&lt;/strong&gt;&lt;/a&gt;, czyli taki Sublime Text w Microsoftowym wydaniu. W całości oparty na node.js i edytorze &lt;a href=&#34;https://atom.io/&#34;&gt;&lt;strong&gt;Atom&lt;/strong&gt;&lt;/a&gt; od GitHuba, a konkretnie na bibliotece &lt;a href=&#34;https://github.com/atom/electron&#34;&gt;&lt;strong&gt;Electron&lt;/strong&gt;&lt;/a&gt; umożliwiającej pisanie cross-platformowych desktopowych aplikacji w JS/HTML/CSS. Główne cechy wyróżniające Code na tle innych edytorów to m.in.:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;cross-platformowość (sprawdzałem i faktycznie tak jest! :) )&lt;/li&gt;
-&lt;li&gt;debugging aplikacji napisanych w node.js (ASP.NET 5 w przygotowaniu)&lt;/li&gt;
-&lt;li&gt;tasks - integracja z popularnymi narzędziami do automatyzacji buildów, testowania i deployowania (Make, Ant, Gulp, Jake, Rake, MSBuild)&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://schemastore.org/json/&#34;&gt;JSON schema&lt;/a&gt; - code-completion w plikach konfiguracyjnych JSON&lt;/li&gt;
-&lt;li&gt;wsparcie TypeScript (code-completion, &lt;em&gt;&amp;ldquo;go to definition&amp;rdquo;&lt;/em&gt; etc.)&lt;/li&gt;
-&lt;li&gt;fuzzy-search - przeszukiwanie plików projektu oraz ustawień edytora (&lt;em&gt;Ctrl+E&lt;/em&gt; i &lt;em&gt;Ctrl-Shift-P&lt;/em&gt;)&lt;/li&gt;
-&lt;li&gt;parsowanie i podgląd &lt;a href=&#34;http://daringfireball.net/projects/markdown/&#34;&gt;Markdown&lt;/a&gt; w locie - w ten sposób powstaje ten post :)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;W obecnej wersji brakuje mi klawiszologii VIM&amp;rsquo;a (jak się człowiek raz przyzwyczai to potem wszystkie inne skróty klawiszowe wydają się bezsensowne) oraz możliwości tworzenia własnych snippetów, co mam nadzieję zostanie dodane w nadchodzących wydaniach.&lt;/p&gt;
-
-&lt;p&gt;Polecam zapoznać się z tym edytorem. Pomimo wersji &lt;em&gt;Preview&lt;/em&gt; posiada masę fajnych funkcjonalności.&lt;/p&gt;
-
-&lt;h2 id=&#34;monaco:6d2be7abc42720062e9271b30ee0bbbf&#34;&gt;Monaco?&lt;/h2&gt;
-
-&lt;p&gt;Jeśli po ściągnięciu Code&amp;rsquo;a masz wrażenie graniczące z pewnością, że gdzieś już to widziałeś to masz całkowitą rację! Microsoft do jego budowy oprócz wspomnianego Atoma wykorzystał &lt;a href=&#34;http://blogs.msdn.com/b/monaco/archive/2014/06/26/how-to-access-visual-studio-online-monaco-from-the-new-azure-portal.aspx&#34;&gt;&lt;strong&gt;Visual Studio Monaco&lt;/strong&gt;&lt;/a&gt;, które jako rozszerzenie można doinstalować w panelu &lt;strong&gt;Azure&lt;/strong&gt; do dowolnej aplikacji na nim hostowanej. Monaco to webowy edytor w &lt;em&gt;&amp;ldquo;chmurze&amp;rdquo;&lt;/em&gt; zintegrowany z wierszem poleceń (dostęp do &lt;code&gt;node&lt;/code&gt; i &lt;code&gt;npm&lt;/code&gt;). Preinstalowany node.js pozwala na hostowanie aplikacji webowych przy użyciu &lt;a href=&#34;https://github.com/tjanczuk/iisnode&#34;&gt;iisnode&lt;/a&gt;. Może posłużyć jako pomoc podczas szybkiej edycji pliku na serwerze albo jako IDE w chmurze :)&lt;/p&gt;
-
-&lt;p&gt;Od jakiegoś czasu na blogu MSDN zaprzestano informować o jakichkolwiek newsach związanych z rozwojem Monaco. Jednak po konferencji &lt;strong&gt;//build/&lt;/strong&gt; nie mam wątpliwości, że Microsoft szykował się na premierę swojego nowego edytora i tak na prawdę tworzył dwa narzędzia równocześnie (pod spodem są te same bebechy: node.js i WebKit).&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;protip: naciśnij F12 w edytorze &lt;strong&gt;Code&lt;/strong&gt; i wszystko jasne!&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Jestem ciekawy czy w przyszłości te dwa projekty staną się jednym tworem.&lt;/p&gt;
-
-&lt;h2 id=&#34;changes-changes-everywhere:6d2be7abc42720062e9271b30ee0bbbf&#34;&gt;Changes, changes everywhere!&lt;/h2&gt;
-
-&lt;p&gt;Muszę przyznać, że lubię ten &amp;ldquo;nowy Microsoft&amp;rdquo;. Edge, ASP.NET vNext, DNX, Code czy rozwój PowerShella sprawiają, że Windows i jego cały ekosystem stają się bardziej &amp;ldquo;developer-friendly&amp;rdquo;. To chyba dobrze, że chcą przyciągnąc do platformy developerów - w końcu to oni ją tworzą.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&#34;http://blogs.technet.com/b/uktechnet/archive/2015/04/30/announcements-from-build-2015.aspx&#34;&gt;http://blogs.technet.com/b/uktechnet/archive/2015/04/30/announcements-from-build-2015.aspx&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://code.visualstudio.com&#34;&gt;http://code.visualstudio.com&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://atom.io/&#34;&gt;https://atom.io/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/atom/electron&#34;&gt;https://github.com/atom/electron&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://schemastore.org/json/&#34;&gt;http://schemastore.org/json/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://daringfireball.net/projects/markdown/&#34;&gt;http://daringfireball.net/projects/markdown/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://blogs.msdn.com/b/monaco/archive/2014/06/26/how-to-access-visual-studio-online-monaco-from-the-new-azure-portal.aspx&#34;&gt;http://blogs.msdn.com/b/monaco/archive/2014/06/26/how-to-access-visual-studio-online-monaco-from-the-new-azure-portal.aspx&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/tjanczuk/iisnode&#34;&gt;https://github.com/tjanczuk/iisnode&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
+      <guid>http://ksmigiel.com/2015/05/vs-code/</guid>
+      <description>Microsoft na tegorocznej konferencji //build/ zaskoczył nas paroma nowinkami. Jeśli nie jesteście na bieżąco polecam zerknąć na podsumowanie. Każdy znajdzie coś dla siebie.
+VS Code Mnie osobiście najbardziej spodobał się edytor Visual Studio Code, czyli taki Sublime Text w Microsoftowym wydaniu. W całości oparty na node.js i edytorze Atom od GitHuba, a konkretnie na bibliotece Electron umożliwiającej pisanie cross-platformowych desktopowych aplikacji w JS/HTML/CSS. Główne cechy wyróżniające Code na tle innych edytorów to m.</description>
     </item>
     
   </channel>

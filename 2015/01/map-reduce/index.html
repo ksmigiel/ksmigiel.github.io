@@ -7,14 +7,14 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:700,600,400" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-  <link href="http://ksmigiel.com//index.xml" rel="alternate" type="application/rss+xml" title="Krzysztof Śmigiel | Blog" />
-  <meta name="title" content="http://ksmigiel.com/">
-  <link rel="canonical" href="http://ksmigiel.com/">
+  <link href="http://ksmigiel.com/index.xml" rel="alternate" type="application/rss+xml" title="Krzysztof Śmigiel | Blog" />
+  <meta name="title" content="http://ksmigiel.com">
+  <link rel="canonical" href="http://ksmigiel.com">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/github.min.css">
   <script src="/js/highlight.js"></script>
   <meta property="og:title" content="Krzysztof Śmigiel | Blog"/>
-  <meta property="og:url" content="http://ksmigiel.com/"/>
-  <meta property="og:image" content="http://ksmigiel.com//images/"/>   
+  <meta property="og:url" content="http://ksmigiel.com"/>
+  <meta property="og:image" content="http://ksmigiel.com/images/"/>   
   <meta property="og:site_name" content="Krzysztof Śmigiel | Blog">
 </head>
 <body>
@@ -52,11 +52,11 @@
 
 <p>Zapewne słyszeliście o <strong>MapReduce</strong>, a jeśli nie, to teraz macie okazję poczytać. <strong>MapReduce</strong> jest frameworkiem służącym do przetwarzania dużych zbiorów danych w sposób zrównoleglony. Ostatnimi czasy stał się bardzo popularny dzięki platformom takim jak <a href="http://hadoop.apache.org">Hadoop</a> (o nim w kolejnym poście) czy <a href="https://spark.apache.org">Spark</a>. Wykorzystywany jest wszędzie tam, gdzie dane liczy się w terabajtach. Duże firmy produkują dużo danych, więc znajduje on zastosowanie np. w Google czy Spotify.</p>
 
-<h2 id="funkcyjnie:d6a86094d7ff3310f4dae7e5d0b58f2e">Funkcyjnie</h2>
+<h2 id="funkcyjnie">Funkcyjnie</h2>
 
 <p>Na początku chciałem wspomnieć o dwóch ważnych rzeczach: <code>map()</code> i <code>reduce()</code>. Te dwie funkcje, które są elementami języków funkcyjnych (choć np. C# ma swoje odpowiedniki w LINQ: <code>Select()</code> i <code>Aggregate()</code>) działają w analogiczny sposób do MapReduce, tyle że na kolekcjach. Tak więc nazwa nie wzięła się znikąd.</p>
 
-<h4 id="f-35:d6a86094d7ff3310f4dae7e5d0b58f2e">F&#35;</h4>
+<h4 id="f-35">F&#35;</h4>
 
 <p><code>map()</code> aplikuje funkcję dla każdego elementu z kolekcji:</p>
 
@@ -76,7 +76,7 @@ sample |&gt; List.reduce (fun a b -&gt; a + b)
 (* val it : int = 15 *)
 </code></pre>
 
-<h4 id="c-35:d6a86094d7ff3310f4dae7e5d0b58f2e">C&#35;</h4>
+<h4 id="c-35">C&#35;</h4>
 
 <p>I analogicznie przy użyciu LINQ</p>
 
@@ -87,7 +87,7 @@ sample.Aggregate((a, b) =&gt; a + b);
 
 <p>Operacje te prezentują prosty workflow jaki przeprowadza się na danych i w wersji rozszerzonej jest on wykorzystywany w MapReduce.</p>
 
-<h2 id="map-reduce-mapreduce:d6a86094d7ff3310f4dae7e5d0b58f2e">map() + reduce() -&gt; MapReduce</h2>
+<h2 id="map-reduce-mapreduce">map() + reduce() -&gt; MapReduce</h2>
 
 <p>Wprowadźmy kilka pojęć: węzeł <strong>(node)</strong> to jeden z wielu komputerów biorących udział w tym całym zamieszaniu. Grupa takich komputerów o podobnej do siebie konfiguracji, będących w tej samej sieci nazywa się klastrem <strong>(cluster)</strong>. To powinno wystarczyć do zrozumienia zasady działania MapReduce, choć ludzie zaznajomieni z tematem prawdopodobnie zamkną przeglądarkę z powodu takiej trywializacji :]</p>
 
@@ -116,7 +116,7 @@ order by id
     <a class="twitter-share-button"
       href="https://twitter.com/share"
       data-via="k_smigiel"
-      data-url="http://ksmigiel.com/2015/01/map-reduce">
+      data-url="http://ksmigiel.com/2015/01/map-reduce/">
       Tweet
     </a> 
   </div>

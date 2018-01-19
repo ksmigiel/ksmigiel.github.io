@@ -7,14 +7,14 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:700,600,400" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-  <link href="http://ksmigiel.com//index.xml" rel="alternate" type="application/rss+xml" title="Krzysztof Śmigiel | Blog" />
-  <meta name="title" content="http://ksmigiel.com/">
-  <link rel="canonical" href="http://ksmigiel.com/">
+  <link href="http://ksmigiel.com/index.xml" rel="alternate" type="application/rss+xml" title="Krzysztof Śmigiel | Blog" />
+  <meta name="title" content="http://ksmigiel.com">
+  <link rel="canonical" href="http://ksmigiel.com">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/github.min.css">
   <script src="/js/highlight.js"></script>
   <meta property="og:title" content="Krzysztof Śmigiel | Blog"/>
-  <meta property="og:url" content="http://ksmigiel.com/"/>
-  <meta property="og:image" content="http://ksmigiel.com//images/"/>   
+  <meta property="og:url" content="http://ksmigiel.com"/>
+  <meta property="og:image" content="http://ksmigiel.com/images/"/>   
   <meta property="og:site_name" content="Krzysztof Śmigiel | Blog">
 </head>
 <body>
@@ -54,7 +54,7 @@
 
 <p>Dzisiaj chciałem przybliżyć kwestię plików definicji do TypeScript. Jeśli zdarzyło wam się pracować z tym językiem, to na pewno wiecie o czym mówię. Jeśli natomiast nie macie pojęcia co to jest - zapraszam do lektury!</p>
 
-<h2 id="typescript-typowany-javascript:08ab5ad69c9b5eb0665d1a4bb3fb6240">TypeScript - typowany JavaScript</h2>
+<h2 id="typescript-typowany-javascript">TypeScript - typowany JavaScript</h2>
 
 <p><a href="http://www.typescriptlang.org/">TypeScript</a> to język kompilowany do JS&rsquo;a prosto od Microsoftu. W wielkim skrócie pozwala na definiowanie typów dla zmiennych, co za tym idzie, deklarowanie klas i interfejsów. Chyba nie trzeba tłumaczyć jakim ułatwieniem staje się taka możliwość w pracy każdego programisty, dla którego środowisko &ldquo;js&rsquo;owe&rdquo; nie jest codziennością, a przychodzi ze świata &ldquo;mocno typowanego&rdquo; (C#, Java, cpp).</p>
 
@@ -88,11 +88,11 @@ var Greeter = (function () {
 
 <p>TypeScript jest na tyle dojrzały, że nawet Google wraz z jego <a href="https://angular.io/">Angular 2.0</a> postanowili wprowadzić natywne wsparcie dla niego!</p>
 
-<h2 id="definitywnie-typowany:08ab5ad69c9b5eb0665d1a4bb3fb6240">Definitywnie typowany!</h2>
+<h2 id="definitywnie-typowany">Definitywnie typowany!</h2>
 
 <p>Zastanawiacie się zapewne w jaki sposób można użyć TypeScript&rsquo;a z istniejącymi już bibliotekami takimi jak: angular, knockout, backbone itd. Otóż istnieje <strong><a href="https://github.com/borisyankov/DefinitelyTyped">repozytorium</a></strong> definicji do przeróżnych frameworków tworzone przez społeczność open source. Sam chcąc bliżej poznać TS postanowiłem udzielić się i puściłem pull requesta z definicjami do <a href="http://jsblocks.com/">blocks</a>. <strong>blocks</strong> to jeden z wielu frameworków <em>MV*</em> (dzień bez nowego frameworka js to dzień stracony) jednak zainteresował mnie ze względu na swoją prostotę i połączenie knockout+backbone (observable i modele).</p>
 
-<h2 id="blocks-d-ts:08ab5ad69c9b5eb0665d1a4bb3fb6240">blocks.d.ts</h2>
+<h2 id="blocks-d-ts">blocks.d.ts</h2>
 
 <p>Deklaracja typów do istniejącego już kodu odbywa się za pomocą <a href="http://www.typescriptlang.org/Handbook#modules-working-with-other-javascript-libraries">Ambient External Modules</a></p>
 
@@ -133,7 +133,7 @@ import blocks = require('blocks');
     <a class="twitter-share-button"
       href="https://twitter.com/share"
       data-via="k_smigiel"
-      data-url="http://ksmigiel.com/2015/05/jsblocks-dts">
+      data-url="http://ksmigiel.com/2015/05/jsblocks-dts/">
       Tweet
     </a> 
   </div>

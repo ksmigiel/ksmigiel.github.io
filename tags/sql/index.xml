@@ -6,103 +6,17 @@
     <description>Recent content in Sql on </description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Sun, 20 Dec 2015 20:26:38 +0100</lastBuildDate>
-    <atom:link href="http://ksmigiel.com/tags/sql/index.xml" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="http://ksmigiel.com/tags/sql/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>U-SQL i Azure Data Lake</title>
-      <link>http://ksmigiel.com/2015/12/u-sql</link>
+      <link>http://ksmigiel.com/2015/12/u-sql/</link>
       <pubDate>Sun, 20 Dec 2015 20:26:38 +0100</pubDate>
       
-      <guid>http://ksmigiel.com/2015/12/u-sql</guid>
-      <description>
-
-&lt;p&gt;Nie skłamię twierdząc, że &lt;strong&gt;Big Data&lt;/strong&gt; jest obok &lt;strong&gt;IoT&lt;/strong&gt;, &lt;strong&gt;machine learningu&lt;/strong&gt; czy &lt;strong&gt;drukowania 3D&lt;/strong&gt; w top 5 jeśli chodzi o modne pojęcia i zagadnienia wyznaczające trendy w świecie IT, tworzące nowe gałęzie w tej dziedzinie. Ponieważ Microsoft w ostatnim czasie realizuje politykę bycia &amp;ldquo;na topie&amp;rdquo; (publiczne repozytoria na GitHub&amp;rsquo;ie, .NET na Linuxie - DNX i Kestrel etc.) nie mogło ich też zabraknąć w tak gorącym temacie jakim jest obecnie Big Data. Efektem popularyzacji Hadoopa i jego przyległości było w tym wypadku otworzenie platformy &lt;a href=&#34;https://azure.microsoft.com/pl-pl/services/hdinsight/&#34;&gt;HDInsight&lt;/a&gt; na chmurze Azure. Za pomocą rozbudowanego interfejsu webowego z łatwością możemy tworzyć klastry Hadoop&amp;rsquo;a, a z poziomu Visual Studio używając SDK projektować &lt;a href=&#34;https://azure.microsoft.com/pl-pl/documentation/articles/hdinsight-storm-develop-csharp-visual-studio-topology/&#34;&gt;topologie Storm&amp;rsquo;a&lt;/a&gt; do przetwarzania strumieniowego i wdrażać je prosto do Azure. Dokumentacja zawiera naprawdę sporo informacji na różnym poziomie zaawansowania, a Azure oferuje 30 dni triala, więc nic tylko zakładać konto i eksperymentować.&lt;/p&gt;
-
-&lt;h2 id=&#34;azure-data-lake:0f75fabf8504a87dff62df1f8eafb8e8&#34;&gt;Azure Data Lake&lt;/h2&gt;
-
-&lt;p&gt;Opisany wyżej poziom abstrakcji okazał się niewystarczający. O ile programiści z konfiguracją klastrów i pisaniem zadań MapReduce poradzą sobie bez problemu, to analitycy danych pracujący na co dzień z SQL&amp;rsquo;em i Excelem już nie koniecznie. Chcąc ułatwić osobom &amp;ldquo;mniej technicznym&amp;rdquo; dostęp do technologii, pod koniec września tego roku Microsoft zapowiedział uruchomienie nowego serwisu: &lt;a href=&#34;http://blogs.technet.com/b/dataplatforminsider/archive/2015/09/28/microsoft-expands-azure-data-lake-to-unleash-big-data-productivity.aspx&#34;&gt;&lt;strong&gt;Azure Data Lake&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
-
-&lt;div style=&#34;text-align: center&#34;&gt;
-  &lt;img src=&#34;http://blogs.technet.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-60-54/928Pic1.png&#34; /&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Jest to serwis, który osiągnięcie konkretnych celów biznesowych stawia nad konfigurację rozproszonej architektury. Pozwala skupić się na logice aplikacji, zamiast na skomplikowanym systemie zależności potrzebnym do jej poprawnego działania. Microsoft inwestując w tego typu technologie Big Data / analizy danych pragranie ułatwić pracę z danymi każdego typu, wielkości i szybkości (czyli tzw. 3xV: &lt;a href=&#34;http://blog.sqlauthority.com/2013/10/02/big-data-what-is-big-data-3-vs-of-big-data-volume-velocity-and-variety-day-2-of-21/&#34;&gt;Volume, Velocity, Variety&lt;/a&gt;) używając do tego dowolnych narzędzi, języków czy frameworków.&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;&amp;ldquo;Our goal is to make big data technology simpler and more accessible to the greatest number of people possible. This includes developers, data scientists, analysts, application developers, and also businesspeople and mainstream IT managers.&amp;rdquo;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Każdy kto próbował samodzielnie uruchomić Hadoopa wraz z całą infrastrukturą wie jak bardzo jest to czasochłonne. Rozwiązanie &amp;ldquo;code-based&amp;rdquo; daje ogromne możliwości, wymaga jednak sporej inwestycji czasu, aby je opanować. Programista często musi zadbać o poprawną synchronizację i współbieżność samodzielnie. Natomiast SQL i języki SQL-podobne, takie jak &lt;a href=&#34;https://hive.apache.org/&#34;&gt;Hive&lt;/a&gt; są relatywnie łatwe, ale brak w nich właśnie tej elastyczności jaką cechuje poprzednie rozwiązanie, jednakże problemy ze skalowalnością, optymalizacją i współbieżnością nie są już tutaj odpowiedzialnością developera.&lt;/p&gt;
-
-&lt;h2 id=&#34;u-sql:0f75fabf8504a87dff62df1f8eafb8e8&#34;&gt;U-SQL&lt;/h2&gt;
-
-&lt;p&gt;I tak o to Microsoft tworzy całkowicie nowy język do analizy danych &lt;strong&gt;U-SQL&lt;/strong&gt;, będący hybrydą dwóch paradygmatów: deklaratywnego i proceduralnego. Teraz z poziomu kodu przypominającego SQL (w rzeczywistości wzorowany na T-SQL i ANSI SQL) możemy korzystać z dobrodziejstw C#, co pozwala na używanie typów jak i wyrażeń lambda (LINQ) m.in w zapytaniu &lt;em&gt;SELECT&lt;/em&gt;. Brzmi niesamowicie, nieprawdaż? Co więcej nic nie stoi na przeszkodzie, aby podpiąć pod zapytanie referencję do biblioteki i użyć zewnętrznego kodu. Daje to przeogromne możliwości w budowaniu rozwiązań analitycznych zarówno dla programistów jak i analityków.
-Ponieważ specyfikacja języka nie jest jeszcze w pełni gotowa, a Azure Data Lake jest (jak sam to określa) w &amp;ldquo;wersji zapoznawczej&amp;rdquo;, przedstawię tylko podstawową składnię i smaczki, co by nabrać apetytu na następne posty :)&lt;/p&gt;
-
-&lt;h3 id=&#34;extractory-i-outputtery:0f75fabf8504a87dff62df1f8eafb8e8&#34;&gt;Extractory i Outputtery&lt;/h3&gt;
-
-&lt;p&gt;Azure Data Lake składa się z dwóch serwisów: ADL &lt;strong&gt;Analytics&lt;/strong&gt; i ADL &lt;strong&gt;Store&lt;/strong&gt;. Ten pierwszy został w skrócie opisany wyżej, a drugi to repozytorium danych, które przechowuje dane w różnej postaci (nawet w czasie rzeczywistym, chociażby z urządzeń IoT). Jest ono kompatybilne z systemem plików &lt;strong&gt;HFDS&lt;/strong&gt; przez co Hadoop i dystrybucje bazujące na nim bez przeszkód mogą uzyskać dostęp do danych w celu przetwarzania i analizy. Komunikacja między nimi odbywa się właśnie za pomocą &lt;strong&gt;Extractorów&lt;/strong&gt; i &lt;strong&gt;Outputterów&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;@searchlog =
-    EXTRACT UserId          int,
-            Start           DateTime,
-            Region          string,
-            Query           string,
-            Duration        int?,
-            Urls            string,
-            ClickedUrls     string
-    FROM &amp;quot;/Samples/Data/SearchLog.tsv&amp;quot;
-    USING Extractors.Tsv();
-
-OUTPUT @searchlog   
-    TO &amp;quot;/output/SearchLog-first-usql.csv&amp;quot;
-USING Outputters.Csv();
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;W ten sposób importujemy plik SearchLog.tsv (tab separated value) do pamięci i od tego momentu korzystamy ze zmiennej jak ze zwykłej, tymczasowej tabeli. Po zakończeniu analiz eksportujemy plik z powrotem do ADL Store, tym razem w formacie .csv (comma separated value). &lt;code&gt;Tsv()&lt;/code&gt; i &lt;code&gt;Csv()&lt;/code&gt; są w standardzie U-SQL, a przy pomocy SDK możemy napisać klasy do obsługi innych typów danych. Na &lt;a href=&#34;https://github.com/MicrosoftBigData/usql/&#34;&gt;GitHub&amp;rsquo;ie&lt;/a&gt; U-SQL można znaleźć przykładową implementację dla typów &lt;strong&gt;XML&lt;/strong&gt; i &lt;strong&gt;JSON&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;wyrażenia-lambda-linq-i-typy:0f75fabf8504a87dff62df1f8eafb8e8&#34;&gt;Wyrażenia lambda, LINQ i typy&lt;/h3&gt;
-
-&lt;p&gt;Ponieważ typy w U-SQL&amp;rsquo;u są typami z C#, możemy ich używać dokładnie tak samo - wszystkie metody na wyciągnięcie ręki! Dzieje się tak, ponieważ standardowy skrypt U-SQL ma referencję do &lt;code&gt;System&lt;/code&gt; i &lt;code&gt;System.Linq&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;--@tweets =
---    EXTRACT
---    ...
-    
-@refs = SELECT new SQL.ARRAY&amp;lt;string&amp;gt;(
-            tweet.Split(&#39; &#39;)
-                 .Where(x =&amp;gt; x.StartsWith(&amp;quot;@&amp;quot;))) AS refs
-        FROM @tweets;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Kod wygląda jakby ktoś do SQL&amp;rsquo;a wkleił C#&amp;lsquo;a, a co najważniejsze: działa i to własnie jest U-SQL! :). &lt;code&gt;SQL.ARRAY&amp;lt;T&amp;gt;&lt;/code&gt; jest typem wbudowanym (w rzeczywistości typem C#) zachowującym się jak tabela SQL (możemy &lt;em&gt;@refs&lt;/em&gt; używać w innych zapytaniach, łączyć z tabelami itp.), a ponieważ &lt;code&gt;Where()&lt;/code&gt; zwraca &lt;code&gt;IEnumerable&amp;lt;T&amp;gt;&lt;/code&gt;, w kolejnych zapytaniach nadal możemy filtrować kolekcję za pomocą predykatów.&lt;/p&gt;
-
-&lt;p&gt;W pewwym momencie będziemy musieli nasze typy-hybrydy zmaterializować (coś na kształt &lt;code&gt;ToList()&lt;/code&gt;) i użyjemy do tego &lt;code&gt;CROSS APPLY EXPLODE&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;@t = SELECT Refs.r.Substring(1) AS r,
-            &amp;quot;mentioned&amp;quot; AS category
-     FROM @refs CROSS APPLY EXPLODE(refs) AS Refs(r);
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Tak przetworzone dane bez problemu zapisujemy w wybranym formacie do ADL Store (patrz wyżej).&lt;/p&gt;
-
-&lt;p&gt;Więcej przykładów znajdziecie na podanym GitHubie Microsoftu (linki na samym dole). Przykłady użyć SDK i Azure Data Lake Tools for Visual Studio opiszę w następnym poście.&lt;/p&gt;
-
-&lt;h2 id=&#34;czyli-dla-każdego:0f75fabf8504a87dff62df1f8eafb8e8&#34;&gt;Czyli dla każdego?&lt;/h2&gt;
-
-&lt;p&gt;Chyba tak. Teraz przetwarzanie danych w chmurze stało się jeszcze łatwiejsze. Niski próg wejścia i znajoma składnia z pewnościa przyciągnie do platformy wielu użytkowników skoncentrowanych na osiągnięciu celu biznesowego. Tego typu podejście nie jest szczepionką na wszystko i z pewnością bardziej &amp;ldquo;customowe&amp;rdquo; rozwiązania nie stracą na znaczeniu.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&#34;https://azure.microsoft.com/pl-pl/services/hdinsight/&#34;&gt;https://azure.microsoft.com/pl-pl/services/hdinsight/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://azure.microsoft.com/pl-pl/documentation/articles/hdinsight-storm-develop-csharp-visual-studio-topology/&#34;&gt;https://azure.microsoft.com/pl-pl/documentation/articles/hdinsight-storm-develop-csharp-visual-studio-topology/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://blogs.technet.com/b/dataplatforminsider/archive/2015/09/28/microsoft-expands-azure-data-lake-to-unleash-big-data-productivity.aspx&#34;&gt;http://blogs.technet.com/b/dataplatforminsider/archive/2015/09/28/microsoft-expands-azure-data-lake-to-unleash-big-data-productivity.aspx&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://blog.sqlauthority.com/2013/10/02/big-data-what-is-big-data-3-vs-of-big-data-volume-velocity-and-variety-day-2-of-21/&#34;&gt;http://blog.sqlauthority.com/2013/10/02/big-data-what-is-big-data-3-vs-of-big-data-volume-velocity-and-variety-day-2-of-21/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://hive.apache.org/&#34;&gt;https://hive.apache.org/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/MicrosoftBigData/usql/&#34;&gt;https://github.com/MicrosoftBigData/usql/&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
+      <guid>http://ksmigiel.com/2015/12/u-sql/</guid>
+      <description>Nie skłamię twierdząc, że Big Data jest obok IoT, machine learningu czy drukowania 3D w top 5 jeśli chodzi o modne pojęcia i zagadnienia wyznaczające trendy w świecie IT, tworzące nowe gałęzie w tej dziedzinie. Ponieważ Microsoft w ostatnim czasie realizuje politykę bycia &amp;ldquo;na topie&amp;rdquo; (publiczne repozytoria na GitHub&amp;rsquo;ie, .NET na Linuxie - DNX i Kestrel etc.) nie mogło ich też zabraknąć w tak gorącym temacie jakim jest obecnie Big Data.</description>
     </item>
     
   </channel>
