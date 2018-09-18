@@ -5,10 +5,19 @@
     <link>http://ksmigiel.com/</link>
     <description>Recent content on </description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 18 Jan 2018 13:13:09 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 18 Sep 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://ksmigiel.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kendo UI Charts renders category axis labels incorrectly for negative series.</title>
+      <link>http://ksmigiel.com/2018/09/kendo-charts/</link>
+      <pubDate>Tue, 18 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://ksmigiel.com/2018/09/kendo-charts/</guid>
+      <description>This post starts new era on my blog. As you might already have noticed, I have decided to change language of new posts to English. Aim is to share my ideas and thoughts with more people, and as side effect, practice my foreign language writing skills. Because I treat this as an experiment, it would be great to get some feedback from you. Also please spot in comments or directly by email any misspelling or grammatical error (and any other of course).</description>
+    </item>
     
     <item>
       <title>Aplikacja konsolowa w .NET Core</title>
