@@ -31,7 +31,7 @@ const questions = [
     "Strzel sobie selfie i przez pomyłkę wyślij je do swojej narzeczonej. Klucz do tego zadania zna Kasia, a to czy go "+
     "dostaniesz zależy tylko od niej...")
 ]
-const times = [3, 90, 90, 90, 90, 90]
+const times = [190, 300, 300, 180, 60, 600]
 
 const state = {
     activeTask: 0,
@@ -61,7 +61,7 @@ let interval = null;
 
 const view = (state, actions) => {
     if (state.activeTask == questions.length) {
-        return h("h1", {}, "Gratulacje! Prawdziwy z Ciebie kawaler i świetny materiał na męża!.")
+        return h("h1", {}, "Gratulacje! Prawdziwy z Ciebie kawaler i świetny materiał na męża!")
     } else {
         return h("div", {}, [
             h("h1", {}, "Zadanie " + (state.activeTask + 1)),
