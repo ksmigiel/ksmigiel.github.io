@@ -5,10 +5,20 @@
     <link>http://ksmigiel.com/post/</link>
     <description>Recent content in Posts on </description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 18 Sep 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 04 Jan 2019 13:13:09 +0000</lastBuildDate>
     
 	<atom:link href="http://ksmigiel.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Hyper terminal i git/bash</title>
+      <link>http://ksmigiel.com/2019/01/hyper-git/</link>
+      <pubDate>Fri, 04 Jan 2019 13:13:09 +0000</pubDate>
+      
+      <guid>http://ksmigiel.com/2019/01/hyper-git/</guid>
+      <description>Już kiedyś pisałem o tym, że lubię konsole. Bardzo też lubię używać gita klepiąc komendy z klawiatury (choć wcale nie jestem hejterem rozwiązań z GUI). Dotychczas używałem GitHub Desktop. Posiadał on wbudowany wrapper do PowerShella zwany posh-git, co bardzo ułatwiało pracę. Jednak w najnowszej wersji, nie wiedzieć czemu, zrezygnowali ze wspierania jakiegokolwiek command-line&amp;rsquo;a, więc zacząłem eksperymentować. Mogłem po prostu zainstalować posh-gita, ale po co sobie ułatwiać życie&amp;hellip;
+Git for Windows Zainstalowałem sobie oficjalną dystrybucję gita.</description>
+    </item>
     
     <item>
       <title>Kendo UI Charts renders category axis labels incorrectly for negative series.</title>
