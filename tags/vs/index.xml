@@ -1,24 +1,2 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Vs on </title>
-    <link>http://ksmigiel.com/tags/vs/</link>
-    <description>Recent content in Vs on </description>
-    <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 14 May 2015 16:38:00 +0100</lastBuildDate>
-    
-	<atom:link href="http://ksmigiel.com/tags/vs/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Visual Studio Code</title>
-      <link>http://ksmigiel.com/2015/05/vs-code/</link>
-      <pubDate>Thu, 14 May 2015 16:38:00 +0100</pubDate>
-      
-      <guid>http://ksmigiel.com/2015/05/vs-code/</guid>
-      <description>Microsoft na tegorocznej konferencji //build/ zaskoczył nas paroma nowinkami. Jeśli nie jesteście na bieżąco polecam zerknąć na podsumowanie. Każdy znajdzie coś dla siebie.
-VS Code Mnie osobiście najbardziej spodobał się edytor Visual Studio Code, czyli taki Sublime Text w Microsoftowym wydaniu. W całości oparty na node.js i edytorze Atom od GitHuba, a konkretnie na bibliotece Electron umożliwiającej pisanie cross-platformowych desktopowych aplikacji w JS/HTML/CSS. Główne cechy wyróżniające Code na tle innych edytorów to m.</description>
-    </item>
-    
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>VS on DevOops adventures</title><link>https://ksmigiel.com/tags/vs/</link><description>Recent content in VS on DevOops adventures</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 14 May 2015 16:38:00 +0100</lastBuildDate><atom:link href="https://ksmigiel.com/tags/vs/index.xml" rel="self" type="application/rss+xml"/><item><title>Visual Studio Code</title><link>https://ksmigiel.com/posts/vs-code/</link><pubDate>Thu, 14 May 2015 16:38:00 +0100</pubDate><guid>https://ksmigiel.com/posts/vs-code/</guid><description>Microsoft na tegorocznej konferencji //build/ zaskoczył nas paroma nowinkami. Jeśli nie jesteście na bieżąco polecam zerknąć na podsumowanie. Każdy znajdzie coś dla siebie.
+VS Code Mnie osobiście najbardziej spodobał się edytor Visual Studio Code, czyli taki Sublime Text w Microsoftowym wydaniu. W całości oparty na node.js i edytorze Atom od GitHuba, a konkretnie na bibliotece Electron umożliwiającej pisanie cross-platformowych desktopowych aplikacji w JS/HTML/CSS. Główne cechy wyróżniające Code na tle innych edytorów to m.</description></item></channel></rss>
